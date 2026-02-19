@@ -19,6 +19,21 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
+// Basic health check
+app.get('/health', (req, res) => {
+  res.json({ status: 'OK', timestamp: new Date().toISOString() });
+});
+
+// API health check
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'OK', timestamp: new Date().toISOString() });
+});
+
+// Test route
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'Test route working' });
+});
+
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/applications', applicationRoutes);
@@ -29,15 +44,6 @@ app.use('/api/partners', partnerRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/initialize-data', initializeRoutes);
 
-// Basic health check
-app.get('/health', (req, res) => {
-  res.json({ status: 'OK', timestamp: new Date().toISOString() });
-});
-
-// Catch-all for undefined API routes
-app.use('/api/*', (req, res) => {
-  res.status(404).json({ error: 'API route not found' });
-});
 
 // Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {

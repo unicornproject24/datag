@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const blogPosts = await prisma.blogPost.findMany({
-      orderBy: { date: 'desc' }
+      orderBy: { publishedAt: 'desc' }
     });
     res.json(blogPosts);
   } catch (error) {
@@ -38,7 +38,7 @@ router.get('/:id', async (req, res) => {
 // Create a new blog post
 router.post('/', async (req, res) => {
   try {
-    const { title, excerpt, author, authorImage, date, readTime } = req.body;
+    const { title, excerpt, author, authorImage, publishedAt, readTime, content, category, tags, imageUrl, isPublic } = req.body;
     
     const blogPost = await prisma.blogPost.create({
       data: {
@@ -46,8 +46,13 @@ router.post('/', async (req, res) => {
         excerpt,
         author,
         authorImage,
-        date: new Date(date),
-        readTime
+        publishedAt: publishedAt ? new Date(publishedAt) : new Date(),
+        readTime,
+        content: content || '',
+        category: category || 'General',
+        tags: tags || [],
+        imageUrl: imageUrl || '',
+        isPublic: isPublic || false
       }
     });
 
@@ -62,7 +67,7 @@ router.post('/', async (req, res) => {
 router.put('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, excerpt, author, authorImage, date, readTime } = req.body;
+    const { title, excerpt, author, authorImage, publishedAt, readTime, content, category, tags, imageUrl, isPublic } = req.body;
 
     const blogPost = await prisma.blogPost.update({
       where: { id },
@@ -71,8 +76,13 @@ router.put('/:id', async (req, res) => {
         excerpt,
         author,
         authorImage,
-        date: new Date(date),
-        readTime
+        publishedAt: publishedAt ? new Date(publishedAt) : undefined,
+        readTime,
+        content,
+        category,
+        tags,
+        imageUrl,
+        isPublic
       }
     });
 

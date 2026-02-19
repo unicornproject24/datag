@@ -1,7 +1,6 @@
 import type { IncomingMessage, ServerResponse } from 'http';
 import { URL } from 'url';
 import * as bcrypt from 'bcryptjs';
-import * as jwt from 'jsonwebtoken';
 
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -39,15 +38,9 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
         return res.end(JSON.stringify({ error: 'Invalid credentials' }));
       }
 
-      const token = jwt.sign(
-        { userId: user.id, role: user.role },
-        process.env.JWT_SECRET || 'fallback-secret',
-        { expiresIn: '7d' }
-      );
-
       res.statusCode = 200;
       return res.end(JSON.stringify({
-        token,
+        token: user.id,
         user: {
           id: user.id,
           email: user.email,
@@ -100,9 +93,8 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       const { token } = JSON.parse(Buffer.concat(chunks).toString());
 
       try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback-secret') as { userId: string };
         const user = await prisma.user.findUnique({
-          where: { id: decoded.userId },
+          where: { id: token },
           select: { id: true, email: true, name: true, role: true }
         });
 

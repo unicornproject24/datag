@@ -5,6 +5,7 @@ import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
 import { Badge } from "../components/ui/badge";
+import { AdvancedEditor } from "../components/admin/AdvancedEditor";
 import { 
   Settings, 
   Plus, 
@@ -92,13 +93,13 @@ interface BlogPost {
 }
 
 export function AdminPage() {
-  const { user, login, logout, isAdmin, isTeamMember } = useAuth();
+  const { user, login, logout, isAdmin, isTeamMember, loading: authLoading } = useAuth();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [researchProjects, setResearchProjects] = useState<ResearchProject[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [stats, setStats] = useState<DashboardStats | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [dataLoading, setDataLoading] = useState(true);
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginError, setLoginError] = useState("");
   const [selectedResearch, setSelectedResearch] = useState<ResearchProject | null>(null);
@@ -117,7 +118,7 @@ export function AdminPage() {
   const API_BASE = '/api';
 
   const fetchAllData = async () => {
-    setLoading(true);
+    setDataLoading(true);
     try {
       const [teamRes, researchRes, usersRes, blogRes] = await Promise.all([
         fetch(`${API_BASE}/team-members`),
@@ -155,14 +156,14 @@ export function AdminPage() {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
-    setLoading(false);
+    setDataLoading(false);
   };
 
   useEffect(() => {
     if (user && (isAdmin || isTeamMember)) {
       fetchAllData();
     } else {
-      setLoading(false);
+      setDataLoading(false);
     }
   }, [user, isAdmin, isTeamMember]);
 
@@ -431,13 +432,28 @@ export function AdminPage() {
     }
   };
 
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background to-soft-blue flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-primary flex items-center justify-center animate-pulse">
+            <Lock className="h-8 w-8 text-white" />
+          </div>
+          <p className="text-muted-foreground text-lg">Authenticating...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!user || (!isAdmin && !isTeamMember)) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-4">
-        <Card className="w-full max-w-md">
+      <div className="min-h-screen bg-gradient-to-br from-background to-soft-blue flex items-center justify-center p-4">
+        <Card className="w-full max-w-md bg-white soft-shadow">
           <CardHeader className="text-center">
-            <Lock className="h-12 w-12 mx-auto text-primary mb-4" />
-            <CardTitle>Admin Login</CardTitle>
+            <div className="w-16 h-16 rounded-2xl bg-gradient-primary flex items-center justify-center mx-auto mb-4">
+              <Lock className="h-8 w-8 text-white" />
+            </div>
+            <CardTitle className="text-2xl">Admin Login</CardTitle>
             <CardDescription>Login as Admin or Team Member</CardDescription>
           </CardHeader>
           <CardContent>
@@ -448,32 +464,44 @@ export function AdminPage() {
     );
   }
 
-  if (loading) {
+  if (dataLoading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <p>Loading admin panel...</p>
+      <div className="min-h-screen bg-gradient-to-br from-background to-soft-blue flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-primary flex items-center justify-center animate-pulse">
+            <LayoutDashboard className="h-8 w-8 text-white" />
+          </div>
+          <p className="text-muted-foreground text-lg">Loading admin panel...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-background to-soft-blue">
       {/* Header */}
-      <header className="border-b bg-card">
+      <header className="border-b bg-white/80 backdrop-blur-sm">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <LayoutDashboard className="h-8 w-8 text-primary" />
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center">
+                <LayoutDashboard className="h-6 w-6 text-white" />
+              </div>
               <div>
-                <h1 className="text-xl font-bold">Admin Dashboard</h1>
+                <h1 className="text-2xl font-bold text-foreground">Admin Dashboard</h1>
                 <p className="text-sm text-muted-foreground">Welcome, {user?.name}</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
-              <Badge variant={user?.role === 'ADMIN' ? 'default' : 'secondary'}>
+              <Badge className={`px-3 py-1 rounded-full ${user?.role === 'ADMIN' ? 'bg-primary text-white' : 'bg-secondary text-white'}`}>
                 {user?.role}
               </Badge>
-              <Button variant="outline" size="sm" onClick={logout}>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={logout}
+                className="rounded-xl border-border hover:shadow-md hover:-translate-y-1 transition-all"
+              >
                 <LogOut className="h-4 w-4 mr-2" />
                 Logout
               </Button>
@@ -637,71 +665,93 @@ export function AdminPage() {
                 </div>
 
                 <div className="grid gap-4">
-                  {researchProjects
-                    .filter(r => r.title.toLowerCase().includes(searchQuery.toLowerCase()))
-                    .map((project) => (
-                    <Card key={project.id} className="hover:shadow-md transition-shadow">
-                      <CardContent className="p-4">
-                        <div className="flex justify-between items-start">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-2">
-                              <h4 className="font-semibold text-lg">{project.title}</h4>
-                              <Badge variant={project.isPublic ? 'default' : 'secondary'}>
-                                {project.isPublic ? 'Published' : 'Draft'}
-                              </Badge>
-                              <Badge variant="outline">{project.status}</Badge>
+                  {researchProjects.length > 0 ? (
+                    researchProjects
+                      .filter(r => r.title.toLowerCase().includes(searchQuery.toLowerCase()))
+                      .map((project) => (
+                      <Card key={project.id} className="hover:shadow-md transition-shadow">
+                        <CardContent className="p-4">
+                          <div className="flex justify-between items-start">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-2">
+                                <h4 className="font-semibold text-lg">{project.title}</h4>
+                                <Badge variant={project.isPublic ? 'default' : 'secondary'}>
+                                  {project.isPublic ? 'Published' : 'Draft'}
+                                </Badge>
+                                <Badge variant="outline">{project.status}</Badge>
+                              </div>
+                              <p className="text-muted-foreground line-clamp-2 mb-2">{project.description}</p>
+                              <div className="flex flex-wrap gap-2 mb-2">
+                                {project.tags.map((tag) => (
+                                  <Badge key={tag} variant="outline" className="text-xs">{tag}</Badge>
+                                ))}
+                              </div>
+                              <p className="text-xs text-muted-foreground">
+                                Updated: {new Date(project.updatedAt).toLocaleDateString()}
+                              </p>
                             </div>
-                            <p className="text-muted-foreground line-clamp-2 mb-2">{project.description}</p>
-                            <div className="flex flex-wrap gap-2 mb-2">
-                              {project.tags.map((tag) => (
-                                <Badge key={tag} variant="outline" className="text-xs">{tag}</Badge>
-                              ))}
+                            <div className="flex flex-col gap-2 ml-4">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => setSelectedResearch(project)}
+                              >
+                                <Eye className="h-4 w-4 mr-1" />
+                                View
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => {
+                                  setEditingResearch(project);
+                                  setShowResearchForm(true);
+                                }}
+                              >
+                                <Edit className="h-4 w-4 mr-1" />
+                                Edit
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant={project.isPublic ? 'secondary' : 'default'}
+                                onClick={() => handleTogglePublishResearch(project.id, project.isPublic)}
+                              >
+                                {project.isPublic ? <EyeOff className="h-4 w-4 mr-1" /> : <Eye className="h-4 w-4 mr-1" />}
+                                {project.isPublic ? 'Unpublish' : 'Publish'}
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="destructive"
+                                onClick={() => handleDeleteResearch(project.id)}
+                              >
+                                <Trash2 className="h-4 w-4 mr-1" />
+                                Delete
+                              </Button>
                             </div>
-                            <p className="text-xs text-muted-foreground">
-                              Updated: {new Date(project.updatedAt).toLocaleDateString()}
-                            </p>
                           </div>
-                          <div className="flex flex-col gap-2 ml-4">
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => setSelectedResearch(project)}
-                            >
-                              <Eye className="h-4 w-4 mr-1" />
-                              View
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => {
-                                setEditingResearch(project);
-                                setShowResearchForm(true);
-                              }}
-                            >
-                              <Edit className="h-4 w-4 mr-1" />
-                              Edit
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant={project.isPublic ? 'secondary' : 'default'}
-                              onClick={() => handleTogglePublishResearch(project.id, project.isPublic)}
-                            >
-                              {project.isPublic ? <EyeOff className="h-4 w-4 mr-1" /> : <Eye className="h-4 w-4 mr-1" />}
-                              {project.isPublic ? 'Unpublish' : 'Publish'}
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="destructive"
-                              onClick={() => handleDeleteResearch(project.id)}
-                            >
-                              <Trash2 className="h-4 w-4 mr-1" />
-                              Delete
-                            </Button>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                        </CardContent>
+                      </Card>
+                    ))
+                  ) : (
+                    <div className="text-center py-16 bg-white rounded-2xl soft-shadow">
+                      <div className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-gradient-primary flex items-center justify-center">
+                        <FileText className="h-10 w-10 text-white" />
+                      </div>
+                      <h3 className="text-xl font-semibold mb-2 text-foreground">No Research Projects Yet</h3>
+                      <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                        Get started by creating your first research project. Share your findings and insights with the community.
+                      </p>
+                      <Button 
+                        onClick={() => {
+                          setEditingResearch(null);
+                          setShowResearchForm(true);
+                        }}
+                        className="bg-gradient-primary hover:shadow-lg hover:-translate-y-1 transition-all px-6 py-3 rounded-xl"
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Create Research Project
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </>
             )}
@@ -749,73 +799,95 @@ export function AdminPage() {
                 </div>
 
                 <div className="grid gap-4">
-                  {blogPosts.map((post) => (
-                    <Card key={post.id} className="hover:shadow-md transition-shadow">
-                      <CardContent className="p-4">
-                        <div className="flex justify-between items-start">
-                          <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-2">
-                              <h4 className="font-semibold text-lg">{post.title}</h4>
-                              <Badge variant={post.isPublic ? 'default' : 'secondary'}>
-                                {post.isPublic ? 'Published' : 'Draft'}
-                              </Badge>
-                              <Badge variant="outline">{post.category}</Badge>
+                  {blogPosts.length > 0 ? (
+                    blogPosts.map((post) => (
+                      <Card key={post.id} className="hover:shadow-md transition-shadow">
+                        <CardContent className="p-4">
+                          <div className="flex justify-between items-start">
+                            <div className="flex-1">
+                              <div className="flex items-center gap-2 mb-2">
+                                <h4 className="font-semibold text-lg">{post.title}</h4>
+                                <Badge variant={post.isPublic ? 'default' : 'secondary'}>
+                                  {post.isPublic ? 'Published' : 'Draft'}
+                                </Badge>
+                                <Badge variant="outline">{post.category}</Badge>
+                              </div>
+                              <p className="text-muted-foreground line-clamp-2 mb-2">{post.excerpt}</p>
+                              <div className="flex flex-wrap gap-2 mb-2">
+                                {post.tags.map((tag) => (
+                                  <Badge key={tag} variant="outline" className="text-xs">{tag}</Badge>
+                                ))}
+                              </div>
+                              <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                                <span className="flex items-center gap-1">
+                                  <Clock className="h-3 w-3" /> {post.readTime}
+                                </span>
+                                <span>By {post.author}</span>
+                                <span>Updated: {new Date(post.updatedAt).toLocaleDateString()}</span>
+                              </div>
                             </div>
-                            <p className="text-muted-foreground line-clamp-2 mb-2">{post.excerpt}</p>
-                            <div className="flex flex-wrap gap-2 mb-2">
-                              {post.tags.map((tag) => (
-                                <Badge key={tag} variant="outline" className="text-xs">{tag}</Badge>
-                              ))}
-                            </div>
-                            <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                              <span className="flex items-center gap-1">
-                                <Clock className="h-3 w-3" /> {post.readTime}
-                              </span>
-                              <span>By {post.author}</span>
-                              <span>Updated: {new Date(post.updatedAt).toLocaleDateString()}</span>
+                            <div className="flex flex-col gap-2 ml-4">
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => setSelectedBlogPost(post)}
+                              >
+                                <Eye className="h-4 w-4 mr-1" />
+                                View
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => {
+                                  setEditingBlogPost(post);
+                                  setShowBlogForm(true);
+                                }}
+                              >
+                                <Edit className="h-4 w-4 mr-1" />
+                                Edit
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant={post.isPublic ? 'secondary' : 'default'}
+                                onClick={() => handleTogglePublishBlogPost(post.id, post.isPublic)}
+                              >
+                                {post.isPublic ? <EyeOff className="h-4 w-4 mr-1" /> : <Eye className="h-4 w-4 mr-1" />}
+                                {post.isPublic ? 'Unpublish' : 'Publish'}
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="destructive"
+                                onClick={() => handleDeleteBlogPost(post.id)}
+                              >
+                                <Trash2 className="h-4 w-4 mr-1" />
+                                Delete
+                              </Button>
                             </div>
                           </div>
-                          <div className="flex flex-col gap-2 ml-4">
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => setSelectedBlogPost(post)}
-                            >
-                              <Eye className="h-4 w-4 mr-1" />
-                              View
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => {
-                                setEditingBlogPost(post);
-                                setShowBlogForm(true);
-                              }}
-                            >
-                              <Edit className="h-4 w-4 mr-1" />
-                              Edit
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant={post.isPublic ? 'secondary' : 'default'}
-                              onClick={() => handleTogglePublishBlogPost(post.id, post.isPublic)}
-                            >
-                              {post.isPublic ? <EyeOff className="h-4 w-4 mr-1" /> : <Eye className="h-4 w-4 mr-1" />}
-                              {post.isPublic ? 'Unpublish' : 'Publish'}
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="destructive"
-                              onClick={() => handleDeleteBlogPost(post.id)}
-                            >
-                              <Trash2 className="h-4 w-4 mr-1" />
-                              Delete
-                            </Button>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                        </CardContent>
+                      </Card>
+                    ))
+                  ) : (
+                    <div className="text-center py-16 bg-white rounded-2xl soft-shadow">
+                      <div className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-gradient-primary flex items-center justify-center">
+                        <BookOpen className="h-10 w-10 text-white" />
+                      </div>
+                      <h3 className="text-xl font-semibold mb-2 text-foreground">No Blog Posts Yet</h3>
+                      <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                        Start sharing your insights and knowledge with the community by creating your first blog post.
+                      </p>
+                      <Button 
+                        onClick={() => {
+                          setEditingBlogPost(null);
+                          setShowBlogForm(true);
+                        }}
+                        className="bg-gradient-primary hover:shadow-lg hover:-translate-y-1 transition-all px-6 py-3 rounded-xl"
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Create Blog Post
+                      </Button>
+                    </div>
+                  )}
                 </div>
               </>
             )}
@@ -854,66 +926,90 @@ export function AdminPage() {
                 </div>
 
                 <div className="grid gap-4">
-                  {teamMembers.map((member) => (
-                    <Card key={member.id}>
-                      <CardContent className="p-4">
-                        <div className="flex justify-between items-start">
-                          <div className="flex items-start gap-4">
-                            {member.imageUrl && (
-                              <img 
-                                src={member.imageUrl} 
-                                alt={member.name}
-                                className="w-16 h-16 rounded-full object-cover"
-                              />
+                  {teamMembers.length > 0 ? (
+                    teamMembers.map((member) => (
+                      <Card key={member.id}>
+                        <CardContent className="p-4">
+                          <div className="flex justify-between items-start">
+                            <div className="flex items-start gap-4">
+                              {member.imageUrl && (
+                                <img 
+                                  src={member.imageUrl} 
+                                  alt={member.name}
+                                  className="w-16 h-16 rounded-full object-cover"
+                                />
+                              )}
+                              <div>
+                                <div className="flex items-center gap-2 mb-1">
+                                  <h4 className="font-semibold">{member.name}</h4>
+                                  <Badge variant={member.isPublic ? 'default' : 'secondary'}>
+                                    {member.isPublic ? 'Active' : 'Inactive'}
+                                  </Badge>
+                                </div>
+                                <p className="text-muted-foreground text-sm">{member.role}</p>
+                                <p className="text-sm mt-1 line-clamp-2">{member.bio}</p>
+                                <div className="flex flex-wrap gap-1 mt-2">
+                                  {member.expertise.map((skill) => (
+                                    <Badge key={skill} variant="outline" className="text-xs">{skill}</Badge>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                            {isAdmin && (
+                              <div className="flex flex-col gap-2">
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => {
+                                    setEditingTeamMember(member);
+                                    setShowTeamForm(true);
+                                  }}
+                                >
+                                  <Edit className="h-4 w-4" />
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant={member.isPublic ? 'secondary' : 'default'}
+                                  onClick={() => handleDeactivateTeamMember(member.id)}
+                                >
+                                  {member.isPublic ? <XCircle className="h-4 w-4" /> : <CheckCircle className="h-4 w-4" />}
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="destructive"
+                                  onClick={() => handleDeleteTeamMember(member.id)}
+                                >
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </div>
                             )}
-                            <div>
-                              <div className="flex items-center gap-2 mb-1">
-                                <h4 className="font-semibold">{member.name}</h4>
-                                <Badge variant={member.isPublic ? 'default' : 'secondary'}>
-                                  {member.isPublic ? 'Active' : 'Inactive'}
-                                </Badge>
-                              </div>
-                              <p className="text-muted-foreground text-sm">{member.role}</p>
-                              <p className="text-sm mt-1 line-clamp-2">{member.bio}</p>
-                              <div className="flex flex-wrap gap-1 mt-2">
-                                {member.expertise.map((skill) => (
-                                  <Badge key={skill} variant="outline" className="text-xs">{skill}</Badge>
-                                ))}
-                              </div>
-                            </div>
                           </div>
-                          {isAdmin && (
-                            <div className="flex flex-col gap-2">
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() => {
-                                  setEditingTeamMember(member);
-                                  setShowTeamForm(true);
-                                }}
-                              >
-                                <Edit className="h-4 w-4" />
-                              </Button>
-                              <Button
-                                size="sm"
-                                variant={member.isPublic ? 'secondary' : 'default'}
-                                onClick={() => handleDeactivateTeamMember(member.id)}
-                              >
-                                {member.isPublic ? <XCircle className="h-4 w-4" /> : <CheckCircle className="h-4 w-4" />}
-                              </Button>
-                              <Button
-                                size="sm"
-                                variant="destructive"
-                                onClick={() => handleDeleteTeamMember(member.id)}
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </Button>
-                            </div>
-                          )}
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))}
+                        </CardContent>
+                      </Card>
+                    ))
+                  ) : (
+                    <div className="text-center py-16 bg-white rounded-2xl soft-shadow">
+                      <div className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-gradient-primary flex items-center justify-center">
+                        <Users className="h-10 w-10 text-white" />
+                      </div>
+                      <h3 className="text-xl font-semibold mb-2 text-foreground">No Team Members Yet</h3>
+                      <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                        Build your team by adding members who will contribute to your research and mission.
+                      </p>
+                      {isAdmin && (
+                        <Button 
+                          onClick={() => {
+                            setEditingTeamMember(null);
+                            setShowTeamForm(true);
+                          }}
+                          className="bg-gradient-primary hover:shadow-lg hover:-translate-y-1 transition-all px-6 py-3 rounded-xl"
+                        >
+                          <Plus className="h-4 w-4 mr-2" />
+                          Add Team Member
+                        </Button>
+                      )}
+                    </div>
+                  )}
                 </div>
               </>
             )}
@@ -929,55 +1025,67 @@ export function AdminPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    {users.map((u) => (
-                      <div key={u.id} className="flex items-center justify-between p-4 border rounded-lg">
-                        <div>
-                          <div className="flex items-center gap-2">
-                            <h4 className="font-medium">{u.name}</h4>
-                            <Badge variant={u.role === 'ADMIN' ? 'default' : 'secondary'}>{u.role}</Badge>
-                            <Badge variant={
-                              u.status === 'APPROVED' ? 'default' :
-                              u.status === 'PENDING' ? 'secondary' :
-                              u.status === 'SUSPENDED' ? 'destructive' : 'outline'
-                            }>
-                              {u.status}
-                            </Badge>
+                    {users.length > 0 ? (
+                      users.map((u) => (
+                        <div key={u.id} className="flex items-center justify-between p-4 border rounded-lg">
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <h4 className="font-medium">{u.name}</h4>
+                              <Badge variant={u.role === 'ADMIN' ? 'default' : 'secondary'}>{u.role}</Badge>
+                              <Badge variant={
+                                u.status === 'APPROVED' ? 'default' :
+                                u.status === 'PENDING' ? 'secondary' :
+                                u.status === 'SUSPENDED' ? 'destructive' : 'outline'
+                              }>
+                                {u.status}
+                              </Badge>
+                            </div>
+                            <p className="text-sm text-muted-foreground">{u.email}</p>
                           </div>
-                          <p className="text-sm text-muted-foreground">{u.email}</p>
-                        </div>
-                        <div className="flex gap-2">
-                          {u.status === 'PENDING' && (
-                            <>
+                          <div className="flex gap-2">
+                            {u.status === 'PENDING' && (
+                              <>
+                                <Button 
+                                  size="sm" 
+                                  onClick={() => handleUpdateUserStatus(u.id, 'APPROVED')}
+                                >
+                                  <CheckCircle className="h-4 w-4 mr-1" />
+                                  Approve
+                                </Button>
+                                <Button 
+                                  size="sm" 
+                                  variant="destructive"
+                                  onClick={() => handleUpdateUserStatus(u.id, 'REJECTED')}
+                                >
+                                  <XCircle className="h-4 w-4 mr-1" />
+                                  Reject
+                                </Button>
+                              </>
+                            )}
+                            {u.status === 'APPROVED' && u.id !== user?.id && (
                               <Button 
                                 size="sm" 
-                                onClick={() => handleUpdateUserStatus(u.id, 'APPROVED')}
+                                variant="secondary"
+                                onClick={() => handleUpdateUserStatus(u.id, 'SUSPENDED')}
                               >
-                                <CheckCircle className="h-4 w-4 mr-1" />
-                                Approve
+                                <Archive className="h-4 w-4 mr-1" />
+                                Suspend
                               </Button>
-                              <Button 
-                                size="sm" 
-                                variant="destructive"
-                                onClick={() => handleUpdateUserStatus(u.id, 'REJECTED')}
-                              >
-                                <XCircle className="h-4 w-4 mr-1" />
-                                Reject
-                              </Button>
-                            </>
-                          )}
-                          {u.status === 'APPROVED' && u.id !== user?.id && (
-                            <Button 
-                              size="sm" 
-                              variant="secondary"
-                              onClick={() => handleUpdateUserStatus(u.id, 'SUSPENDED')}
-                            >
-                              <Archive className="h-4 w-4 mr-1" />
-                              Suspend
-                            </Button>
-                          )}
+                            )}
+                          </div>
                         </div>
+                      ))
+                    ) : (
+                      <div className="text-center py-16 bg-white rounded-2xl soft-shadow">
+                        <div className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-gradient-primary flex items-center justify-center">
+                          <UserPlus className="h-10 w-10 text-white" />
+                        </div>
+                        <h3 className="text-xl font-semibold mb-2 text-foreground">No Users Found</h3>
+                        <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                          No user accounts have been created yet. Users will appear here once they register.
+                        </p>
                       </div>
-                    ))}
+                    )}
                   </div>
                 </CardContent>
               </Card>
@@ -1177,12 +1285,11 @@ function ResearchForm({
           
           <div>
             <label className="text-sm font-medium">Description</label>
-            <Textarea
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+            <AdvancedEditor
+              content={formData.description}
+              onChange={(content: string) => setFormData({...formData, description: content})}
               placeholder="Enter research description"
-              rows={5}
-              required
+              className="min-h-[300px]"
             />
           </div>
 
@@ -1299,12 +1406,11 @@ function TeamMemberForm({
 
           <div>
             <label className="text-sm font-medium">Bio</label>
-            <Textarea
-              value={formData.bio}
-              onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
+            <AdvancedEditor
+              content={formData.bio}
+              onChange={(content: string) => setFormData({...formData, bio: content})}
               placeholder="Short biography"
-              rows={3}
-              required
+              className="min-h-[200px]"
             />
           </div>
 
@@ -1500,23 +1606,21 @@ function BlogPostForm({
           
           <div>
             <label className="text-sm font-medium">Excerpt</label>
-            <Textarea
-              value={formData.excerpt}
-              onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
+            <AdvancedEditor
+              content={formData.excerpt}
+              onChange={(content: string) => setFormData({...formData, excerpt: content})}
               placeholder="Short summary of the post"
-              rows={2}
-              required
+              className="min-h-[150px]"
             />
           </div>
 
           <div>
             <label className="text-sm font-medium">Content</label>
-            <Textarea
-              value={formData.content}
-              onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+            <AdvancedEditor
+              content={formData.content}
+              onChange={(content: string) => setFormData({...formData, content: content})}
               placeholder="Full blog post content"
-              rows={10}
-              required
+              className="min-h-[400px]"
             />
           </div>
 

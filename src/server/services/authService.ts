@@ -1,11 +1,6 @@
-import { sign, verify, SignOptions } from 'jsonwebtoken';
 import * as bcrypt from 'bcryptjs';
 import prisma from '../utils/prisma.js';
 import { User } from '@prisma/client';
-
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret';
-const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET || 'refresh-fallback-secret';
-const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '24h';
 
 export class AuthService {
   static async register(userData: {
@@ -38,7 +33,17 @@ export class AuthService {
       }
     });
 
-    return this.generateTokens(user);
+    // Return simple token (user ID for now)
+    return {
+      token: user.id,
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        status: user.status
+      }
+    };
   }
 
   static async login(email: string, password: string) {
@@ -64,47 +69,9 @@ export class AuthService {
       throw new Error('Invalid credentials');
     }
 
-    return this.generateTokens(user);
-  }
-
-  static async verifyToken(token: string) {
-    try {
-      const decoded = verify(token, JWT_SECRET) as { id: string; email: string };
-      const user = await prisma.user.findUnique({
-        where: { id: decoded.id }
-      });
-
-      if (!user) {
-        throw new Error('User not found');
-      }
-
-      return user;
-    } catch (error) {
-      throw new Error('Invalid token');
-    }
-  }
-
-  static generateTokens(user: User) {
-    const payload = {
-      id: user.id,
-      email: user.email,
-      role: user.role,
-      status: user.status
-    };
-
-    const accessToken = sign(payload, JWT_SECRET as string, {
-      expiresIn: JWT_EXPIRES_IN
-    } as SignOptions);
-
-    const refreshToken = sign(
-      { id: user.id },
-      REFRESH_TOKEN_SECRET as string,
-      { expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN || '7d' } as SignOptions
-    );
-
+    // Return simple token (user ID for now)
     return {
-      accessToken,
-      refreshToken,
+      token: user.id,
       user: {
         id: user.id,
         email: user.email,
@@ -115,24 +82,19 @@ export class AuthService {
     };
   }
 
-  static async refreshAccessToken(refreshToken: string) {
+  static async verifyToken(token: string) {
     try {
-      const payload = verify(
-        refreshToken,
-        REFRESH_TOKEN_SECRET
-      ) as { id: string };
-
       const user = await prisma.user.findUnique({
-        where: { id: payload.id }
+        where: { id: token }
       });
 
       if (!user) {
-        throw new Error('Invalid refresh token');
+        throw new Error('User not found');
       }
 
-      return this.generateTokens(user);
+      return user;
     } catch (error) {
-      throw new Error('Invalid refresh token');
+      throw new Error('Invalid token');
     }
   }
 }

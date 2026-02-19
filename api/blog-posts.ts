@@ -27,6 +27,31 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       return res.end(JSON.stringify(posts));
     }
 
+    // GET /api/blog-posts/admin - List all blog posts (admin only)
+    if (req.method === 'GET' && url.pathname === '/api/blog-posts/admin') {
+      const posts = await prisma.blogPost.findMany({
+        orderBy: { publishedAt: 'desc' }
+      });
+      res.statusCode = 200;
+      return res.end(JSON.stringify(posts));
+    }
+
+    // POST /api/blog-posts/create - Create new blog post (admin only)
+    if (req.method === 'POST' && url.pathname === '/api/blog-posts/create') {
+      const chunks: Buffer[] = [];
+      for await (const chunk of req) {
+        chunks.push(chunk);
+      }
+      const body = JSON.parse(Buffer.concat(chunks).toString());
+      
+      const post = await prisma.blogPost.create({
+        data: body
+      });
+      
+      res.statusCode = 201;
+      return res.end(JSON.stringify(post));
+    }
+
     // GET /api/blog-posts/:id - Get specific blog post
     if (req.method === 'GET' && id && id !== 'blog-posts') {
       const post = await prisma.blogPost.findUnique({
@@ -75,8 +100,35 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       return res.end(JSON.stringify(post));
     }
 
+    // PUT /api/blog-posts/admin/:id - Update blog post (admin only)
+    if (req.method === 'PUT' && url.pathname.startsWith('/api/blog-posts/admin/') && id) {
+      const chunks: Buffer[] = [];
+      for await (const chunk of req) {
+        chunks.push(chunk);
+      }
+      const body = JSON.parse(Buffer.concat(chunks).toString());
+      
+      const post = await prisma.blogPost.update({
+        where: { id },
+        data: body
+      });
+      
+      res.statusCode = 200;
+      return res.end(JSON.stringify(post));
+    }
+
     // DELETE /api/blog-posts/:id - Delete blog post (admin only)
     if (req.method === 'DELETE' && id && id !== 'blog-posts') {
+      await prisma.blogPost.delete({
+        where: { id }
+      });
+      
+      res.statusCode = 204;
+      return res.end();
+    }
+
+    // DELETE /api/blog-posts/admin/:id - Delete blog post (admin only)
+    if (req.method === 'DELETE' && url.pathname.startsWith('/api/blog-posts/admin/') && id) {
       await prisma.blogPost.delete({
         where: { id }
       });

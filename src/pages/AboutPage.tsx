@@ -1,5 +1,5 @@
 import { Button } from "../components/ui/button";
-import { BookOpen, Shield, Users, Target } from "lucide-react";
+import { BookOpen, Shield, Users, Target, Heart, Brain } from "lucide-react";
 
 interface AboutPageProps {
   onNavigate: (page: string) => void;
@@ -33,14 +33,18 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-white pt-20">
+    <div className="min-h-screen bg-gradient-to-br from-background to-soft-blue pt-20">
       {/* Hero Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-24 bg-gradient-primary text-white">
         <div className="container mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+          <div className="inline-flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full mb-6">
+            <Heart className="h-4 w-4 text-white" />
+            <span className="text-sm font-medium text-white">Our Mission</span>
+          </div>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
             Data Well-being Group
           </h1>
-          <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+          <p className="text-lg sm:text-xl mb-10 leading-relaxed max-w-3xl mx-auto text-white/90">
             Advancing research at the intersection of data science, technology ethics, and human well-being. 
             We develop frameworks, tools, and insights to ensure data serves people's best interests.
           </p>
@@ -48,7 +52,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             <Button 
               size="lg"
               onClick={() => onNavigate("research")}
-              className="bg-primary hover:bg-primary/90 text-white"
+              className="bg-white text-primary hover:bg-white/90 hover:shadow-lg hover:-translate-y-1 transition-all px-8 py-4 text-base font-medium rounded-xl"
             >
               <BookOpen className="h-5 w-5 mr-2" />
               Explore Research
@@ -56,7 +60,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             <Button 
               size="lg"
               variant="outline"
-              className="border-2 border-gray-300 hover:border-primary hover:text-primary"
+              className="border-2 border-white text-white hover:bg-white/10 backdrop-blur-sm px-8 py-4 text-base font-medium rounded-xl"
             >
               Join Our Community
             </Button>
@@ -65,33 +69,41 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
       </section>
 
       {/* Mission & Research Grid */}
-      <section className="py-20">
+      <section className="py-24 bg-gradient-to-br from-background to-soft-green">
         <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Mission Card */}
-            <div className="bg-gray-50 p-8 rounded-lg">
-              <h2 className="text-2xl font-bold mb-4 text-gray-900">Our Mission</h2>
-              <p className="text-gray-600 mb-4 leading-relaxed">
+            <div className="bg-white p-10 rounded-3xl soft-shadow hover:shadow-lg transition-all">
+              <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-6">
+                <Heart className="h-4 w-4 text-primary" />
+                <span className="text-sm font-medium text-primary">Our Purpose</span>
+              </div>
+              <h2 className="text-3xl font-bold mb-6 text-foreground">Our Mission</h2>
+              <p className="text-muted-foreground mb-6 leading-relaxed">
                 The Data Well-being Group (DAWG) is dedicated to understanding and improving the relationship 
                 between data practices and human flourishing. We believe that data science should be conducted 
                 with people's well-being at the center.
               </p>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-muted-foreground leading-relaxed">
                 Through rigorous research, ethical frameworks, and practical tools, we work to ensure that 
                 data-driven technologies enhance rather than diminish quality of life.
               </p>
             </div>
 
             {/* Research Areas Card */}
-            <div className="bg-primary/5 p-8 rounded-lg border border-primary/20">
-              <h2 className="text-2xl font-bold mb-4 text-gray-900">Research Areas</h2>
-              <ul className="space-y-3">
+            <div className="bg-gradient-secondary p-10 rounded-3xl text-white">
+              <div className="inline-flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full mb-6">
+                <Brain className="h-4 w-4 text-white" />
+                <span className="text-sm font-medium text-white">Focus Areas</span>
+              </div>
+              <h2 className="text-3xl font-bold mb-6 text-white">Research Areas</h2>
+              <ul className="space-y-4">
                 {researchAreas.map((area, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <div className="w-2 h-2 rounded-full bg-white"></div>
+                  <li key={index} className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-3 h-3 rounded-full bg-white"></div>
                     </div>
-                    <span className="text-gray-700">{area}</span>
+                    <span className="text-white/90">{area}</span>
                   </li>
                 ))}
               </ul>
@@ -101,13 +113,17 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
       </section>
 
       {/* Values Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-24 bg-gradient-to-br from-background to-soft-lavender">
         <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 bg-accent/10 px-4 py-2 rounded-full mb-4">
+              <Target className="h-4 w-4 text-accent" />
+              <span className="text-sm font-medium text-accent">Core Principles</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
               Our Values
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               The principles that guide our work and research
             </p>
           </div>
@@ -118,13 +134,13 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
               return (
                 <div
                   key={index}
-                  className="bg-white p-8 rounded-lg border hover:shadow-lg transition-shadow text-center"
+                  className="bg-white p-8 rounded-2xl soft-shadow hover:shadow-lg hover:-translate-y-2 transition-all text-center group"
                 >
-                  <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <Icon className="h-8 w-8 text-primary" />
+                  <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6 group-hover:bg-primary group-hover:scale-110 transition-all">
+                    <Icon className="h-8 w-8 text-primary group-hover:text-white" />
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-gray-900">{value.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{value.description}</p>
+                  <h3 className="text-xl font-bold mb-4 text-foreground">{value.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{value.description}</p>
                 </div>
               );
             })}

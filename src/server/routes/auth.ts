@@ -47,13 +47,18 @@ router.post('/login', async (req, res) => {
 });
 
 // Verify token
-router.get('/verify', authenticate, async (req, res) => {
+router.post('/verify', async (req, res) => {
   try {
-    const user = (req as any).user;
+    const { token } = req.body;
+    if (!token) {
+      return res.status(400).json({ error: 'Token is required' });
+    }
+    
+    const user = await AuthService.verifyToken(token);
     res.json({ user });
   } catch (error) {
     console.error('Verify token error:', error);
-    res.status(500).json({ error: 'Verification failed' });
+    res.status(401).json({ error: 'Invalid token' });
   }
 });
 

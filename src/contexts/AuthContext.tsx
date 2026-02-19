@@ -26,21 +26,39 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check for existing token on app load
-    const token = localStorage.getItem('accessToken');
-    if (token) {
-      // In a real app, you would verify the token with the backend
-      // For now, we'll just get the user data from localStorage
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
+    const verifyToken = async () => {
+      const token = localStorage.getItem('accessToken');
+      if (token) {
         try {
-          setUser(JSON.parse(storedUser));
-        } catch (e) {
-          console.error('Error parsing stored user data', e);
+          const response = await fetch('/api/auth/verify', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ token })
+          });
+          
+          if (response.ok) {
+            const data = await response.json();
+            setUser(data.user);
+          } else {
+            // Token is invalid, clear storage
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            localStorage.removeItem('user');
+          }
+        } catch (error) {
+          console.error('Error verifying token:', error);
+          // Clear storage on error
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
+          localStorage.removeItem('user');
         }
       }
-    }
-    setLoading(false);
+      setLoading(false);
+    };
+
+    verifyToken();
   }, []);
 
   const login = async (email: string, password: string) => {
