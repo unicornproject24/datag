@@ -6,7 +6,7 @@ export default async function handler(_req: IncomingMessage, res: ServerResponse
 
   try {
     // Test database connection
-    const { default: prisma } = await import('../src/server/utils/prisma.js');
+    const { default: prisma } = await import('./prisma.js');
     await prisma.$queryRaw`SELECT 1`;
 
     res.statusCode = 200;

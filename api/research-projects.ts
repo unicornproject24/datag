@@ -13,7 +13,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
   }
 
   try {
-    const { default: prisma } = await import('../src/server/utils/prisma.js');
+    const { default: prisma } = await import('./prisma.js');
     const url = new URL(req.url || '', `http://${req.headers.host}`);
     const id = url.pathname.split('/').pop();
 
