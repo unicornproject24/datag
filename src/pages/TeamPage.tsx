@@ -3,7 +3,6 @@ import { Button } from "../components/ui/button";
 import { Card } from "../components/ui/card";
 import { Users, Heart, Brain, Lightbulb } from "lucide-react";
 import { useState, useEffect } from "react";
-import { projectId, publicAnonKey } from "../utils/supabase/info";
 
 export function TeamPage() {
   const [teamMembers, setTeamMembers] = useState<any[]>([]);
@@ -15,18 +14,9 @@ export function TeamPage() {
 
   const fetchTeamMembers = async () => {
     try {
-      const res = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/make-server-eb1fb471/team-members`,
-        {
-          headers: {
-            'Authorization': `Bearer ${publicAnonKey}`
-          }
-        }
-      );
+      const res = await fetch('/api/team-members');
       const data = await res.json();
-      if (data.success) {
-        setTeamMembers(data.data || []);
-      }
+      setTeamMembers(Array.isArray(data) ? data : data.data || []);
     } catch (error) {
       console.error('Error fetching team members:', error);
     }

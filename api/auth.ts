@@ -16,10 +16,10 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
   try {
     const { default: prisma } = await import('../src/server/utils/prisma.js');
     const url = new URL(req.url || '', `http://${req.headers.host}`);
-    const action = url.pathname.split('/').pop();
+    const pathname = url.pathname;
 
     // POST /api/auth/login
-    if (req.method === 'POST' && action === 'login') {
+    if (req.method === 'POST' && pathname === '/api/auth/login') {
       const chunks: Buffer[] = [];
       for await (const chunk of req) {
         chunks.push(chunk);
@@ -51,7 +51,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     }
 
     // POST /api/auth/register
-    if (req.method === 'POST' && action === 'register') {
+    if (req.method === 'POST' && pathname === '/api/auth/register') {
       const chunks: Buffer[] = [];
       for await (const chunk of req) {
         chunks.push(chunk);
@@ -85,7 +85,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     }
 
     // POST /api/auth/verify
-    if (req.method === 'POST' && action === 'verify') {
+    if (req.method === 'POST' && pathname === '/api/auth/verify') {
       const chunks: Buffer[] = [];
       for await (const chunk of req) {
         chunks.push(chunk);

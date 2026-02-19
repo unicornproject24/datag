@@ -2,7 +2,6 @@ import { Card, CardContent } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Handshake, Mail, Heart, Users, Lightbulb } from "lucide-react";
 import { useState, useEffect } from "react";
-import { projectId, publicAnonKey } from "../utils/supabase/info";
 
 export function PartnersPage() {
   const [partners, setPartners] = useState<any[]>([]);
@@ -14,18 +13,9 @@ export function PartnersPage() {
 
   const fetchPartners = async () => {
     try {
-      const res = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/make-server-eb1fb471/partners`,
-        {
-          headers: {
-            'Authorization': `Bearer ${publicAnonKey}`
-          }
-        }
-      );
+      const res = await fetch('/api/partners');
       const data = await res.json();
-      if (data.success) {
-        setPartners(data.data || []);
-      }
+      setPartners(Array.isArray(data) ? data : data.data || []);
     } catch (error) {
       console.error('Error fetching partners:', error);
     }
