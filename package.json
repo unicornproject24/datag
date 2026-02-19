@@ -88,8 +88,10 @@
       "scripts": {
             "dev": "vite",
             "dev:server": "npx nodemon --exec \"npx tsx\" src/server/index.ts",
-            "build": "vite build",
-            "prisma:seed": "npx tsx prisma/seed.ts"
+            "build": "prisma generate && vite build",
+            "prisma:generate": "prisma generate",
+            "prisma:seed": "npx tsx prisma/seed.ts",
+            "postinstall": "prisma generate"
       },
       "prisma": {
             "seed": "npx tsx prisma/seed.ts"

@@ -119,6 +119,9 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
   } catch (error) {
     console.error('Auth error:', error);
     res.statusCode = 500;
-    return res.end(JSON.stringify({ error: 'Authentication failed' }));
+    return res.end(JSON.stringify({ 
+      error: 'Authentication failed',
+      details: error instanceof Error ? error.message : String(error)
+    }));
   }
 }

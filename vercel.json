@@ -1,5 +1,7 @@
 {
   "version": 2,
+  "buildCommand": "prisma generate && vite build",
+  "installCommand": "npm install && prisma generate",
   "builds": [
     {
       "src": "api/prisma.ts",
