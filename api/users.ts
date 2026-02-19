@@ -18,7 +18,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     const id = url.pathname.split('/').pop();
 
     // GET /api/users - List all users (admin only)
-    if (req.method === 'GET' && url.pathname === '/api/users') {
+    if (req.method === 'GET' && (url.pathname === '/api/users' || url.pathname === '/users')) {
       const users = await prisma.user.findMany({
         select: {
           id: true,

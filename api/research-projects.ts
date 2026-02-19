@@ -18,7 +18,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     const id = url.pathname.split('/').pop();
 
     // GET /api/research-projects - List all public research projects
-    if (req.method === 'GET' && url.pathname === '/api/research-projects') {
+    if (req.method === 'GET' && (url.pathname === '/api/research-projects' || url.pathname === '/research-projects')) {
       const projects = await prisma.researchProject.findMany({
         where: { isPublic: true },
         orderBy: { createdAt: 'desc' }

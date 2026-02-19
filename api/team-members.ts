@@ -18,7 +18,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     const id = url.pathname.split('/').pop();
 
     // GET /api/team-members - List all public team members
-    if (req.method === 'GET' && url.pathname === '/api/team-members') {
+    if (req.method === 'GET' && (url.pathname === '/api/team-members' || url.pathname === '/team-members')) {
       const members = await prisma.teamMember.findMany({
         where: { isPublic: true },
         orderBy: { createdAt: 'asc' }

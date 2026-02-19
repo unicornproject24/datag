@@ -17,9 +17,12 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     const { default: prisma } = await import('../src/server/utils/prisma.js');
     const url = new URL(req.url || '', `http://${req.headers.host}`);
     const pathname = url.pathname;
+    
+    // Debug logging
+    console.log('Auth API called:', { method: req.method, pathname, url: req.url });
 
-    // POST /api/auth/login
-    if (req.method === 'POST' && pathname === '/api/auth/login') {
+    // POST /api/auth/login - handle both with and without /api prefix
+    if (req.method === 'POST' && (pathname === '/api/auth/login' || pathname === '/auth/login')) {
       const chunks: Buffer[] = [];
       for await (const chunk of req) {
         chunks.push(chunk);
@@ -51,7 +54,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     }
 
     // POST /api/auth/register
-    if (req.method === 'POST' && pathname === '/api/auth/register') {
+    if (req.method === 'POST' && (pathname === '/api/auth/register' || pathname === '/auth/register')) {
       const chunks: Buffer[] = [];
       for await (const chunk of req) {
         chunks.push(chunk);
@@ -85,7 +88,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     }
 
     // POST /api/auth/verify
-    if (req.method === 'POST' && pathname === '/api/auth/verify') {
+    if (req.method === 'POST' && (pathname === '/api/auth/verify' || pathname === '/auth/verify')) {
       const chunks: Buffer[] = [];
       for await (const chunk of req) {
         chunks.push(chunk);

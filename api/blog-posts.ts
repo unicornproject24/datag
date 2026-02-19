@@ -18,7 +18,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     const id = url.pathname.split('/').pop();
 
     // GET /api/blog-posts - List all public blog posts
-    if (req.method === 'GET' && url.pathname === '/api/blog-posts') {
+    if (req.method === 'GET' && (url.pathname === '/api/blog-posts' || url.pathname === '/blog-posts')) {
       const posts = await prisma.blogPost.findMany({
         where: { isPublic: true },
         orderBy: { publishedAt: 'desc' }
@@ -28,7 +28,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     }
 
     // GET /api/blog-posts/admin - List all blog posts (admin only)
-    if (req.method === 'GET' && url.pathname === '/api/blog-posts/admin') {
+    if (req.method === 'GET' && (url.pathname === '/api/blog-posts/admin' || url.pathname === '/blog-posts/admin')) {
       const posts = await prisma.blogPost.findMany({
         orderBy: { publishedAt: 'desc' }
       });
@@ -37,7 +37,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     }
 
     // POST /api/blog-posts/create - Create new blog post (admin only)
-    if (req.method === 'POST' && url.pathname === '/api/blog-posts/create') {
+    if (req.method === 'POST' && (url.pathname === '/api/blog-posts/create' || url.pathname === '/blog-posts/create')) {
       const chunks: Buffer[] = [];
       for await (const chunk of req) {
         chunks.push(chunk);
@@ -101,7 +101,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     }
 
     // PUT /api/blog-posts/admin/:id - Update blog post (admin only)
-    if (req.method === 'PUT' && url.pathname.startsWith('/api/blog-posts/admin/') && id) {
+    if (req.method === 'PUT' && (url.pathname.startsWith('/api/blog-posts/admin/') || url.pathname.startsWith('/blog-posts/admin/')) && id) {
       const chunks: Buffer[] = [];
       for await (const chunk of req) {
         chunks.push(chunk);
@@ -128,7 +128,7 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
     }
 
     // DELETE /api/blog-posts/admin/:id - Delete blog post (admin only)
-    if (req.method === 'DELETE' && url.pathname.startsWith('/api/blog-posts/admin/') && id) {
+    if (req.method === 'DELETE' && (url.pathname.startsWith('/api/blog-posts/admin/') || url.pathname.startsWith('/blog-posts/admin/')) && id) {
       await prisma.blogPost.delete({
         where: { id }
       });
