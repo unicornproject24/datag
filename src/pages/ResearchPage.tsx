@@ -1,29 +1,46 @@
 import { ProjectCard } from "../components/ProjectCard";
-import { BookOpen } from "lucide-react";
+import { BookOpen, Search, Filter, ArrowRight, Sparkles } from "lucide-react";
 import { useState, useEffect } from "react";
-import { projectId, publicAnonKey } from "../utils/supabase/info";
+import { Input } from "../components/ui/input";
+import { Button } from "../components/ui/button";
+import { Badge } from "../components/ui/badge";
+
+interface ResearchProject {
+  id: string;
+  title: string;
+  description: string;
+  status: "Active" | "Completed" | "Planning";
+  tags: string[];
+  imageUrl: string;
+  isPublic: boolean;
+  createdAt: string;
+}
 
 export function ResearchPage() {
-  const [projects, setProjects] = useState<any[]>([]);
+  const [projects, setProjects] = useState<ResearchProject[]>([]);
+  const [filteredProjects, setFilteredProjects] = useState<ResearchProject[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState<string>("all");
+  const [selectedTag, setSelectedTag] = useState<string>("all");
 
   useEffect(() => {
     fetchProjects();
   }, []);
 
+  useEffect(() => {
+    filterProjects();
+  }, [projects, searchQuery, selectedStatus, selectedTag]);
+
   const fetchProjects = async () => {
     try {
-      const res = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/make-server-eb1fb471/research-projects`,
-        {
-          headers: {
-            'Authorization': `Bearer ${publicAnonKey}`
-          }
-        }
-      );
+      const res = await fetch('/api/research-projects');
       const data = await res.json();
-      if (data.success) {
-        setProjects(data.data || []);
+      if (Array.isArray(data)) {
+        // Only show public projects on the public page
+        const publicProjects = data.filter((p: ResearchProject) => p.isPublic);
+        setProjects(publicProjects);
+        setFilteredProjects(publicProjects);
       }
     } catch (error) {
       console.error('Error fetching research projects:', error);
@@ -31,10 +48,44 @@ export function ResearchPage() {
     setLoading(false);
   };
 
+  const filterProjects = () => {
+    let filtered = projects;
+
+    if (searchQuery) {
+      filtered = filtered.filter(p =>
+        p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.description.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    if (selectedStatus !== "all") {
+      filtered = filtered.filter(p => p.status === selectedStatus);
+    }
+
+    if (selectedTag !== "all") {
+      filtered = filtered.filter(p => p.tags.includes(selectedTag));
+    }
+
+    setFilteredProjects(filtered);
+  };
+
+  // Get unique tags from all projects
+  const allTags = Array.from(new Set(projects.flatMap(p => p.tags)));
+
+  const statusCounts = {
+    all: projects.length,
+    Active: projects.filter(p => p.status === "Active").length,
+    Completed: projects.filter(p => p.status === "Completed").length,
+    Planning: projects.filter(p => p.status === "Planning").length
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <p>Loading research projects...</p>
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+          <p className="text-muted-foreground">Loading research projects...</p>
+        </div>
       </div>
     );
   }
@@ -62,14 +113,87 @@ export function ResearchPage() {
         </div>
       </section>
 
+      {/* Filters & Search */}
+      <section className="py-8 border-b border-border/50">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="flex flex-col lg:flex-row gap-4 lg:items-center lg:justify-between">
+            {/* Search */}
+            <div className="relative max-w-md w-full">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search projects..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+
+            {/* Status Filters */}
+            <div className="flex flex-wrap gap-2">
+              {["all", "Active", "Completed", "Planning"].map((status) => (
+                <Button
+                  key={status}
+                  variant={selectedStatus === status ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setSelectedStatus(status)}
+                >
+                  {status === "all" ? "All" : status}
+                  <Badge variant="secondary" className="ml-2">
+                    {statusCounts[status as keyof typeof statusCounts]}
+                  </Badge>
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          {/* Tags Filter */}
+          {allTags.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-4">
+              <span className="text-sm text-muted-foreground flex items-center gap-1">
+                <Filter className="h-3 w-3" /> Tags:
+              </span>
+              <Button
+                variant={selectedTag === "all" ? "default" : "outline"}
+                size="sm"
+                onClick={() => setSelectedTag("all")}
+              >
+                All
+              </Button>
+              {allTags.map((tag) => (
+                <Button
+                  key={tag}
+                  variant={selectedTag === tag ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setSelectedTag(tag)}
+                >
+                  {tag}
+                </Button>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
       {/* Projects Grid */}
       <section className="py-16 sm:py-20">
         <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid sm:grid-cols-2 gap-6 mb-12">
-            {projects.map((project) => (
-              <ProjectCard key={project.title} {...project} />
-            ))}
-          </div>
+          {filteredProjects.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filteredProjects.map((project) => (
+                <ProjectCard key={project.id} {...project} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20">
+              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-muted flex items-center justify-center">
+                <Sparkles className="h-10 w-10 text-muted-foreground" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">No Research Projects Yet</h3>
+              <p className="text-muted-foreground max-w-md mx-auto">
+                We're currently working on exciting research projects. Check back soon to see our latest work in data well-being and ethical AI.
+              </p>
+            </div>
+          )}
 
           {/* Research Impact */}
           <div className="mt-16 bg-gradient-to-br from-secondary/20 to-accent/10 rounded-3xl p-8 sm:p-12 border border-border shadow-xl">

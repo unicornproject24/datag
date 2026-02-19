@@ -54,16 +54,15 @@ export class AuthService {
       throw new Error('Account not approved');
     }
 
+    // Only allow ADMIN and TEAM_MEMBER roles to access admin panel
+    if (user.role !== 'ADMIN' && user.role !== 'TEAM_MEMBER') {
+      throw new Error('Insufficient permissions. Only admins and team members can access this area.');
+    }
+
     const isValidPassword = await bcrypt.compare(password, user.password);
     if (!isValidPassword) {
       throw new Error('Invalid credentials');
     }
-
-    // Update last login - removing this line since lastLogin field doesn't exist in schema
-    // await prisma.user.update({
-    //   where: { id: user.id },
-    //   data: { lastLogin: new Date() }
-    // });
 
     return this.generateTokens(user);
   }

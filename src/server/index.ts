@@ -7,6 +7,7 @@ import teamMemberRoutes from './routes/teamMembers.js';
 import blogPostRoutes from './routes/blogPosts.js';
 import researchProjectRoutes from './routes/researchProjects.js';
 import partnerRoutes from './routes/partners.js';
+import userRoutes from './routes/users.js';
 import initializeRoutes from './routes/initialize.js';
 
 dotenv.config();
@@ -25,6 +26,7 @@ app.use('/api/team-members', teamMemberRoutes);
 app.use('/api/blog-posts', blogPostRoutes);
 app.use('/api/research-projects', researchProjectRoutes);
 app.use('/api/partners', partnerRoutes);
+app.use('/api/users', userRoutes);
 app.use('/api/initialize-data', initializeRoutes);
 
 // Basic health check

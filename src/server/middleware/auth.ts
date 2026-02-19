@@ -32,3 +32,25 @@ export const authorizeRoles = (...allowedRoles: string[]) => {
     next();
   };
 };
+
+// Middleware to require admin role
+export const requireAdmin = (req: Request, res: Response, next: NextFunction) => {
+  const user = (req as any).user;
+  
+  if (!user || user.role !== 'ADMIN') {
+    return res.status(403).json({ error: 'Admin access required' });
+  }
+  
+  next();
+};
+
+// Middleware to require team member or admin role
+export const requireTeamMember = (req: Request, res: Response, next: NextFunction) => {
+  const user = (req as any).user;
+  
+  if (!user || (user.role !== 'ADMIN' && user.role !== 'TEAM_MEMBER')) {
+    return res.status(403).json({ error: 'Team member access required' });
+  }
+  
+  next();
+};

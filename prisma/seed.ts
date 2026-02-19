@@ -22,6 +22,27 @@ async function main() {
   });
 
   console.log('Admin user created:', admin.email);
+
+  // Create demo team member
+  const teamPassword = await bcrypt.hash('team123', 12);
+  
+  const teamMember = await prisma.user.upsert({
+    where: { email: 'team@datawellbeing.org' },
+    update: {},
+    create: {
+      email: 'team@datawellbeing.org',
+      password: teamPassword,
+      name: 'Demo Team Member',
+      role: 'TEAM_MEMBER',
+      status: 'APPROVED',
+      emailVerified: true,
+      isPublic: true,
+      bio: 'A dedicated team member working on data wellbeing research.',
+      researchInterests: ['Data Ethics', 'AI Safety', 'Digital Wellness']
+    }
+  });
+
+  console.log('Team member created:', teamMember.email);
 }
 
 main()
