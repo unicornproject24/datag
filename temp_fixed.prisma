@@ -1,0 +1,237 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums for role-based access control
+enum UserRole {
+  VISITOR
+  TEAM_MEMBER
+  ADMIN
+}
+
+enum UserStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
+enum ContentStatus {
+  DRAFT
+  PENDING_APPROVAL
+  APPROVED
+  REJECTED
+  PUBLISHED
+}
+
+// Main user model with authentication and profile information
+model User {
+  id                String     @id @default(uuid())
+  email             String     @unique
+  password          String     // Hashed password
+  name              String
+  role              UserRole   @default(VISITOR)
+  status            UserStatus @default(APPROVED) // Default approved for existing users
+  emailVerified     Boolean    @default(false)
+  emailVerificationToken String?
+  resetPasswordToken String?
+  resetPasswordExpires DateTime?
+  lastLogin         DateTime?
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  
+  // Profile information
+  bio               String?
+  researchInterests String[]   @default([])
+  photoUrl          String?
+  socialLinks       Json?      // {github: "...", linkedin: "...", twitter: "..."}
+  isPublic          Boolean    @default(true)  // Visible on public team page
+  expertise         String[]   @default([])
+  
+  // Relationships
+  authoredPosts      Post[]
+  authoredPapers     ResearchPaper[]
+  submittedApplications Application[] @relation(name: "UserSubmittedApplications")
+  reviewedApplications Application[] @relation(name: "UserReviewedApplications")
+  approvedUsers      User[]     @relation("Approver")
+  approvedBy         User?      @relation("Approver", fields: [approvedById], references: [id])
+  approvedById       String?
+  
+  // Approval relationships for content
+  approvedPosts      Post[]     @relation("PostApprover")
+  approvedPapers     ResearchPaper[] @relation("PaperApprover")
+  
+  @@map("users")
+}
+
+// Research papers model
+model ResearchPaper {
+  id            String        @id @default(uuid())
+  title         String
+  authors       String[]      // Array of author names/IDs
+  abstract      String
+  keywords      String[]      @default([])
+  pdfUrl        String?       // URL to uploaded PDF
+  doiLink       String?       // DOI link
+  publishedDate DateTime      // Publication date
+  category      String        // Research category
+  status        ContentStatus @default(DRAFT)
+  views         Int           @default(0)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  
+  // Metadata
+  journal       String?
+  volume        String?
+  issue         String?
+  pages         String?
+  citationCount Int           @default(0)
+  
+  // Relationships
+  author        User          @relation(fields: [authorId], references: [id])
+  authorId      String
+  approvedBy    User?         @relation("PaperApprover", fields: [approvedById], references: [id])
+  approvedById  String?
+  
+  @@index([status])
+  @@index([publishedDate])
+  @@index([category])
+  @@map("research_papers")
+}
+
+// Blog posts model
+model Post {
+  id            String        @id @default(uuid())
+  title         String
+  slug          String        @unique // URL-friendly version of title
+  content       String        // Markdown or HTML content
+  excerpt       String        // Short description
+  featuredImage String?       // URL to featured image
+  tags          String[]      @default([])
+  category      String        // Blog category
+  status        ContentStatus @default(DRAFT)
+  views         Int           @default(0)
+  publishedAt   DateTime?     // When it was published
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  
+  // SEO
+  metaDescription String?
+  metaKeywords    String[]    @default([])
+  
+  // Relationships
+  author        User          @relation(fields: [authorId], references: [id])
+  authorId      String
+  approvedBy    User?         @relation("PostApprover", fields: [approvedById], references: [id])
+  approvedById  String?
+  
+  @@index([status])
+  @@index([publishedAt])
+  @@index([category])
+  @@map("blog_posts")
+}
+
+// Team member applications
+model Application {
+  id            String     @id @default(uuid())
+  email         String
+  name          String
+  motivation    String     // Statement of purpose
+  cvUrl         String     // URL to uploaded CV
+  researchInterests String[] @default([])
+  expertise     String[]   @default([])
+  githubUrl     String?    // Optional GitHub profile
+  linkedinUrl   String?    // Optional LinkedIn profile
+  status        UserStatus @default(PENDING)
+  feedback      String?    // Admin feedback for rejections/changes
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  
+  // Review information
+  reviewedAt    DateTime?
+  reviewedBy    User?      @relation("UserReviewedApplications", fields: [reviewedById], references: [id])
+  reviewedById  String?
+  applicantId   String
+  applicant     User       @relation("UserSubmittedApplications", fields: [applicantId], references: [id])
+  
+  @@index([status])
+  @@index([createdAt])
+  @@map("applications")
+}
+
+// Contact form submissions
+model ContactSubmission {
+  id            String   @id @default(uuid())
+  name          String
+  email         String
+  subject       String
+  message       String
+  inquiryType   String   // General, Collaboration, Speaking, etc.
+  status        String   @default("NEW") // NEW, PROCESSED, ARCHIVED
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  processedAt   DateTime?
+  processedBy   String?  // Admin who processed it
+  
+  @@index([status])
+  @@index([createdAt])
+  @@map("contact_submissions")
+}
+
+// System settings and configuration
+model Setting {
+  id          String   @id @default(uuid())
+  key         String   @unique
+  value       String
+  description String?
+  category    String?  // For grouping settings
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([key])
+  @@map("settings")
+}
+
+// Audit logs for tracking system changes
+model AuditLog {
+  id          String   @id @default(uuid())
+  userId      String?  // User who performed the action
+  action      String   // CREATE, UPDATE, DELETE, APPROVE, etc.
+  entityType  String   // USER, POST, PAPER, APPLICATION, etc.
+  entityId    String   // ID of the affected entity
+  changes     Json?    // What changed
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+  
+  @@index([userId])
+  @@index([entityType])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+// File uploads tracking
+model FileUpload {
+  id          String   @id @default(uuid())
+  filename    String
+  originalName String
+  mimeType    String
+  size        Int      // File size in bytes
+  url         String   // Storage URL
+  uploadedBy  String?  // User ID who uploaded
+  entityType  String?  // POST, PAPER, APPLICATION, etc.
+  entityId    String?  // Associated entity ID
+  createdAt   DateTime @default(now())
+  
+  @@index([uploadedBy])
+  @@index([entityType])
+  @@map("file_uploads")
+}

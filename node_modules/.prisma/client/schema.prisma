@@ -1,0 +1,175 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums for role-based access control
+enum UserRole {
+  VISITOR
+  TEAM_MEMBER
+  ADMIN
+}
+
+enum UserStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  SUSPENDED
+}
+
+enum ContentStatus {
+  DRAFT
+  PENDING_APPROVAL
+  APPROVED
+  REJECTED
+  PUBLISHED
+}
+
+// Main user model with authentication and profile information
+model User {
+  id                String     @id @default(uuid())
+  email             String     @unique
+  password          String     // Hashed password
+  name              String
+  role              UserRole   @default(VISITOR)
+  status            UserStatus @default(APPROVED) // Default approved for existing users
+  emailVerified     Boolean    @default(false)
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  
+  // Profile information
+  bio               String?
+  researchInterests String[]   @default([])
+  photoUrl          String?
+  isPublic          Boolean    @default(true)  // Visible on public team page
+  
+  // Relationships
+  authoredPosts      Post[]
+  authoredPapers     ResearchPaper[]
+  submittedApplications Application[] @relation(name: "UserSubmittedApplications")
+  reviewedApplications Application[] @relation(name: "UserReviewedApplications")
+  
+  @@map("users")
+}
+
+// Research papers model
+model ResearchPaper {
+  id            String        @id @default(uuid())
+  title         String
+  authors       String[]      // Array of author names/IDs
+  abstract      String
+  publishedDate DateTime      // Publication date
+  status        ContentStatus @default(DRAFT)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  
+  // Relationships
+  author        User          @relation(fields: [authorId], references: [id])
+  authorId      String
+  
+  @@map("research_papers")
+}
+
+// Blog posts model
+model Post {
+  id            String        @id @default(uuid())
+  title         String
+  content       String        // Markdown or HTML content
+  status        ContentStatus @default(DRAFT)
+  publishedAt   DateTime?     // When it was published
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  
+  // Relationships
+  author        User          @relation(fields: [authorId], references: [id])
+  authorId      String
+  
+  @@map("blog_posts")
+}
+
+// Team member applications
+model Application {
+  id            String     @id @default(uuid())
+  email         String
+  name          String
+  motivation    String     // Statement of purpose
+  cvUrl         String     // URL to uploaded CV
+  status        UserStatus @default(PENDING)
+  feedback      String?    // Admin feedback for rejections/changes
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  
+  // Relations
+  applicantId   String
+  applicant     User       @relation(name: "UserSubmittedApplications", fields: [applicantId], references: [id])
+  reviewerId    String?
+  reviewer      User?      @relation(name: "UserReviewedApplications", fields: [reviewerId], references: [id])
+  
+  @@map("applications")
+}
+
+// Team member model for the public team page
+model TeamMember {
+  id         String   @id @default(uuid())
+  name       String
+  role       String
+  bio        String
+  expertise  String[]
+  imageUrl   String
+  isPublic   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("team_members")
+}
+
+// Blog post model for the admin panel
+model BlogPost {
+  id          String   @id @default(uuid())
+  title       String
+  excerpt     String
+  author      String
+  authorImage String
+  date        DateTime @default(now())
+  readTime    String
+  isPublic    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("blog_posts_admin")
+}
+
+// Research project model for the admin panel
+model ResearchProject {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  status      String
+  tags        String[]
+  imageUrl    String
+  isPublic    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("research_projects")
+}
+
+// Partner model for the admin panel
+model Partner {
+  id          String   @id @default(uuid())
+  name        String
+  type        String
+  description String
+  isPublic    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("partners")
+}
