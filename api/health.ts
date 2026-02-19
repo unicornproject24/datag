@@ -1,6 +1,6 @@
 import type { IncomingMessage, ServerResponse } from 'http';
 
-export default async function handler(req: IncomingMessage, res: ServerResponse) {
+export default async function handler(_req: IncomingMessage, res: ServerResponse) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Content-Type', 'application/json');
 

@@ -1,0 +1,6 @@
+Add your hero image here as:
+- hero.jpg
+- hero.png
+- or hero.webp
+
+Recommended size: 800x800 pixels or larger
