@@ -193,7 +193,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      {/* Discover DAWG Section */}
+      {/* Discover DaWg Section */}
       <section className="py-24 bg-gradient-to-br from-background to-soft-lavender">
         <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -202,7 +202,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <span className="text-sm font-medium text-accent">Explore Our Work</span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-              Discover DAWG
+              Discover DaWg
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Explore our work across research, community, and collaboration

@@ -84,7 +84,7 @@ export function PartnersPage() {
                 <Heart className="h-4 w-4 text-accent" />
                 <span className="text-sm font-medium text-accent">Why Partner With Us</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">Why Partner With DAWG</h2>
+              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">Why Partner With DaWg</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">Join us in creating positive change through ethical data practices</p>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">

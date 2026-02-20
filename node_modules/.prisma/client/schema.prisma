@@ -99,15 +99,23 @@ model Application {
 
 // Team member model for the public team page
 model TeamMember {
-  id         String   @id @default(uuid())
-  name       String
-  role       String
-  bio        String
-  expertise  String[]
-  imageUrl   String
-  isPublic   Boolean  @default(true)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id                String   @id @default(uuid())
+  name              String
+  preferredName     String?
+  role              String
+  bio               String
+  expertise         String[]
+  researchInterests String[] @default([])
+  projects          Json?    // Array of {title, description} objects
+  education         String?
+  links             Json?    // {linkedIn, orcid, googleScholar, website, youtube}
+  imageUrl          String
+  consentGiven      Boolean  @default(false)
+  consentName       String?
+  consentDate       DateTime?
+  isPublic          Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   @@map("team_members")
 }
