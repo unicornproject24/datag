@@ -205,7 +205,7 @@ export function ResearchPage() {
         </div>
       </section>
 
-      {/* Research Impact */}
+      {/* Research Impact - Dynamic Stats from API Data */}
       <section className="py-24 bg-gradient-to-br from-soft-lavender to-background">
         <div className="container mx-auto px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
@@ -222,58 +222,35 @@ export function ResearchPage() {
                 <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:scale-110 transition-all">
                   <BookOpen className="h-8 w-8 text-primary group-hover:text-white" />
                 </div>
-                <div className="text-3xl sm:text-4xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform">50+</div>
-                <p className="text-muted-foreground font-medium">Publications</p>
+                <div className="text-3xl sm:text-4xl font-bold text-primary mb-2 group-hover:scale-110 transition-transform">{projects.length}</div>
+                <p className="text-muted-foreground font-medium">Research Projects</p>
               </div>
               <div className="bg-white p-6 rounded-2xl soft-shadow hover:shadow-lg hover:-translate-y-2 transition-all text-center group">
                 <div className="w-16 h-16 rounded-2xl bg-secondary/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-secondary group-hover:scale-110 transition-all">
                   <Lightbulb className="h-8 w-8 text-secondary group-hover:text-white" />
                 </div>
-                <div className="text-3xl sm:text-4xl font-bold text-secondary mb-2 group-hover:scale-110 transition-transform">12</div>
+                <div className="text-3xl sm:text-4xl font-bold text-secondary mb-2 group-hover:scale-110 transition-transform">
+                  {projects.filter(p => p.status === "Active").length}
+                </div>
                 <p className="text-muted-foreground font-medium">Active Projects</p>
               </div>
               <div className="bg-white p-6 rounded-2xl soft-shadow hover:shadow-lg hover:-translate-y-2 transition-all text-center group">
                 <div className="w-16 h-16 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-accent group-hover:scale-110 transition-all">
                   <Sparkles className="h-8 w-8 text-accent group-hover:text-white" />
                 </div>
-                <div className="text-3xl sm:text-4xl font-bold text-accent mb-2 group-hover:scale-110 transition-transform">8</div>
-                <p className="text-muted-foreground font-medium">Policy Impacts</p>
+                <div className="text-3xl sm:text-4xl font-bold text-accent mb-2 group-hover:scale-110 transition-transform">
+                  {projects.filter(p => p.status === "Completed").length}
+                </div>
+                <p className="text-muted-foreground font-medium">Completed Projects</p>
               </div>
               <div className="bg-white p-6 rounded-2xl soft-shadow hover:shadow-lg hover:-translate-y-2 transition-all text-center group">
                 <div className="w-16 h-16 rounded-2xl bg-warm/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-warm group-hover:scale-110 transition-all">
                   <Users className="h-8 w-8 text-warm group-hover:text-white" />
                 </div>
-                <div className="text-3xl sm:text-4xl font-bold text-warm mb-2 group-hover:scale-110 transition-transform">25+</div>
-                <p className="text-muted-foreground font-medium">Collaborators</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Publications Section */}
-          <div className="mt-20 bg-white rounded-3xl p-10 soft-shadow">
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-4">
-                <BookOpen className="h-4 w-4 text-primary" />
-                <span className="text-sm font-medium text-primary">Latest Research</span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">Recent Publications</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">Our latest contributions to the field of data well-being and ethical technology</p>
-            </div>
-            <div className="space-y-6">
-              <div className="bg-gradient-to-r from-primary/5 to-secondary/5 p-8 rounded-2xl soft-shadow hover:shadow-lg hover:-translate-y-1 transition-all group">
-                <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">Privacy in the Age of AI: A Framework for Action</h3>
-                <p className="text-muted-foreground mb-3">Chen, S., et al. (2025)</p>
-                <p className="text-foreground/70">Journal of Data Ethics, Vol. 12, Issue 3</p>
-              </div>
-              <div className="bg-gradient-to-r from-secondary/5 to-accent/5 p-8 rounded-2xl soft-shadow hover:shadow-lg hover:-translate-y-1 transition-all group">
-                <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-secondary transition-colors">Measuring Digital Well-being: Validation of the DWB Scale</h3>
-                <p className="text-muted-foreground mb-3">Johnson, M., Patel, P. (2025)</p>
-                <p className="text-foreground/70">Computers in Human Behavior</p>
-              </div>
-              <div className="bg-gradient-to-r from-accent/5 to-warm/5 p-8 rounded-2xl soft-shadow hover:shadow-lg hover:-translate-y-1 transition-all group">
-                <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-accent transition-colors">Teen Social Media Use and Mental Health Outcomes</h3>
-                <p className="text-muted-foreground mb-3">Kim, A., et al. (2024)</p>
-                <p className="text-foreground/70">Developmental Psychology Quarterly</p>
+                <div className="text-3xl sm:text-4xl font-bold text-warm mb-2 group-hover:scale-110 transition-transform">
+                  {Array.from(new Set(projects.flatMap(p => p.tags))).length}
+                </div>
+                <p className="text-muted-foreground font-medium">Research Areas</p>
               </div>
             </div>
           </div>
