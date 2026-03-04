@@ -36,7 +36,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             </div>
             <div className="text-left">
               <div className="text-2xl font-bold text-white">DaWg</div>
-              <div className="text-sm text-white/80">Data and Well-being Group</div>
+              <div className="text-sm text-white/80">Data and Wellbeing Group</div>
             </div>
           </div>
 

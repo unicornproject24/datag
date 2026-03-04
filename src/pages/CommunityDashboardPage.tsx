@@ -1,6 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
-import { Badge } from "../components/ui/badge";
 import { 
   Users, 
   TrendingUp, 
@@ -21,8 +20,8 @@ export function CommunityDashboardPage() {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Beyond Words Community</h1>
-            <p className="text-gray-600 mt-1">Welcome back! Here's what's happening in your community.</p>
+            <h1 className="text-3xl font-bold text-gray-900">FTL Beyond Words Community</h1>
+            <p className="text-gray-600 mt-1">Main Community Dashboard</p>
           </div>
           <div className="flex gap-3">
             <Button variant="outline" className="gap-2">
@@ -34,6 +33,12 @@ export function CommunityDashboardPage() {
               New Post
             </Button>
           </div>
+        </div>
+
+        {/* Most Important Metrics Header */}
+        <div className="bg-white p-4 rounded-lg border border-gray-200">
+          <h2 className="text-lg font-semibold text-gray-900">Most Important Metrics</h2>
+          <p className="text-sm text-gray-600 mt-1">Real-time insights into community health and engagement</p>
         </div>
 
         {/* Key Metrics Cards */}
@@ -543,6 +548,273 @@ export function CommunityDashboardPage() {
                   <p className="text-2xl font-bold text-gray-900">141</p>
                   <p className="text-sm text-gray-600 mt-1">Events</p>
                   <p className="text-xs text-purple-600 font-medium mt-2">+6% this month</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Community Feedback Section */}
+        <Card className="bg-pink-50 border-pink-200">
+          <CardHeader>
+            <CardTitle className="text-lg">Community Feedback</CardTitle>
+            <p className="text-sm text-gray-600">Member satisfaction and sentiment analysis</p>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="text-center">
+                <div className="text-4xl font-bold text-gray-900">4.2</div>
+                <div className="text-sm text-gray-600 mt-1">Overall Rating</div>
+                <div className="flex items-center justify-center gap-1 mt-2">
+                  {[1, 2, 3, 4].map((star) => (
+                    <svg key={star} className="w-5 h-5 text-yellow-400 fill-current" viewBox="0 0 20 20">
+                      <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                    </svg>
+                  ))}
+                  <svg className="w-5 h-5 text-gray-300 fill-current" viewBox="0 0 20 20">
+                    <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
+                  </svg>
+                </div>
+                <p className="text-xs text-gray-500 mt-2">Based on 1,247 reviews</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="text-4xl font-bold text-gray-900">28</div>
+                <div className="text-sm text-gray-600 mt-1">Active Surveys</div>
+                <div className="mt-3">
+                  <div className="text-xs text-gray-500 mb-1">Response Rate</div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="bg-green-600 h-2 rounded-full" style={{ width: '67%' }}></div>
+                  </div>
+                  <p className="text-xs text-gray-600 mt-1">67% completion</p>
+                </div>
+              </div>
+
+              <div className="text-center">
+                <div className="text-4xl font-bold text-gray-900">3.4</div>
+                <div className="text-sm text-gray-600 mt-1">Net Promoter Score</div>
+                <div className="flex items-center justify-center gap-2 mt-3">
+                  <span className="text-xs px-2 py-1 bg-green-100 text-green-700 rounded">Promoters: 54%</span>
+                  <span className="text-xs px-2 py-1 bg-red-100 text-red-700 rounded">Detractors: 12%</span>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Current Resource Engagement & User Ranking */}
+        <div className="grid lg:grid-cols-2 gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Current Resource Engagement</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-gray-900">Research Papers</span>
+                      <span className="text-sm font-bold text-gray-900">1,247</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-green-600 h-2 rounded-full" style={{ width: '82%' }}></div>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">82% engagement rate</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-gray-900">Video Tutorials</span>
+                      <span className="text-sm font-bold text-gray-900">892</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-blue-600 h-2 rounded-full" style={{ width: '68%' }}></div>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">68% engagement rate</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-gray-900">Webinars</span>
+                      <span className="text-sm font-bold text-gray-900">543</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-purple-600 h-2 rounded-full" style={{ width: '45%' }}></div>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">45% engagement rate</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-gray-900">Discussion Forums</span>
+                      <span className="text-sm font-bold text-gray-900">2,156</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-orange-600 h-2 rounded-full" style={{ width: '91%' }}></div>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">91% engagement rate</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>User Ranking Status</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg border border-yellow-200">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-yellow-400 rounded-full flex items-center justify-center text-white font-bold text-lg">
+                      1
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900">Top Contributor</p>
+                      <p className="text-xs text-gray-600">Dr. Sarah Johnson</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-2xl font-bold text-gray-900">2,847</p>
+                    <p className="text-xs text-gray-600">points</p>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  {[
+                    { rank: 2, name: "Prof. Michael Chen", points: 2156, color: "bg-gray-300" },
+                    { rank: 3, name: "Dr. Emily Rodriguez", points: 1892, color: "bg-orange-300" },
+                    { rank: 4, name: "James Wilson", points: 1543, color: "bg-gray-200" },
+                    { rank: 5, name: "Lisa Anderson", points: 1247, color: "bg-gray-200" }
+                  ].map((user) => (
+                    <div key={user.rank} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-8 h-8 ${user.color} rounded-full flex items-center justify-center text-gray-700 font-semibold text-sm`}>
+                          {user.rank}
+                        </div>
+                        <p className="text-sm font-medium text-gray-900">{user.name}</p>
+                      </div>
+                      <p className="text-sm font-bold text-gray-900">{user.points}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Weekly Help Tracking & Active Time Coverage */}
+        <div className="grid lg:grid-cols-2 gap-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Weekly Help Tracking</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                <div className="h-48 flex items-end justify-between gap-3">
+                  {[
+                    { day: "Monday", value: 70, count: 234 },
+                    { day: "Tuesday", value: 55, count: 189 },
+                    { day: "Wednesday", value: 85, count: 312 },
+                    { day: "Thursday", value: 90, count: 345 },
+                    { day: "Friday", value: 65, count: 278 },
+                    { day: "Saturday", value: 40, count: 156 },
+                    { day: "Sunday", value: 45, count: 178 }
+                  ].map((item, index) => (
+                    <div key={index} className="flex-1 flex flex-col items-center gap-2">
+                      <div 
+                        className="w-full bg-gradient-to-t from-orange-600 to-orange-400 rounded-t-lg hover:from-orange-700 hover:to-orange-500 transition-all cursor-pointer relative group" 
+                        style={{ height: `${item.value}%` }}
+                      >
+                        <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                          {item.count} requests
+                        </div>
+                      </div>
+                      <span className="text-xs text-gray-600 font-medium">{item.day.slice(0, 3)}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="grid grid-cols-3 gap-4 pt-4 border-t">
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-gray-900">1,692</p>
+                    <p className="text-xs text-gray-600 mt-1">Total Requests</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-green-600">89%</p>
+                    <p className="text-xs text-gray-600 mt-1">Resolved</p>
+                  </div>
+                  <div className="text-center">
+                    <p className="text-2xl font-bold text-gray-900">2.4h</p>
+                    <p className="text-xs text-gray-600 mt-1">Avg Response</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Active Time & Retention Coverage</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-4 bg-green-50 rounded-lg text-center">
+                    <p className="text-3xl font-bold text-gray-900">156</p>
+                    <p className="text-sm text-gray-600 mt-1">Active Now</p>
+                    <p className="text-xs text-green-600 font-medium mt-2">↑ 12% vs yesterday</p>
+                  </div>
+                  <div className="p-4 bg-blue-50 rounded-lg text-center">
+                    <p className="text-3xl font-bold text-gray-900">423</p>
+                    <p className="text-sm text-gray-600 mt-1">Today's Peak</p>
+                    <p className="text-xs text-blue-600 font-medium mt-2">at 2:00 PM</p>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-gray-700">7-Day Retention</span>
+                      <span className="text-sm font-bold text-gray-900">88%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-green-600 h-2 rounded-full" style={{ width: '88%' }}></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-gray-700">30-Day Retention</span>
+                      <span className="text-sm font-bold text-gray-900">76%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-blue-600 h-2 rounded-full" style={{ width: '76%' }}></div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-medium text-gray-700">90-Day Retention</span>
+                      <span className="text-sm font-bold text-gray-900">64%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="bg-purple-600 h-2 rounded-full" style={{ width: '64%' }}></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-600">Avg Session Duration</span>
+                    <span className="text-lg font-bold text-gray-900">24 min</span>
+                  </div>
                 </div>
               </div>
             </CardContent>

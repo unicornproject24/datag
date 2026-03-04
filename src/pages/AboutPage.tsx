@@ -62,7 +62,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             <span className="text-sm font-medium text-white">Our Mission</span>
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-            Data and Well-being Group
+            Data and Wellbeing Group
           </h1>
           <p className="text-lg sm:text-xl mb-10 leading-relaxed max-w-3xl mx-auto text-white/90">
             Advancing research at the intersection of data science, technology ethics, and human well-being. 
@@ -100,7 +100,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
               </div>
               <h2 className="text-3xl font-bold mb-6 text-foreground">Our Mission</h2>
               <p className="text-muted-foreground mb-6 leading-relaxed">
-                The Data and Well-being Group (DaWg) is dedicated to understanding and improving the relationship
+                The Data and Wellbeing Group (DaWg) is dedicated to understanding and improving the relationship
                 between data practices and human flourishing. We believe that data science should be conducted 
                 with people's well-being at the center.
               </p>

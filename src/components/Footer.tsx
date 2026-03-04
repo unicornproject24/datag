@@ -13,7 +13,7 @@ export function Footer({ onNavigate }: FooterProps) {
           <div>
             <div className="text-xl font-bold mb-2">DaWg</div>
             <p className="text-gray-300 text-sm mb-4">
-              Data and Well-being Group - Advancing ethical data science research
+              Data and Wellbeing Group - Advancing ethical data science research
             </p>
             <div className="flex gap-3">
               <button className="w-10 h-10 rounded-lg bg-white/10 hover:bg-primary flex items-center justify-center transition-colors">
@@ -63,7 +63,7 @@ export function Footer({ onNavigate }: FooterProps) {
         </div>
 
         <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-300">
-          <p>© 2025 Data and Well-being Group. All rights reserved.</p>
+          <p>© 2025 Data and Wellbeing Group. All rights reserved.</p>
           <div className="flex gap-6">
             <button className="hover:text-white">Privacy Policy</button>
             <button className="hover:text-white">Terms of Use</button>

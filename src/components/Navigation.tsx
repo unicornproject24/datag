@@ -33,7 +33,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
             </div>
             <div className="flex flex-col items-start">
               <div className="text-xl font-bold text-primary">DaWg</div>
-              <div className="text-xs text-muted-foreground">Data and Well-being Group</div>
+              <div className="text-xs text-muted-foreground">Data and Wellbeing Group</div>
             </div>
           </button>
 
