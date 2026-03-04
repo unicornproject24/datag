@@ -74,33 +74,33 @@ export function TeamMemberCard({
       {/* Modal Dialog with Full Details */}
       {isDialogOpen && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-slate-900/80 via-blue-900/70 to-indigo-900/80 backdrop-blur-md p-4 animate-in fade-in duration-200"
           onClick={() => setIsDialogOpen(false)}
         >
           <div 
-            className="bg-background w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-xl shadow-2xl animate-in zoom-in-95 duration-200"
+            className="bg-white dark:bg-slate-900 w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-2xl shadow-2xl animate-in zoom-in-95 duration-200 border border-white/20"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="sticky top-0 bg-background border-b px-6 py-4 flex items-center justify-between rounded-t-xl">
+            <div className="sticky top-0 bg-gradient-to-r from-primary/10 to-accent/10 backdrop-blur-sm border-b px-6 py-4 flex items-center justify-between rounded-t-2xl">
               <div>
-                <h2 className="text-2xl font-bold">{displayName}</h2>
+                <h2 className="text-2xl font-bold text-foreground">{displayName}</h2>
                 {preferredName && preferredName !== name && (
                   <p className="text-sm text-muted-foreground">{name}</p>
                 )}
               </div>
               <Button
-                variant="ghost"
+                variant="outline"
                 size="icon"
                 onClick={() => setIsDialogOpen(false)}
-                className="rounded-full"
+                className="rounded-full hover:bg-primary/10 transition-colors"
               >
                 <X className="h-5 w-5" />
               </Button>
             </div>
             
             {/* Modal Content */}
-            <div className="p-6">
+            <div className="p-8 bg-gradient-to-br from-background via-white to-soft-lavender/30 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
               <div className="grid md:grid-cols-3 gap-6">
                 {/* Left Column - Image & Quick Info */}
                 <div className="md:col-span-1 space-y-4">
