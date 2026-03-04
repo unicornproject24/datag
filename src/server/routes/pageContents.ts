@@ -1,8 +1,7 @@
 import { Router } from 'express';
-import { getPrismaClient } from '../utils/prisma';
+import prisma from '../utils/prisma';
 
 const router = Router();
-const prisma = getPrismaClient();
 
 // GET - Fetch page content(s)
 router.get('/', async (req, res) => {

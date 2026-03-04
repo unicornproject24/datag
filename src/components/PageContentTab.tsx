@@ -1,12 +1,9 @@
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./ui/card";
-import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { Badge } from "./ui/badge";
-import { AdvancedEditor } from "./admin/AdvancedEditor";
-import { Home, FileText, Save, X, Eye, Edit3, Image as ImageIcon } from "lucide-react";
+import { Home, FileText, Edit3, Image as ImageIcon } from "lucide-react";
 
 interface PageContentTabProps {
   pageContent: any;

@@ -583,9 +583,18 @@ export function AdminPage() {
 
           {/* Dashboard Tab */}
           <TabsContent value="dashboard" className="space-y-6">
-            {stats && (
-              <>
-                {/* Enhanced Stats Cards */}
+            {!stats ? (
+              <div className="flex items-center justify-center py-20">
+                <div className="text-center">
+                  <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-primary flex items-center justify-center animate-pulse">
+                    <LayoutDashboard className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">Loading Dashboard...</h3>
+                  <p className="text-muted-foreground">Please wait while we fetch your data</p>
+                </div>
+              </div>
+            ) : (
+              <>                {/* Enhanced Stats Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                   <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                     <CardContent className="p-6">

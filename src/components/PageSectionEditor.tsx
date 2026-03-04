@@ -3,8 +3,7 @@ import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "./ui/card";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
-import { AdvancedEditor } from "./admin/AdvancedEditor";
-import { Save, X, CheckCircle, Image as ImageIcon } from "lucide-react";
+import { Save, X, Image as ImageIcon } from "lucide-react";
 
 interface PageSectionEditorProps {
   section: string;
