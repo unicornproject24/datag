@@ -16,7 +16,7 @@ import {
 
 export function CommunityDashboardPage() {
   return (
-    <div className="min-h-screen bg-gray-50 p-4 mt-5 md:p-6 lg:p-8">
+    <div className="min-h-screen bg-gray-50 p-4 mt-10 md:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
