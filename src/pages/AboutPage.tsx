@@ -72,7 +72,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             <Button 
               size="lg"
               onClick={() => onNavigate("research")}
-              className="bg-white text-primary hover:bg-white/90 hover:shadow-lg hover:-translate-y-1 transition-all px-8 py-4 text-base font-medium rounded-xl"
+              className="bg-white text-white hover:bg-white/90 hover:shadow-lg hover:-translate-y-1 transition-all px-8 py-4 text-base font-medium rounded-xl"
             >
               <BookOpen className="h-5 w-5 mr-2" />
               Explore Research
@@ -89,7 +89,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
       </section>
 
       {/* Mission & Research Grid */}
-      <section className="py-24 bg-gradient-to-br from-background to-soft-green">
+      <section className="py-24 bg-gradient-to-br from-slate-100 to-emerald-100">
         <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Mission Card */}
@@ -133,7 +133,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
       </section>
 
       {/* Values Section */}
-      <section className="py-24 bg-gradient-to-br from-background to-soft-lavender">
+      <section className="py-24 bg-gradient-to-br from-slate-100 to-purple-100">
         <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 bg-accent/10 px-4 py-2 rounded-full mb-4">
@@ -168,13 +168,13 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
         </div>
       </section>
       {/* Partners Grid */}
-            <section className="py-20 bg-gradient-to-br from-background to-soft-green">
+            <section className="py-20 bg-gradient-to-br from-slate-100 to-emerald-100">
               <div className="container mx-auto px-4 sm:px-6">
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
                   {partners.map((partner) => (
-                    <Card key={partner.name} className="bg-white soft-shadow hover:shadow-lg hover:-translate-y-2 transition-all group rounded-2xl overflow-hidden">
+                    <Card key={partner.name} className="bg-white soft-shadow rounded-2xl overflow-hidden">
                       <CardContent className="p-8">
-                        <div className="w-16 h-16 rounded-2xl bg-gradient-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-all">
+                        <div className="w-16 h-16 rounded-2xl bg-gradient-primary flex items-center justify-center mb-6">
                           <Handshake className="h-8 w-8 text-white" />
                         </div>
                         <h3 className="text-xl font-bold text-foreground mb-3">{partner.name}</h3>
@@ -196,22 +196,22 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
                     <p className="text-muted-foreground max-w-2xl mx-auto">Join us in creating positive change through ethical data practices</p>
                   </div>
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div className="text-center p-6 rounded-2xl bg-gradient-to-br from-primary/5 to-primary/10 soft-shadow hover:shadow-md transition-all group hover:-translate-y-2">
-                      <div className="w-16 h-16 rounded-2xl bg-gradient-primary flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                    <div className="text-center p-6 rounded-2xl bg-gradient-to-br from-primary/5 to-primary/10 soft-shadow">
+                      <div className="w-16 h-16 rounded-2xl bg-gradient-primary flex items-center justify-center mx-auto mb-6">
                         <Lightbulb className="h-8 w-8 text-white" />
                       </div>
                       <h3 className="text-xl font-bold text-foreground mb-3">Rigorous Research</h3>
                       <p className="text-muted-foreground">Access to cutting-edge research methodologies and evidence-based insights</p>
                     </div>
-                    <div className="text-center p-6 rounded-2xl bg-gradient-to-br from-secondary/5 to-secondary/10 soft-shadow hover:shadow-md transition-all group hover:-translate-y-2">
-                      <div className="w-16 h-16 rounded-2xl bg-gradient-secondary flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                    <div className="text-center p-6 rounded-2xl bg-gradient-to-br from-secondary/5 to-secondary/10 soft-shadow">
+                      <div className="w-16 h-16 rounded-2xl bg-gradient-secondary flex items-center justify-center mx-auto mb-6">
                         <Users className="h-8 w-8 text-white" />
                       </div>
                       <h3 className="text-xl font-bold text-foreground mb-3">Global Network</h3>
                       <p className="text-muted-foreground">Connect with leading experts and organizations worldwide</p>
                     </div>
-                    <div className="text-center p-6 rounded-2xl bg-gradient-to-br from-accent/5 to-accent/10 soft-shadow hover:shadow-md transition-all group hover:-translate-y-2">
-                      <div className="w-16 h-16 rounded-2xl bg-gradient-warm flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
+                    <div className="text-center p-6 rounded-2xl bg-gradient-to-br from-accent/5 to-accent/10 soft-shadow">
+                      <div className="w-16 h-16 rounded-2xl bg-gradient-warm flex items-center justify-center mx-auto mb-6">
                         <Heart className="h-8 w-8 text-white" />
                       </div>
                       <h3 className="text-xl font-bold text-foreground mb-3">Real Impact</h3>
@@ -370,7 +370,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
                       We're always open to new partnerships that align with our mission. 
                       Let's explore how we can work together to advance data well-being.
                     </p>
-                    <Button size="lg" className="bg-white text-primary hover:bg-white/90 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all px-8 py-4 text-lg font-medium rounded-xl">
+                    <Button size="lg" className="bg-black text-white  shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all px-8 py-4 text-lg font-medium rounded-xl">
                       <Mail className="h-5 w-5 mr-2" />
                       Get in Touch
                     </Button>

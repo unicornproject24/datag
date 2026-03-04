@@ -1,6 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/card";
 import { Button } from "../components/ui/button";
-import { Progress } from "../components/ui/progress";
 import { Badge } from "../components/ui/badge";
 import { 
   Users, 
@@ -175,7 +174,9 @@ export function CommunityDashboardPage() {
                     <span className="text-sm font-medium text-gray-700">Daily Active Users</span>
                     <span className="text-sm font-bold text-gray-900">1,247 / 2,847</span>
                   </div>
-                  <Progress value={44} className="h-2" />
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="bg-green-600 h-2 rounded-full" style={{ width: '44%' }}></div>
+                  </div>
                   <span className="text-xs text-gray-500">44% of total members</span>
                 </div>
 
@@ -184,7 +185,9 @@ export function CommunityDashboardPage() {
                     <span className="text-sm font-medium text-gray-700">Post Engagement</span>
                     <span className="text-sm font-bold text-gray-900">2,156 / 2,500</span>
                   </div>
-                  <Progress value={86} className="h-2" />
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="bg-green-600 h-2 rounded-full" style={{ width: '86%' }}></div>
+                  </div>
                   <span className="text-xs text-gray-500">86% engagement rate</span>
                 </div>
 
@@ -193,7 +196,9 @@ export function CommunityDashboardPage() {
                     <span className="text-sm font-medium text-gray-700">Event Participation</span>
                     <span className="text-sm font-bold text-gray-900">892 / 1,200</span>
                   </div>
-                  <Progress value={74} className="h-2" />
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="bg-green-600 h-2 rounded-full" style={{ width: '74%' }}></div>
+                  </div>
                   <span className="text-xs text-gray-500">74% participation rate</span>
                 </div>
 
@@ -202,7 +207,9 @@ export function CommunityDashboardPage() {
                     <span className="text-sm font-medium text-gray-700">Resource Downloads</span>
                     <span className="text-sm font-bold text-gray-900">1,543 / 2,000</span>
                   </div>
-                  <Progress value={77} className="h-2" />
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div className="bg-green-600 h-2 rounded-full" style={{ width: '77%' }}></div>
+                  </div>
                   <span className="text-xs text-gray-500">77% download rate</span>
                 </div>
               </CardContent>
@@ -364,7 +371,9 @@ export function CommunityDashboardPage() {
                 <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium text-gray-900">Data Privacy</span>
-                    <Badge variant="destructive" className="bg-red-600">High Priority</Badge>
+                    <span className="inline-flex items-center justify-center rounded-md border border-transparent bg-red-600 text-white px-2 py-0.5 text-xs font-medium">
+                      High Priority
+                    </span>
                   </div>
                   <p className="text-sm text-gray-600 mb-3">
                     Exploring user consent and data collection best practices
@@ -379,7 +388,9 @@ export function CommunityDashboardPage() {
                 <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium text-gray-900">AI Ethics</span>
-                    <Badge className="bg-orange-600">Medium Priority</Badge>
+                    <span className="inline-flex items-center justify-center rounded-md border border-transparent bg-orange-600 text-white px-2 py-0.5 text-xs font-medium">
+                      Medium Priority
+                    </span>
                   </div>
                   <p className="text-sm text-gray-600 mb-3">
                     Investigating ethical implications of AI in decision-making
@@ -394,7 +405,9 @@ export function CommunityDashboardPage() {
                 <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium text-gray-900">Digital Wellbeing</span>
-                    <Badge className="bg-yellow-600">Medium Priority</Badge>
+                    <span className="inline-flex items-center justify-center rounded-md border border-transparent bg-yellow-600 text-white px-2 py-0.5 text-xs font-medium">
+                      Medium Priority
+                    </span>
                   </div>
                   <p className="text-sm text-gray-600 mb-3">
                     Studying impact of technology on mental health and wellness
@@ -409,7 +422,9 @@ export function CommunityDashboardPage() {
                 <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
                   <div className="flex items-center justify-between mb-2">
                     <span className="font-medium text-gray-900">Inclusive Design</span>
-                    <Badge className="bg-green-600">Active</Badge>
+                    <span className="inline-flex items-center justify-center rounded-md border border-transparent bg-green-600 text-white px-2 py-0.5 text-xs font-medium">
+                      Active
+                    </span>
                   </div>
                   <p className="text-sm text-gray-600 mb-3">
                     Creating accessible and inclusive digital experiences
@@ -488,9 +503,13 @@ export function CommunityDashboardPage() {
                   <div className="flex-1">
                     <p className="text-sm font-medium text-gray-900">{item.task}</p>
                     <div className="flex items-center gap-2 mt-1">
-                      <Badge variant={item.priority === 'high' ? 'destructive' : 'secondary'} className="text-xs">
+                      <span className={`inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium ${
+                        item.priority === 'high' 
+                          ? 'bg-red-100 text-red-700 border-red-300' 
+                          : 'bg-gray-100 text-gray-700 border-gray-300'
+                      }`}>
                         {item.priority}
-                      </Badge>
+                      </span>
                       <span className="text-xs text-gray-500">Due: {item.due}</span>
                     </div>
                   </div>
