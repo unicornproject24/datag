@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "buildCommand": "prisma generate && vite build",
-  "installCommand": "npm install && prisma generate",
+  "buildCommand": "npx prisma generate && vite build",
+  "installCommand": "npm install && npx prisma generate",
   "outputDirectory": "dist",
   "functions": {
     "api/*.ts": {
