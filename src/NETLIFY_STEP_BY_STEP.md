@@ -1,6 +1,6 @@
 # 📘 Netlify Deployment - Complete Step-by-Step Guide
 
-This guide walks you through deploying your DAWG website to Netlify with **detailed** instructions for absolute beginners.
+This guide walks you through deploying your DaWg website to Netlify with **detailed** instructions for absolute beginners.
 
 ---
 
@@ -27,7 +27,7 @@ This guide walks you through deploying your DAWG website to Netlify with **detai
 2. Click it and wait for the download to complete
 
 3. **Find the downloaded file** (probably in your Downloads folder)
-   - It will be a ZIP file named something like `dawg-website.zip`
+   - It will be a ZIP file named something like `DaWg-website.zip`
 
 4. **Extract/Unzip the file:**
    - **Windows:** Right-click → "Extract All"
@@ -56,7 +56,7 @@ You have two options. **Option A is much easier for beginners.**
 1. In GitHub Desktop, click **"Sign in to GitHub.com"**
 2. Click **"Create your free account"**
 3. Fill in:
-   - Username (e.g., "dawg-research")
+   - Username (e.g., "DaWg-research")
    - Email address
    - Password
 4. Verify your email
@@ -78,8 +78,8 @@ You have two options. **Option A is much easier for beginners.**
    - This is normal! Click **"Create a Repository"**
 
 6. Fill in the form:
-   - **Name:** `dawg-website` (or whatever you prefer)
-   - **Description:** "DAWG Research Group Website"
+   - **Name:** `DaWg-website` (or whatever you prefer)
+   - **Description:** "DaWg Research Group Website"
    - **Keep "Git Ignore" as "Node"**
    - Leave "License" as "None"
 
@@ -93,7 +93,7 @@ You have two options. **Option A is much easier for beginners.**
 2. Click **"Publish repository"**
 
 3. A dialog will appear:
-   - **Name:** `dawg-website` (already filled)
+   - **Name:** `DaWg-website` (already filled)
    - **Description:** Your description from before
    - **Keep this code private:** 
      - ✅ CHECK this if you want the code private
@@ -105,7 +105,7 @@ You have two options. **Option A is much easier for beginners.**
 5. Wait 10-30 seconds for upload to complete
 
 6. ✅ **Success!** Your code is now on GitHub!
-   - You can verify by going to `github.com/YOUR-USERNAME/dawg-website`
+   - You can verify by going to `github.com/YOUR-USERNAME/DaWg-website`
 
 ### Option B: Without GitHub Desktop (For Developers)
 
@@ -126,7 +126,7 @@ git commit -m "Initial commit"
 
 # Create repo on github.com first (click + → New repository)
 # Then:
-git remote add origin https://github.com/YOUR-USERNAME/dawg-website.git
+git remote add origin https://github.com/YOUR-USERNAME/DaWg-website.git
 git branch -M main
 git push -u origin main
 ```
@@ -163,17 +163,17 @@ git push -u origin main
 
 4. You may need to **authorize Netlify** again
    - Click "Authorize Netlify"
-   - If asked, select "All repositories" or just "dawg-website"
+   - If asked, select "All repositories" or just "DaWg-website"
    - Click the green button to confirm
 
 ### Step 3.3: Select Your Repository
 
 1. You should now see a list of your GitHub repositories
 
-2. Find **"dawg-website"** (or whatever you named it)
+2. Find **"DaWg-website"** (or whatever you named it)
    - Use the search box if you have many repos
 
-3. Click on **"dawg-website"**
+3. Click on **"DaWg-website"**
 
 ### Step 3.4: Configure Build Settings
 
@@ -203,7 +203,7 @@ You'll see a configuration page. Here's what to enter:
    - Leave all other fields as they are
 
 7. Click **"Deploy [site name]"** button at the bottom
-   - The button might say "Deploy site" or "Deploy dawg-website"
+   - The button might say "Deploy site" or "Deploy DaWg-website"
 
 ### Step 3.5: Wait for Deployment
 
@@ -231,13 +231,13 @@ The auto-generated name isn't pretty. Let's change it:
 2. Click **"Change site name"** (under "Site information")
 
 3. Enter a new name:
-   - Example: `dawg-research`
+   - Example: `DaWg-research`
    - Must be unique across all Netlify sites
    - Can only use letters, numbers, and hyphens
 
 4. Click **"Save"**
 
-5. ✅ Your new URL: `dawg-research.netlify.app`
+5. ✅ Your new URL: `DaWg-research.netlify.app`
 
 ---
 
@@ -248,10 +248,10 @@ Your site is live, but it needs data!
 ### Step 4.1: Access Admin Panel
 
 1. Go to your deployed site
-   - Example: `dawg-research.netlify.app`
+   - Example: `DaWg-research.netlify.app`
 
 2. Add `/#admin` to the end of the URL
-   - Full URL: `dawg-research.netlify.app/#admin`
+   - Full URL: `DaWg-research.netlify.app/#admin`
 
 3. Press Enter
 
@@ -278,7 +278,7 @@ Your site is live, but it needs data!
 
 1. Go back to your main site
    - Remove the `#admin` from URL
-   - Just: `dawg-research.netlify.app`
+   - Just: `DaWg-research.netlify.app`
 
 2. Click through each page:
    - Home ✓
@@ -363,7 +363,7 @@ Let's add a new blog post:
 1. **Your live site:** `your-site.netlify.app`
 2. **Admin panel:** `your-site.netlify.app/#admin`
 3. **Netlify dashboard:** `app.netlify.com`
-4. **GitHub repo:** `github.com/YOUR-USERNAME/dawg-website`
+4. **GitHub repo:** `github.com/YOUR-USERNAME/DaWg-website`
 
 ---
 
@@ -451,4 +451,4 @@ Before you close this guide, make sure you've:
 
 ---
 
-Good luck with your DAWG website! 🐕✨
+Good luck with your DaWg website! 🐕✨

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Netlify Build Script for DAWG Website
+# Netlify Build Script for DaWg Website
 # This script ensures only frontend dependencies are installed
 
 set -e  # Exit on any error

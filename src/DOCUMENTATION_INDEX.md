@@ -1,4 +1,4 @@
-# 📚 DAWG Website - Complete Documentation Index
+# 📚 DaWg Website - Complete Documentation Index
 
 **Choose your path based on your experience level and needs.**
 
@@ -303,7 +303,7 @@
 
 1. `your-site.com/#admin` - Admin panel
 2. `app.netlify.com` - Netlify dashboard
-3. `github.com/YOUR-USERNAME/dawg-website` - Code repo
+3. `github.com/YOUR-USERNAME/DaWg-website` - Code repo
 4. This documentation index!
 
 ---

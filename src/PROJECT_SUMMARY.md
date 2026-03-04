@@ -1,8 +1,8 @@
-# DAWG Website - Project Summary
+# DaWg Website - Project Summary
 
 ## 🎯 What Has Been Built
 
-A complete, production-ready multi-page website for the Data Well-being Group (DAWG) with:
+A complete, production-ready multi-page website for the Data Well-being Group (DaWg) with:
 
 ### ✨ Features Delivered
 
@@ -38,7 +38,7 @@ A complete, production-ready multi-page website for the Data Well-being Group (D
 ## 📂 Project Structure
 
 ```
-DAWG Website/
+DaWg Website/
 │
 ├── 📄 Core Application
 │   ├── App.tsx                    # Main app component with routing
@@ -51,7 +51,7 @@ DAWG Website/
 │   │   └── ui/                   # UI component library
 │   ├── pages/                     # Page components
 │   │   ├── HomePage.tsx          # Landing page
-│   │   ├── AboutPage.tsx         # About DAWG
+│   │   ├── AboutPage.tsx         # About DaWg
 │   │   ├── TeamPage.tsx          # Team directory
 │   │   ├── ResearchPage.tsx      # Research projects
 │   │   ├── BlogPage.tsx          # Blog posts
@@ -209,7 +209,7 @@ Background (Natural):     #FAF9F6
 - Recent highlights
 
 ### 2. About Page
-**Purpose:** DAWG's mission and values
+**Purpose:** DaWg's mission and values
 
 **Components:**
 - Mission statement

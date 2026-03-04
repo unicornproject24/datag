@@ -1,13 +1,11 @@
 import { Card, CardContent } from "../components/ui/card";
 import { Button } from "../components/ui/button";
 import { Users, ArrowRight, Sparkles, Globe, Heart, Lightbulb } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 export function PartnersPage() {
-  const navigate = useNavigate();
-
   const handleJoinCommunity = () => {
-    navigate("/community");
+    window.location.hash = "community";
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (

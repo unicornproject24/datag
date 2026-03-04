@@ -302,7 +302,7 @@ Your deployment is successful when:
 
 Once deployed successfully:
 
-1. ✅ Your DAWG website is live
+1. ✅ Your DaWg website is live
 2. ✅ Supabase backend is connected
 3. ✅ Admin panel is ready for content
 4. ✅ No more 404 errors!

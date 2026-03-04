@@ -1,6 +1,6 @@
-# DAWG Website
+# DaWg Website
 
-A modern, responsive website for the Data Well-being Group (DAWG) research team, featuring a clean design with pastel colors, content management system, and multi-page navigation.
+A modern, responsive website for the Data Well-being Group (DaWg) research team, featuring a clean design with pastel colors, content management system, and multi-page navigation.
 
 ## ✨ Features
 
@@ -26,7 +26,7 @@ A modern, responsive website for the Data Well-being Group (DAWG) research team,
 1. **Clone the repository:**
    ```bash
    git clone <your-repo-url>
-   cd dawg-website
+   cd DaWg-website
    ```
 
 2. **Install dependencies:**
@@ -86,7 +86,7 @@ The admin panel is currently accessible via direct URL (`/#admin`). For producti
 
 ## 🤝 Contributing
 
-This is a custom website for DAWG. For questions or issues:
+This is a custom website for DaWg. For questions or issues:
 1. Check the `DEPLOYMENT_GUIDE.md`
 2. Review the code comments
 3. Contact the development team

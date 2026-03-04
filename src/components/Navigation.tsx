@@ -32,7 +32,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
               <Brain className="h-5 w-5 text-white" />
             </div>
             <div className="flex flex-col items-start">
-              <div className="text-xl font-bold text-primary">DaWG</div>
+              <div className="text-xl font-bold text-primary">DaWg</div>
               <div className="text-xs text-muted-foreground">Data and Well-being Group</div>
             </div>
           </button>

@@ -1,6 +1,6 @@
 # Local Development Guide
 
-Quick reference for running and testing the DAWG website locally.
+Quick reference for running and testing the DaWg website locally.
 
 ## 🏃 Running Locally
 

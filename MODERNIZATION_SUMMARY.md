@@ -1,7 +1,7 @@
 # Website Modernization Summary
 
 ## Overview
-The Data Well-being Group (DAWG) website has been completely revamped with modern design principles, enhanced mobile responsiveness, and improved user experience.
+The Data Well-being Group (DaWg) website has been completely revamped with modern design principles, enhanced mobile responsiveness, and improved user experience.
 
 ## ✨ Key Improvements
 

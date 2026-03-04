@@ -7,7 +7,7 @@ The website has been redesigned to match the clean, professional pattern from Co
 
 ### Navigation
 - **Fixed Header**: Clean white background with subtle shadow on scroll
-- **Simple Logo**: Bold "DAWG" text with subtitle separator
+- **Simple Logo**: Bold "DaWg" text with subtitle separator
 - **Minimal Menu**: Text-only navigation items with hover states
 - **Clean CTA**: Simple button with icon
 - **Mobile-Friendly**: Collapsible menu for mobile devices

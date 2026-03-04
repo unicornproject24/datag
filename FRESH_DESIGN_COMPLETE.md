@@ -29,7 +29,7 @@ Completely restarted the design from scratch with proper alignment, spacing, and
 ### Navigation (Fixed)
 ```
 ┌────────────────────────────────────────┐
-│ DAWG | Home About Team Research Blog   │
+│ DaWg | Home About Team Research Blog   │
 │      Partners                [Contact] │
 └────────────────────────────────────────┘
 ```

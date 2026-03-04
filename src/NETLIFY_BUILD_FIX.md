@@ -94,7 +94,7 @@ Once the deployment completes:
 
 1. ✅ Build status should show **"Published"** with a green checkmark
 2. Click the site URL
-3. Your DAWG website should load!
+3. Your DaWg website should load!
 4. Navigate to `/#admin` to initialize the database
 
 ---

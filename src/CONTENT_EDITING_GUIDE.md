@@ -1,12 +1,12 @@
 # Content Editing Quick Reference
 
-A simple guide for managing your DAWG website content through the admin panel.
+A simple guide for managing your DaWg website content through the admin panel.
 
 ## 🔑 Accessing the Admin Panel
 
 **URL:** `your-website.com/#admin`
 
-Example: If your site is at `dawg-research.com`, visit `dawg-research.com/#admin`
+Example: If your site is at `DaWg-research.com`, visit `DaWg-research.com/#admin`
 
 ---
 

@@ -1,4 +1,4 @@
-# 🚀 DAWG Website - Quick Start Guide
+# 🚀 DaWg Website - Quick Start Guide
 
 ## Step 0: Download Your Code from Figma Make 📥
 
@@ -33,7 +33,7 @@ Most hosting platforms connect to GitHub, so let's set that up first:
    - Click "File" → "Add Local Repository"
    - Navigate to your extracted project folder
    - If prompted, click "Create Repository"
-   - Add description: "DAWG Website"
+   - Add description: "DaWg Website"
    - Click "Create Repository"
 
 4. **Publish to GitHub:**
@@ -58,18 +58,18 @@ Most hosting platforms connect to GitHub, so let's set that up first:
 
 4. **Commit:**
    ```bash
-   git commit -m "Initial commit - DAWG website"
+   git commit -m "Initial commit - DaWg website"
    ```
 
 5. **Create repository on GitHub:**
    - Go to [github.com](https://github.com)
    - Click "+" → "New repository"
-   - Name it "dawg-website"
+   - Name it "DaWg-website"
    - Click "Create repository"
 
 6. **Push to GitHub:**
    ```bash
-   git remote add origin https://github.com/YOUR-USERNAME/dawg-website.git
+   git remote add origin https://github.com/YOUR-USERNAME/DaWg-website.git
    git branch -M main
    git push -u origin main
    ```
@@ -94,10 +94,10 @@ Now that your code is on GitHub, choose your hosting platform:
 3. **Import Project:**
    - Click "Add New..." → "Project"
    - You'll see your GitHub repositories
-   - Find "dawg-website" and click "Import"
+   - Find "DaWg-website" and click "Import"
 
 4. **Configure Project:**
-   - Project Name: `dawg-website` (or your choice)
+   - Project Name: `DaWg-website` (or your choice)
    - Framework Preset: Vite (should auto-detect)
    - Root Directory: `./` (leave as is)
    - Build Command: `npm run build` (should be filled)
@@ -106,7 +106,7 @@ Now that your code is on GitHub, choose your hosting platform:
 
 5. **Wait for deployment** (1-2 minutes)
 
-6. ✅ Done! You'll get a URL like `dawg-website.vercel.app`
+6. ✅ Done! You'll get a URL like `DaWg-website.vercel.app`
 
 ### Netlify
 
@@ -121,7 +121,7 @@ Now that your code is on GitHub, choose your hosting platform:
    - Click "Add new site" → "Import an existing project"
    - Click "GitHub"
    - Authorize Netlify to access repositories
-   - Find and select "dawg-website"
+   - Find and select "DaWg-website"
 
 4. **Configure Build:**
    - Branch: `main`
@@ -131,12 +131,12 @@ Now that your code is on GitHub, choose your hosting platform:
 
 5. **Wait for deployment** (1-2 minutes)
 
-6. ✅ Done! You'll get a URL like `dawg-website.netlify.app`
+6. ✅ Done! You'll get a URL like `DaWg-website.netlify.app`
 
 ### GitHub Pages (Free but takes longer)
 
 1. **Go to your repository** on GitHub
-   - URL: `github.com/YOUR-USERNAME/dawg-website`
+   - URL: `github.com/YOUR-USERNAME/DaWg-website`
 
 2. **Enable GitHub Pages:**
    - Click "Settings" tab
@@ -152,7 +152,7 @@ Now that your code is on GitHub, choose your hosting platform:
 
 4. **Wait for deployment** (2-3 minutes)
 
-5. ✅ Done! Your site will be at `YOUR-USERNAME.github.io/dawg-website`
+5. ✅ Done! Your site will be at `YOUR-USERNAME.github.io/DaWg-website`
 
 ---
 
@@ -405,7 +405,7 @@ Once deployed, your site will have these pages:
 
 ## 🎉 You're Ready!
 
-Your DAWG website is ready to go live. Here's what you have:
+Your DaWg website is ready to go live. Here's what you have:
 
 ✅ **Professional multi-page website**
 ✅ **Easy-to-use admin panel**
@@ -426,4 +426,4 @@ Your DAWG website is ready to go live. Here's what you have:
 - `CONTENT_EDITING_GUIDE.md`
 - `LOCAL_DEVELOPMENT.md`
 
-**Good luck with your DAWG website! 🐕✨**
+**Good luck with your DaWg website! 🐕✨**

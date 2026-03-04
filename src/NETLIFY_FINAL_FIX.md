@@ -370,7 +370,7 @@ Once your site is live:
 
 ### 4. Share Your Site! 🌟
 ```
-Your DAWG website is now live!
+Your DaWg website is now live!
 - Professional design ✅
 - Fully functional backend ✅
 - Content management system ✅

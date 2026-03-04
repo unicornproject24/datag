@@ -35,7 +35,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <Brain className="h-6 w-6 text-white" />
             </div>
             <div className="text-left">
-              <div className="text-2xl font-bold text-white">DaWG</div>
+              <div className="text-2xl font-bold text-white">DaWg</div>
               <div className="text-sm text-white/80">Data and Well-being Group</div>
             </div>
           </div>

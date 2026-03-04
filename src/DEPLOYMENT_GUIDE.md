@@ -1,4 +1,4 @@
-# DAWG Website Deployment Guide
+# DaWg Website Deployment Guide
 
 This guide will help you deploy your Data Well-being Group website and set up the content management system.
 
@@ -39,7 +39,7 @@ Access the admin panel at `your-site-url.com/#admin` to:
    git add .
    git commit -m "Initial commit"
    git branch -M main
-   git remote add origin https://github.com/yourusername/dawg-website.git
+   git remote add origin https://github.com/yourusername/DaWg-website.git
    git push -u origin main
    ```
 
@@ -116,7 +116,7 @@ Access the admin panel at `your-site-url.com/#admin` to:
    npm run deploy
    ```
 
-5. **Access your site** at `https://yourusername.github.io/dawg-website`
+5. **Access your site** at `https://yourusername.github.io/DaWg-website`
 
 ---
 

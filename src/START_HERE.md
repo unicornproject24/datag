@@ -1,4 +1,4 @@
-# 🐕 Welcome to Your DAWG Website!
+# 🐕 Welcome to Your DaWg Website!
 
 ## 📍 You Are Here
 
@@ -314,7 +314,7 @@ You now have:
 
 **Questions?** All the answers are in these docs. Use the reference above to find what you need.
 
-**Good luck with your DAWG website!** 🐕✨
+**Good luck with your DaWg website!** 🐕✨
 
 ---
 

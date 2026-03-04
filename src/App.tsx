@@ -8,6 +8,7 @@ import { ResearchPage } from "./pages/ResearchPage";
 import { BlogPage } from "./pages/BlogPage";
 import { PartnersPage } from "./pages/PartnersPage";
 import { AdminPage } from "./pages/AdminPage";
+import { CommunityDashboardPage } from "./pages/CommunityDashboardPage";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
@@ -43,6 +44,8 @@ export default function App() {
         return <BlogPage />;
       case "partners":
         return <PartnersPage />;
+      case "community":
+        return <CommunityDashboardPage />;
       case "admin":
         return <AdminPage />;
       case "home":
