@@ -1,9 +1,8 @@
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "./ui/dialog";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { Linkedin, GraduationCap, ExternalLink, Eye, Youtube } from "lucide-react";
+import { Linkedin, GraduationCap, ExternalLink, Eye, X, Youtube } from "lucide-react";
 import { useState } from "react";
 
 interface TeamMemberCardProps {
@@ -72,159 +71,181 @@ export function TeamMemberCard({
         </CardContent>
       </Card>
 
-      {/* Dialog with Full Details */}
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-bold">{displayName}</DialogTitle>
-            {preferredName && preferredName !== name && (
-              <DialogDescription className="text-base">{name}</DialogDescription>
-            )}
-          </DialogHeader>
-          
-          <div className="grid md:grid-cols-3 gap-6 mt-4">
-            {/* Left Column - Image & Quick Info */}
-            <div className="md:col-span-1 space-y-4">
-              <div className="aspect-square rounded-lg overflow-hidden bg-muted">
-                <ImageWithFallback
-                  src={imageUrl}
-                  alt={name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              
-              <div className="space-y-3">
-                <div>
-                  <p className="text-sm font-semibold mb-2">Position</p>
-                  <p className="text-sm text-primary">{role}</p>
-                </div>
-                
-                {education && (
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <GraduationCap className="h-4 w-4 text-primary" />
-                      <p className="text-sm font-semibold">Education</p>
-                    </div>
-                    <p className="text-sm text-muted-foreground">{education}</p>
-                  </div>
-                )}
-                
-                {links && (links.linkedIn || links.orcid || links.googleScholar || links.website || links.youtube) && (
-                  <div>
-                    <p className="text-sm font-semibold mb-2">Connect</p>
-                    <div className="flex flex-wrap gap-2">
-                      {links.linkedIn && (
-                        <a 
-                          href={links.linkedIn} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-muted-foreground hover:text-primary transition-colors"
-                          title="LinkedIn"
-                        >
-                          <Linkedin className="h-5 w-5" />
-                        </a>
-                      )}
-                      {links.orcid && (
-                        <a 
-                          href={links.orcid} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-muted-foreground hover:text-primary transition-colors"
-                          title="ORCID"
-                        >
-                          <span className="text-xs font-bold">ORCID</span>
-                        </a>
-                      )}
-                      {links.googleScholar && (
-                        <a 
-                          href={links.googleScholar} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-muted-foreground hover:text-primary transition-colors"
-                          title="Google Scholar"
-                        >
-                          <span className="text-xs font-bold">Scholar</span>
-                        </a>
-                      )}
-                      {links.youtube && (
-                        <a 
-                          href={links.youtube} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-muted-foreground hover:text-primary transition-colors"
-                          title="YouTube"
-                        >
-                          <Youtube className="h-5 w-5" />
-                        </a>
-                      )}
-                      {links.website && (
-                        <a 
-                          href={links.website} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-muted-foreground hover:text-primary transition-colors"
-                          title="Website"
-                        >
-                          <ExternalLink className="h-5 w-5" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
+      {/* Modal Dialog with Full Details */}
+      {isDialogOpen && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-200"
+          onClick={() => setIsDialogOpen(false)}
+        >
+          <div 
+            className="bg-background w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-xl shadow-2xl animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Modal Header */}
+            <div className="sticky top-0 bg-background border-b px-6 py-4 flex items-center justify-between rounded-t-xl">
+              <div>
+                <h2 className="text-2xl font-bold">{displayName}</h2>
+                {preferredName && preferredName !== name && (
+                  <p className="text-sm text-muted-foreground">{name}</p>
                 )}
               </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsDialogOpen(false)}
+                className="rounded-full"
+              >
+                <X className="h-5 w-5" />
+              </Button>
             </div>
             
-            {/* Right Column - Detailed Info */}
-            <div className="md:col-span-2 space-y-6">
-              <div>
-                <h4 className="text-lg font-semibold mb-3">Biography</h4>
-                <p className="text-foreground/80 leading-relaxed">{bio}</p>
-              </div>
-              
-              {expertise && expertise.length > 0 && (
-                <div>
-                  <h4 className="text-lg font-semibold mb-3">Expertise</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {expertise.map((skill) => (
-                      <Badge key={skill} variant="secondary" className="bg-secondary/20 text-secondary border-secondary/30">
-                        {skill}
-                      </Badge>
-                    ))}
+            {/* Modal Content */}
+            <div className="p-6">
+              <div className="grid md:grid-cols-3 gap-6">
+                {/* Left Column - Image & Quick Info */}
+                <div className="md:col-span-1 space-y-4">
+                  <div className="aspect-square rounded-lg overflow-hidden bg-muted">
+                    <ImageWithFallback
+                      src={imageUrl}
+                      alt={name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                </div>
-              )}
-              
-              {researchInterests && researchInterests.length > 0 && (
-                <div>
-                  <h4 className="text-lg font-semibold mb-3">Research Interests</h4>
-                  <ul className="space-y-2">
-                    {researchInterests.map((interest, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="text-primary mt-1.5">•</span>
-                        <span className="text-foreground/80">{interest}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              
-              {projects && projects.length > 0 && (
-                <div>
-                  <h4 className="text-lg font-semibold mb-3">Projects</h4>
+                  
                   <div className="space-y-3">
-                    {projects.map((project, idx) => (
-                      <div key={idx} className="bg-muted/50 p-4 rounded-lg">
-                        <p className="text-sm font-semibold text-foreground">{project.title}</p>
-                        <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
+                    <div>
+                      <p className="text-sm font-semibold mb-2">Position</p>
+                      <p className="text-sm text-primary">{role}</p>
+                    </div>
+                    
+                    {education && (
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <GraduationCap className="h-4 w-4 text-primary" />
+                          <p className="text-sm font-semibold">Education</p>
+                        </div>
+                        <p className="text-sm text-muted-foreground">{education}</p>
                       </div>
-                    ))}
+                    )}
+                    
+                    {links && (links.linkedIn || links.orcid || links.googleScholar || links.website || links.youtube) && (
+                      <div>
+                        <p className="text-sm font-semibold mb-2">Connect</p>
+                        <div className="flex flex-wrap gap-2">
+                          {links.linkedIn && (
+                            <a 
+                              href={links.linkedIn} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-muted-foreground hover:text-primary transition-colors"
+                              title="LinkedIn"
+                            >
+                              <Linkedin className="h-5 w-5" />
+                            </a>
+                          )}
+                          {links.orcid && (
+                            <a 
+                              href={links.orcid} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-muted-foreground hover:text-primary transition-colors"
+                              title="ORCID"
+                            >
+                              <span className="text-xs font-bold">ORCID</span>
+                            </a>
+                          )}
+                          {links.googleScholar && (
+                            <a 
+                              href={links.googleScholar} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-muted-foreground hover:text-primary transition-colors"
+                              title="Google Scholar"
+                            >
+                              <span className="text-xs font-bold">Scholar</span>
+                            </a>
+                          )}
+                          {links.youtube && (
+                            <a 
+                              href={links.youtube} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-muted-foreground hover:text-primary transition-colors"
+                              title="YouTube"
+                            >
+                              <Youtube className="h-5 w-5" />
+                            </a>
+                          )}
+                          {links.website && (
+                            <a 
+                              href={links.website} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-muted-foreground hover:text-primary transition-colors"
+                              title="Website"
+                            >
+                              <ExternalLink className="h-5 w-5" />
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
-              )}
+                
+                {/* Right Column - Detailed Info */}
+                <div className="md:col-span-2 space-y-6">
+                  <div>
+                    <h4 className="text-lg font-semibold mb-3">Biography</h4>
+                    <p className="text-foreground/80 leading-relaxed">{bio}</p>
+                  </div>
+                  
+                  {expertise && expertise.length > 0 && (
+                    <div>
+                      <h4 className="text-lg font-semibold mb-3">Expertise</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {expertise.map((skill) => (
+                          <Badge key={skill} variant="secondary" className="bg-secondary/20 text-secondary border-secondary/30">
+                            {skill}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  
+                  {researchInterests && researchInterests.length > 0 && (
+                    <div>
+                      <h4 className="text-lg font-semibold mb-3">Research Interests</h4>
+                      <ul className="space-y-2">
+                        {researchInterests.map((interest, idx) => (
+                          <li key={idx} className="flex items-start gap-2">
+                            <span className="text-primary mt-1.5">•</span>
+                            <span className="text-foreground/80">{interest}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  
+                  {projects && projects.length > 0 && (
+                    <div>
+                      <h4 className="text-lg font-semibold mb-3">Projects</h4>
+                      <div className="space-y-3">
+                        {projects.map((project, idx) => (
+                          <div key={idx} className="bg-muted/50 p-4 rounded-lg">
+                            <p className="text-sm font-semibold text-foreground">{project.title}</p>
+                            <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
-        </DialogContent>
-      </Dialog>
+        </div>
+      )}
     </>
   );
 }
