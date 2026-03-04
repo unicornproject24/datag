@@ -20,6 +20,10 @@
       "use": "@vercel/node"
     },
     {
+      "src": "api/page-content.ts",
+      "use": "@vercel/node"
+    },
+    {
       "src": "api/research-projects.ts",
       "use": "@vercel/node"
     },
@@ -51,6 +55,10 @@
     {
       "src": "/api/health",
       "dest": "/api/health.ts"
+    },
+    {
+      "src": "/api/page-content(.*)",
+      "dest": "/api/page-content.ts"
     },
     {
       "src": "/api/research-projects(.*)",
