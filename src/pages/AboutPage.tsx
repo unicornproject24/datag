@@ -93,7 +93,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
         <div className="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Mission Card */}
-            <div className="bg-white p-10 rounded-3xl soft-shadow hover:shadow-lg transition-all">
+            <div className="bg-white p-10 rounded-3xl soft-shadow">
               <div className="inline-flex items-center gap-2 bg-primary/10 px-4 py-2 rounded-full mb-6">
                 <Heart className="h-4 w-4 text-primary" />
                 <span className="text-sm font-medium text-primary">Our Purpose</span>
@@ -154,10 +154,10 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
               return (
                 <div
                   key={index}
-                  className="bg-white p-8 rounded-2xl soft-shadow hover:shadow-lg hover:-translate-y-2 transition-all text-center group"
+                  className="bg-white p-8 rounded-2xl soft-shadow text-center"
                 >
-                  <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6 group-hover:bg-primary group-hover:scale-110 transition-all">
-                    <Icon className="h-8 w-8 text-primary group-hover:text-white" />
+                  <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
+                    <Icon className="h-8 w-8 text-primary" />
                   </div>
                   <h3 className="text-xl font-bold mb-4 text-foreground">{value.title}</h3>
                   <p className="text-muted-foreground leading-relaxed">{value.description}</p>
@@ -231,7 +231,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
                     <p className="text-muted-foreground max-w-2xl mx-auto">Multiple ways to work together based on your organization's needs</p>
                   </div>
                   <div className="grid md:grid-cols-2 gap-8">
-                    <div className="bg-white p-8 rounded-2xl soft-shadow hover:shadow-lg transition-all">
+                    <div className="bg-white p-8 rounded-2xl soft-shadow">
                       <div className="w-12 h-12 rounded-xl bg-gradient-primary flex items-center justify-center mb-6">
                         <Lightbulb className="h-6 w-6 text-white" />
                       </div>
@@ -261,8 +261,8 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
                         </li>
                       </ul>
                     </div>
-      
-                    <div className="bg-white p-8 rounded-2xl soft-shadow hover:shadow-lg transition-all">
+                  
+                    <div className="bg-white p-8 rounded-2xl soft-shadow">
                       <div className="w-12 h-12 rounded-xl bg-gradient-secondary flex items-center justify-center mb-6">
                         <Users className="h-6 w-6 text-white" />
                       </div>
@@ -292,8 +292,8 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
                         </li>
                       </ul>
                     </div>
-      
-                    <div className="bg-white p-8 rounded-2xl soft-shadow hover:shadow-lg transition-all">
+                  
+                    <div className="bg-white p-8 rounded-2xl soft-shadow">
                       <div className="w-12 h-12 rounded-xl bg-gradient-accent flex items-center justify-center mb-6">
                         <Heart className="h-6 w-6 text-white" />
                       </div>
@@ -323,8 +323,8 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
                         </li>
                       </ul>
                     </div>
-      
-                    <div className="bg-white p-8 rounded-2xl soft-shadow hover:shadow-lg transition-all">
+                  
+                    <div className="bg-white p-8 rounded-2xl soft-shadow">
                       <div className="w-12 h-12 rounded-xl bg-gradient-warm flex items-center justify-center mb-6">
                         <Users className="h-6 w-6 text-white" />
                       </div>
@@ -358,8 +358,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
                 </div>
       
                 {/* CTA Section */}
-                <div className="mt-20 bg-gradient-primary text-white rounded-3xl p-12 text-center soft-shadow group relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-white/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                <div className="mt-20 bg-gradient-primary text-white rounded-3xl p-12 text-center soft-shadow relative overflow-hidden">
                   <div className="relative z-10 max-w-3xl mx-auto">
                     <div className="inline-flex items-center gap-2 bg-white/20 px-4 py-2 rounded-full mb-6">
                       <Heart className="h-4 w-4 text-white" />
@@ -370,7 +369,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
                       We're always open to new partnerships that align with our mission. 
                       Let's explore how we can work together to advance data well-being.
                     </p>
-                    <Button size="lg" className="bg-black text-white  shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all px-8 py-4 text-lg font-medium rounded-xl">
+                    <Button size="lg" className="bg-black text-white shadow-lg px-8 py-4 text-lg font-medium rounded-xl">
                       <Mail className="h-5 w-5 mr-2" />
                       Get in Touch
                     </Button>
