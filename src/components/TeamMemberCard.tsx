@@ -1,8 +1,9 @@
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "./ui/dialog";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { Linkedin, GraduationCap, ExternalLink, ChevronDown, ChevronUp, Youtube } from "lucide-react";
+import { Linkedin, GraduationCap, ExternalLink, Eye, Youtube } from "lucide-react";
 import { useState } from "react";
 
 interface TeamMemberCardProps {
@@ -36,158 +37,194 @@ export function TeamMemberCard({
   links,
   imageUrl 
 }: TeamMemberCardProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const displayName = preferredName || name;
   
   return (
-    <Card className="overflow-hidden hover:shadow-lg transition-shadow border-border">
-      <div className="aspect-square overflow-hidden bg-muted">
-        <ImageWithFallback
-          src={imageUrl}
-          alt={name}
-          className="w-full h-full object-cover"
-        />
-      </div>
-      <CardContent className="p-6">
-        <h3 className="mb-1">{displayName}</h3>
-        {preferredName && preferredName !== name && (
-          <p className="text-sm text-muted-foreground mb-1">{name}</p>
-        )}
-        <p className="text-primary mb-3">{role}</p>
-        
-        {education && (
-          <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
-            <GraduationCap className="h-4 w-4 flex-shrink-0" />
-            <span className="line-clamp-1">{education}</span>
-          </div>
-        )}
-        
-        <p className={`text-foreground/80 mb-4 ${isExpanded ? '' : 'line-clamp-4'}`}>{bio}</p>
-        
-        {/* Expandable Content */}
-        {isExpanded && (
-          <div className="space-y-4 mb-4 animate-in slide-in-from-top-2 duration-200">
-            {researchInterests && researchInterests.length > 0 && (
-              <div>
-                <p className="text-sm font-medium mb-2">Research Interests:</p>
-                <ul className="text-sm text-muted-foreground space-y-1">
-                  {researchInterests.map((interest, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <span className="text-primary mt-1.5">•</span>
-                      <span>{interest}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            
-            {projects && projects.length > 0 && (
-              <div>
-                <p className="text-sm font-medium mb-2">Projects:</p>
-                <div className="space-y-3">
-                  {projects.map((project, idx) => (
-                    <div key={idx} className="bg-muted/50 p-3 rounded-lg">
-                      <p className="text-sm font-medium text-foreground">{project.title}</p>
-                      <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-        
-        <div className="flex flex-wrap gap-2 mb-4">
-          {expertise.slice(0, isExpanded ? undefined : 4).map((skill) => (
-            <Badge key={skill} variant="secondary" className="bg-secondary/20 text-secondary border-secondary/30">
-              {skill}
-            </Badge>
-          ))}
-          {!isExpanded && expertise.length > 4 && (
-            <Badge variant="outline" className="text-xs">+{expertise.length - 4} more</Badge>
-          )}
+    <>
+      <Card className="overflow-hidden hover:shadow-lg transition-shadow border-border cursor-pointer group" onClick={() => setIsDialogOpen(true)}>
+        <div className="aspect-square overflow-hidden bg-muted">
+          <ImageWithFallback
+            src={imageUrl}
+            alt={name}
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          />
         </div>
-        
-        {/* Toggle Button */}
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="w-full mb-3 text-muted-foreground hover:text-foreground"
-        >
-          {isExpanded ? (
-            <>
-              <ChevronUp className="h-4 w-4 mr-2" />
-              Show Less
-            </>
-          ) : (
-            <>
-              <ChevronDown className="h-4 w-4 mr-2" />
-              View More
-            </>
+        <CardContent className="p-4 text-center">
+          <h3 className="font-semibold text-lg mb-1">{displayName}</h3>
+          {preferredName && preferredName !== name && (
+            <p className="text-xs text-muted-foreground mb-1">{name}</p>
           )}
-        </Button>
-        
-        {links && (links.linkedIn || links.orcid || links.googleScholar || links.website || links.youtube) && (
-          <div className="flex gap-2 pt-3 border-t">
-            {links.linkedIn && (
-              <a 
-                href={links.linkedIn} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                title="LinkedIn"
-              >
-                <Linkedin className="h-5 w-5" />
-              </a>
+          <p className="text-sm text-primary mb-3">{role}</p>
+          
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsDialogOpen(true);
+            }}
+            className="w-full gap-2"
+          >
+            <Eye className="h-4 w-4" />
+            View Profile
+          </Button>
+        </CardContent>
+      </Card>
+
+      {/* Dialog with Full Details */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold">{displayName}</DialogTitle>
+            {preferredName && preferredName !== name && (
+              <DialogDescription className="text-base">{name}</DialogDescription>
             )}
-            {links.orcid && (
-              <a 
-                href={links.orcid} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                title="ORCID"
-              >
-                <span className="text-xs font-bold">ORCID</span>
-              </a>
-            )}
-            {links.googleScholar && (
-              <a 
-                href={links.googleScholar} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                title="Google Scholar"
-              >
-                <span className="text-xs font-bold">Scholar</span>
-              </a>
-            )}
-            {links.youtube && (
-              <a 
-                href={links.youtube} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                title="YouTube"
-              >
-                <Youtube className="h-5 w-5" />
-              </a>
-            )}
-            {links.website && (
-              <a 
-                href={links.website} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-primary transition-colors"
-                title="Website"
-              >
-                <ExternalLink className="h-5 w-5" />
-              </a>
-            )}
+          </DialogHeader>
+          
+          <div className="grid md:grid-cols-3 gap-6 mt-4">
+            {/* Left Column - Image & Quick Info */}
+            <div className="md:col-span-1 space-y-4">
+              <div className="aspect-square rounded-lg overflow-hidden bg-muted">
+                <ImageWithFallback
+                  src={imageUrl}
+                  alt={name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              
+              <div className="space-y-3">
+                <div>
+                  <p className="text-sm font-semibold mb-2">Position</p>
+                  <p className="text-sm text-primary">{role}</p>
+                </div>
+                
+                {education && (
+                  <div>
+                    <div className="flex items-center gap-2 mb-2">
+                      <GraduationCap className="h-4 w-4 text-primary" />
+                      <p className="text-sm font-semibold">Education</p>
+                    </div>
+                    <p className="text-sm text-muted-foreground">{education}</p>
+                  </div>
+                )}
+                
+                {links && (links.linkedIn || links.orcid || links.googleScholar || links.website || links.youtube) && (
+                  <div>
+                    <p className="text-sm font-semibold mb-2">Connect</p>
+                    <div className="flex flex-wrap gap-2">
+                      {links.linkedIn && (
+                        <a 
+                          href={links.linkedIn} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground hover:text-primary transition-colors"
+                          title="LinkedIn"
+                        >
+                          <Linkedin className="h-5 w-5" />
+                        </a>
+                      )}
+                      {links.orcid && (
+                        <a 
+                          href={links.orcid} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground hover:text-primary transition-colors"
+                          title="ORCID"
+                        >
+                          <span className="text-xs font-bold">ORCID</span>
+                        </a>
+                      )}
+                      {links.googleScholar && (
+                        <a 
+                          href={links.googleScholar} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground hover:text-primary transition-colors"
+                          title="Google Scholar"
+                        >
+                          <span className="text-xs font-bold">Scholar</span>
+                        </a>
+                      )}
+                      {links.youtube && (
+                        <a 
+                          href={links.youtube} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground hover:text-primary transition-colors"
+                          title="YouTube"
+                        >
+                          <Youtube className="h-5 w-5" />
+                        </a>
+                      )}
+                      {links.website && (
+                        <a 
+                          href={links.website} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-muted-foreground hover:text-primary transition-colors"
+                          title="Website"
+                        >
+                          <ExternalLink className="h-5 w-5" />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            {/* Right Column - Detailed Info */}
+            <div className="md:col-span-2 space-y-6">
+              <div>
+                <h4 className="text-lg font-semibold mb-3">Biography</h4>
+                <p className="text-foreground/80 leading-relaxed">{bio}</p>
+              </div>
+              
+              {expertise && expertise.length > 0 && (
+                <div>
+                  <h4 className="text-lg font-semibold mb-3">Expertise</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {expertise.map((skill) => (
+                      <Badge key={skill} variant="secondary" className="bg-secondary/20 text-secondary border-secondary/30">
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+              
+              {researchInterests && researchInterests.length > 0 && (
+                <div>
+                  <h4 className="text-lg font-semibold mb-3">Research Interests</h4>
+                  <ul className="space-y-2">
+                    {researchInterests.map((interest, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="text-primary mt-1.5">•</span>
+                        <span className="text-foreground/80">{interest}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              
+              {projects && projects.length > 0 && (
+                <div>
+                  <h4 className="text-lg font-semibold mb-3">Projects</h4>
+                  <div className="space-y-3">
+                    {projects.map((project, idx) => (
+                      <div key={idx} className="bg-muted/50 p-4 rounded-lg">
+                        <p className="text-sm font-semibold text-foreground">{project.title}</p>
+                        <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-        )}
-      </CardContent>
-    </Card>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
