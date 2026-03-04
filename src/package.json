@@ -1,7 +1,7 @@
 {
   "name": "DaWg-website",
   "version": "1.0.1",
-  "description": "Data Well-being Group (DaWg) research team website",
+  "description": "Data wellbeing Group (DaWg) research team website",
   "type": "module",
   "scripts": {
     "dev": "vite",

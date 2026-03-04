@@ -15,7 +15,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
         <div className="absolute inset-0">
           <img
             src="/images/inspa-makers--BCd_TrrhGs-unsplash.jpg"
-            alt="Data Well-being"
+            alt="Data wellbeing"
             className="w-full h-full object-cover"
             onLoad={() => console.log("✅ Hero image loaded successfully")}
             onError={(e) => {
@@ -45,7 +45,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
           </h1>
 
           <p className="text-lg sm:text-xl mb-10 max-w-3xl mx-auto opacity-90 leading-relaxed animate-slide-up" style={{animationDelay: "0.2s"}}>
-            Advancing research at the intersection of data science, technology ethics, and human well-being. 
+            Advancing research at the intersection of data science, technology ethics, and human wellbeing. 
             We develop frameworks, tools, and insights to ensure data serves people's best interests.
           </p>
 
@@ -157,7 +157,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               Making a Difference
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Our research and initiatives are creating positive change in data well-being
+              Our research and initiatives are creating positive change in data wellbeing
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -211,8 +211,8 @@ export function HomePage({ onNavigate }: HomePageProps) {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { icon: Lightbulb, title: "About Us", desc: "Learn about our mission to advance ethical data science and human well-being", page: "about", color: "primary" },
-              { icon: Users, title: "Our Team", desc: "Meet the researchers and experts dedicated to data well-being", page: "team", color: "secondary" },
+              { icon: Lightbulb, title: "About Us", desc: "Learn about our mission to advance ethical data science and human wellbeing", page: "about", color: "primary" },
+              { icon: Users, title: "Our Team", desc: "Meet the researchers and experts dedicated to data wellbeing", page: "team", color: "secondary" },
               { icon: BookOpen, title: "Research", desc: "Explore our cutting-edge projects and publications", page: "research", color: "accent" },
               { icon: Heart, title: "Blog", desc: "Read insights and perspectives from our team members", page: "blog", color: "warm" },
               { icon: Handshake, title: "Partners", desc: "Discover our collaborators across academia, industry, and community", page: "partners", color: "primary" }
@@ -252,7 +252,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               Join Us in Shaping the Future
             </h2>
             <p className="text-lg text-white/90 mb-10 leading-relaxed">
-              Whether you're a researcher, organization, or individual interested in data well-being, we'd love to connect with you.
+              Whether you're a researcher, organization, or individual interested in data wellbeing, we'd love to connect with you.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 

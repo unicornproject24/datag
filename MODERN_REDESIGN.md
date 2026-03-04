@@ -1,7 +1,7 @@
 # 🎨 Modern Website Redesign - Complete
 
 ## Overview
-The Data Well-being Group website has been completely redesigned with a truly modern, elegant aesthetic featuring sophisticated grid systems, contemporary design patterns, and premium visual elements.
+The Data wellbeing Group website has been completely redesigned with a truly modern, elegant aesthetic featuring sophisticated grid systems, contemporary design patterns, and premium visual elements.
 
 ## ✨ New Design Features
 

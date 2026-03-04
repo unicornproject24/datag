@@ -2,7 +2,7 @@
 
 ## 🎯 What Has Been Built
 
-A complete, production-ready multi-page website for the Data Well-being Group (DaWg) with:
+A complete, production-ready multi-page website for the Data wellbeing Group (DaWg) with:
 
 ### ✨ Features Delivered
 
@@ -214,7 +214,7 @@ Background (Natural):     #FAF9F6
 **Components:**
 - Mission statement
 - Vision section
-- Core values (Data Rights, Transparency, Well-being)
+- Core values (Data Rights, Transparency, wellbeing)
 - Interactive FAQ accordion
 - Call-to-action for collaboration
 
@@ -444,7 +444,7 @@ Hide admin panel link and keep URL private - provides basic security through obs
 
 ## 🎊 Congratulations!
 
-You now have a complete, professional website for the Data Well-being Group with:
+You now have a complete, professional website for the Data wellbeing Group with:
 
 ✨ **Beautiful Design** - Calming pastel colors and modern aesthetics
 ⚡ **Easy Management** - No-code content updates via admin panel
@@ -457,4 +457,4 @@ You now have a complete, professional website for the Data Well-being Group with
 
 ---
 
-Built with care for the Data Well-being Group 🐕
+Built with care for the Data wellbeing Group 🐕

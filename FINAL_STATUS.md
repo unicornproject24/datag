@@ -2,7 +2,7 @@
 
 ## Status: FULLY FUNCTIONAL
 
-The Data Well-being Group website has been successfully modernized with all Tailwind CSS classes now working correctly.
+The Data wellbeing Group website has been successfully modernized with all Tailwind CSS classes now working correctly.
 
 ## What Was Fixed
 
@@ -65,7 +65,7 @@ The Data Well-being Group website has been successfully modernized with all Tail
 ### Build Configuration
 ```json
 {
-  "name": "Data Well-being Group Webpage",
+  "name": "Data wellbeing Group Webpage",
   "type": "module",
   "dependencies": {
     "tailwindcss": "^4.1.17",

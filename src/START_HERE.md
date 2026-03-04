@@ -2,7 +2,7 @@
 
 ## 📍 You Are Here
 
-You've just received a complete, production-ready website for the Data Well-being Group. This document will guide you to the right resources based on what you want to do.
+You've just received a complete, production-ready website for the Data wellbeing Group. This document will guide you to the right resources based on what you want to do.
 
 ---
 

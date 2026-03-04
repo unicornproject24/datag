@@ -162,7 +162,7 @@ export function BlogPage() {
             Insights & Ideas
           </h1>
           <p className="text-lg sm:text-xl text-white/90 mb-10 leading-relaxed max-w-3xl mx-auto">
-            Our team members share thoughts, findings, and perspectives on data well-being. 
+            Our team members share thoughts, findings, and perspectives on data wellbeing. 
             These posts are open for anyone to explore and engage with.
           </p>
 
@@ -216,7 +216,7 @@ export function BlogPage() {
               </div>
               <h2 className="text-3xl font-bold text-foreground mb-4">No Blog Posts Found</h2>
               <p className="text-lg text-muted-foreground max-w-md mx-auto">
-                Check back soon for insights and perspectives from our team on data well-being and ethical AI.
+                Check back soon for insights and perspectives from our team on data wellbeing and ethical AI.
               </p>
             </div>
           )}

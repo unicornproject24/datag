@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-This document outlines the requirements for migrating the Data Well-being Group Webpage from Supabase to Prisma with PostgreSQL, including the implementation of a role-based admin approval system for team members.
+This document outlines the requirements for migrating the Data wellbeing Group Webpage from Supabase to Prisma with PostgreSQL, including the implementation of a role-based admin approval system for team members.
 
 ## Current System Analysis
 

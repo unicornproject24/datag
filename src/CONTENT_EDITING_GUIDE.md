@@ -137,7 +137,7 @@ When you first access the admin panel:
 ### Writing Good Descriptions
 
 ✅ **Good:**
-"Developing comprehensive metrics to assess individual and collective digital well-being across various platforms and contexts."
+"Developing comprehensive metrics to assess individual and collective digital wellbeing across various platforms and contexts."
 
 ❌ **Avoid:**
 "This project is about metrics."

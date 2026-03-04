@@ -17,7 +17,7 @@
 ## File Structure
 
 ```
-Data Well-being Group Webpage/
+Data wellbeing Group Webpage/
 ├── public/
 │   └── images/
 │       └── hero.jpg  ← Put your image here
@@ -41,7 +41,7 @@ If you want to use a different filename (e.g., `my-image.png`):
 - **Size**: At least 800x800 pixels
 - **Format**: JPG for photos, PNG for graphics with transparency
 - **File Size**: Keep under 500KB for fast loading
-- **Content**: Choose an image that represents data well-being, research, or technology
+- **Content**: Choose an image that represents data wellbeing, research, or technology
 
 ## Current Setup
 

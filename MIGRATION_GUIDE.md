@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide provides step-by-step instructions for migrating the Data Well-being Group Webpage from Supabase key-value storage to Prisma with PostgreSQL.
+This guide provides step-by-step instructions for migrating the Data wellbeing Group Webpage from Supabase key-value storage to Prisma with PostgreSQL.
 
 ## Prerequisites
 
@@ -87,8 +87,8 @@ async function main() {
   // Create initial settings
   await prisma.setting.createMany({
     data: [
-      { key: 'site_name', value: 'Data Well-being Group', description: 'Website name' },
-      { key: 'site_description', value: 'Advancing research at the intersection of data science and human well-being', description: 'Site description' },
+      { key: 'site_name', value: 'Data wellbeing Group', description: 'Website name' },
+      { key: 'site_description', value: 'Advancing research at the intersection of data science and human wellbeing', description: 'Site description' },
       { key: 'contact_email', value: 'info@datawellbeing.org', description: 'Main contact email' },
       { key: 'maintenance_mode', value: 'false', description: 'Maintenance mode status' }
     ]

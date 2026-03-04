@@ -1,6 +1,6 @@
 # DaWg Website
 
-A modern, responsive website for the Data Well-being Group (DaWg) research team, featuring a clean design with pastel colors, content management system, and multi-page navigation.
+A modern, responsive website for the Data wellbeing Group (DaWg) research team, featuring a clean design with pastel colors, content management system, and multi-page navigation.
 
 ## ✨ Features
 
@@ -93,7 +93,7 @@ This is a custom website for DaWg. For questions or issues:
 
 ## 📄 License
 
-All rights reserved - Data Well-being Group
+All rights reserved - Data wellbeing Group
 
 ---
 

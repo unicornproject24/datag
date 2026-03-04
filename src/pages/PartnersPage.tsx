@@ -41,7 +41,7 @@ export function PartnersPage() {
                   </h1>
                   
                   <p className="text-lg text-white/90 leading-relaxed">
-                    Connect with researchers, professionals, and enthusiasts passionate about data well-being and ethical technology.
+                    Connect with researchers, professionals, and enthusiasts passionate about data wellbeing and ethical technology.
                   </p>
                 </div>
 
@@ -98,7 +98,7 @@ export function PartnersPage() {
                 </div>
 
                 <p className="text-foreground/70 leading-relaxed">
-                  Whether you're a researcher, student, professional, or simply passionate about data ethics and well-being, 
+                  Whether you're a researcher, student, professional, or simply passionate about data ethics and wellbeing, 
                   our community welcomes you. Together, we're shaping a more human-centered approach to technology.
                 </p>
               </div>

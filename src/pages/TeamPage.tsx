@@ -48,7 +48,7 @@ export function TeamPage() {
             </h1>
             <p className="text-lg sm:text-xl text-white/90 leading-relaxed max-w-3xl mx-auto">
               A diverse group of researchers, data scientists, and ethicists dedicated to 
-              advancing data well-being. Our interdisciplinary team brings together expertise 
+              advancing data wellbeing. Our interdisciplinary team brings together expertise 
               from computer science, psychology, public policy, and design.
             </p>
           </div>

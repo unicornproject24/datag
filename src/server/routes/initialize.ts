@@ -17,14 +17,14 @@ router.post('/', async (req, res) => {
       {
         name: 'Dr. Sarah Chen',
         role: 'Principal Investigator',
-        bio: 'Leading research in data ethics and digital well-being with 15+ years of experience.',
+        bio: 'Leading research in data ethics and digital wellbeing with 15+ years of experience.',
         expertise: ['Data Ethics', 'Privacy', 'AI Policy'],
         imageUrl: 'https://images.unsplash.com/photo-1758685734503-58a8accc24e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjByZXNlYXJjaGVyJTIwcG9ydHJhaXR8ZW58MXx8fHwxNzYxOTA3NzA4fDA&ixlib=rb-4.1.0&q=80&w=1080'
       },
       {
         name: 'Dr. Marcus Johnson',
         role: 'Senior Researcher',
-        bio: 'Specializes in quantitative methods for measuring digital well-being outcomes.',
+        bio: 'Specializes in quantitative methods for measuring digital wellbeing outcomes.',
         expertise: ['Statistics', 'Survey Design', 'Behavioral Analysis'],
         imageUrl: 'https://images.unsplash.com/photo-1758685734503-58a8accc24e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjByZXNlYXJjaGVyJTIwcG9ydHJhaXR8ZW58MXx8fHwxNzYxOTA3NzA4fDA&ixlib=rb-4.1.0&q=80&w=1080'
       },
@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
       {
         name: 'Alex Kim',
         role: 'PhD Candidate',
-        bio: 'Researching the impact of social media on adolescent well-being.',
+        bio: 'Researching the impact of social media on adolescent wellbeing.',
         expertise: ['Social Media', 'Youth Studies', 'Mixed Methods'],
         imageUrl: 'https://images.unsplash.com/photo-1758685734503-58a8accc24e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjByZXNlYXJjaGVyJTIwcG9ydHJhaXR8ZW58MXx8fHwxNzYxOTA3NzA4fDA&ixlib=rb-4.1.0&q=80&w=1080'
       },
@@ -69,7 +69,7 @@ router.post('/', async (req, res) => {
       },
       {
         title: 'Measuring What Matters: Beyond Screen Time',
-        excerpt: 'Screen time alone doesn\'t tell us much about digital well-being. Here\'s what we should be measuring instead.',
+        excerpt: 'Screen time alone doesn\'t tell us much about digital wellbeing. Here\'s what we should be measuring instead.',
         author: 'Dr. Marcus Johnson',
         authorImage: 'https://images.unsplash.com/photo-1758685734503-58a8accc24e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjByZXNlYXJjaGVyJTIwcG9ydHJhaXR8ZW58MXx8fHwxNzYxOTA3NzA4fDA&ixlib=rb-4.1.0&q=80&w=1080',
         date: new Date('2025-10-18'),
@@ -85,7 +85,7 @@ router.post('/', async (req, res) => {
       },
       {
         title: 'Social Media and Teen Mental Health: Preliminary Findings',
-        excerpt: 'Early insights from our longitudinal study reveal nuanced patterns in how different social media behaviors affect adolescent well-being.',
+        excerpt: 'Early insights from our longitudinal study reveal nuanced patterns in how different social media behaviors affect adolescent wellbeing.',
         author: 'Alex Kim',
         authorImage: 'https://images.unsplash.com/photo-1758685734503-58a8accc24e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjByZXNlYXJjaGVyJTIwcG9ydHJhaXR8ZW58MXx8fHwxNzYxOTA3NzA4fDA&ixlib=rb-4.1.0&q=80&w=1080',
         date: new Date('2025-10-05'),
@@ -118,10 +118,10 @@ router.post('/', async (req, res) => {
     // Initialize research projects
     const projects = [
       {
-        title: 'Digital Well-being Metrics Framework',
-        description: 'Developing comprehensive metrics to assess individual and collective digital well-being across various platforms and contexts.',
+        title: 'Digital wellbeing Metrics Framework',
+        description: 'Developing comprehensive metrics to assess individual and collective digital wellbeing across various platforms and contexts.',
         status: 'Active',
-        tags: ['Metrics', 'Framework', 'Well-being'],
+        tags: ['Metrics', 'Framework', 'wellbeing'],
         imageUrl: 'https://images.unsplash.com/photo-1758626101945-ed0068aad9f9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkYXRhJTIwc2NpZW5jZSUyMHJlc2VhcmNofGVufDF8fHx8MTc2MTkzODcxNXww&ixlib=rb-4.1.0&q=80&w=1080'
       },
       {
@@ -177,7 +177,7 @@ router.post('/', async (req, res) => {
       {
         name: 'Tech for Good Foundation',
         type: 'Funding Partner',
-        description: 'Supporting our privacy-preserving data collection project and youth digital well-being initiatives.'
+        description: 'Supporting our privacy-preserving data collection project and youth digital wellbeing initiatives.'
       },
       {
         name: 'Global Privacy Alliance',
@@ -185,7 +185,7 @@ router.post('/', async (req, res) => {
         description: 'Joint initiatives on data ethics standards and international privacy policy development.'
       },
       {
-        name: 'Youth Well-being Coalition',
+        name: 'Youth wellbeing Coalition',
         type: 'Community Partner',
         description: 'Co-designing research with young people to ensure their voices shape digital policy.'
       },
@@ -202,7 +202,7 @@ router.post('/', async (req, res) => {
       {
         name: 'University Research Network',
         type: 'Academic Partner',
-        description: 'Multi-institutional collaboration on digital well-being metrics and longitudinal studies.'
+        description: 'Multi-institutional collaboration on digital wellbeing metrics and longitudinal studies.'
       },
       {
         name: 'Policy Impact Center',

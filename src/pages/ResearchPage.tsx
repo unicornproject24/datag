@@ -197,7 +197,7 @@ export function ResearchPage() {
                 </div>
                 <h2 className="text-3xl font-bold text-foreground mb-4">No Research Projects Found</h2>
                 <p className="text-lg text-muted-foreground max-w-md mx-auto">
-                  We're currently working on exciting research projects. Check back soon to see our latest work in data well-being and ethical AI.
+                  We're currently working on exciting research projects. Check back soon to see our latest work in data wellbeing and ethical AI.
                 </p>
               </div>
             )}
@@ -215,7 +215,7 @@ export function ResearchPage() {
                 <span className="text-sm font-medium text-accent">Our Impact</span>
               </div>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">Research Impact</h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Making meaningful contributions to data well-being and ethical technology</p>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Making meaningful contributions to data wellbeing and ethical technology</p>
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
               <div className="bg-white p-6 rounded-2xl soft-shadow hover:shadow-lg hover:-translate-y-2 transition-all text-center group">

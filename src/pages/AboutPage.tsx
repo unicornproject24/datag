@@ -35,7 +35,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
     {
       icon: Users,
       title: "Human-Centered",
-      description: "Technology designed with people's well-being in mind"
+      description: "Technology designed with people's wellbeing in mind"
     },
     {
       icon: Target,
@@ -46,7 +46,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
 
   const researchAreas = [
     "Privacy-preserving data collection methods",
-    "Digital well-being metrics and frameworks",
+    "Digital wellbeing metrics and frameworks",
     "Ethical AI and algorithmic transparency",
     "Social media and mental health",
     "Data governance and policy development"
@@ -65,7 +65,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             Data and Wellbeing Group
           </h1>
           <p className="text-lg sm:text-xl mb-10 leading-relaxed max-w-3xl mx-auto text-white/90">
-            Advancing research at the intersection of data science, technology ethics, and human well-being. 
+            Advancing research at the intersection of data science, technology ethics, and human wellbeing. 
             We develop frameworks, tools, and insights to ensure data serves people's best interests.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -102,7 +102,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
               <p className="text-muted-foreground mb-6 leading-relaxed">
                 The Data and Wellbeing Group (DaWg) is dedicated to understanding and improving the relationship
                 between data practices and human flourishing. We believe that data science should be conducted 
-                with people's well-being at the center.
+                with people's wellbeing at the center.
               </p>
               <p className="text-muted-foreground leading-relaxed">
                 Through rigorous research, ethical frameworks, and practical tools, we work to ensure that 
@@ -238,7 +238,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
                       <h3 className="text-xl font-bold text-foreground mb-4">Research Partnerships</h3>
                       <p className="text-muted-foreground mb-6">
                         Joint research projects, data sharing agreements, and co-authored publications 
-                        that advance the field of data well-being.
+                        that advance the field of data wellbeing.
                       </p>
                       <ul className="space-y-3">
                         <li className="flex items-start gap-3">
@@ -268,7 +268,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
                       </div>
                       <h3 className="text-xl font-bold text-foreground mb-4">Advisory Services</h3>
                       <p className="text-muted-foreground mb-6">
-                        Expert consultation on data ethics, privacy, and well-being for organizations 
+                        Expert consultation on data ethics, privacy, and wellbeing for organizations 
                         seeking to improve their practices.
                       </p>
                       <ul className="space-y-3">
@@ -367,7 +367,7 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
                     <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">Interested in Collaborating?</h2>
                     <p className="text-lg text-white/90 mb-10 leading-relaxed max-w-2xl mx-auto">
                       We're always open to new partnerships that align with our mission. 
-                      Let's explore how we can work together to advance data well-being.
+                      Let's explore how we can work together to advance data wellbeing.
                     </p>
                     <Button size="lg" className="bg-black text-white shadow-lg px-8 py-4 text-lg font-medium rounded-xl">
                       <Mail className="h-5 w-5 mr-2" />

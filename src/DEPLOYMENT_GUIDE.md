@@ -1,6 +1,6 @@
 # DaWg Website Deployment Guide
 
-This guide will help you deploy your Data Well-being Group website and set up the content management system.
+This guide will help you deploy your Data wellbeing Group website and set up the content management system.
 
 ## 🚀 Quick Start
 

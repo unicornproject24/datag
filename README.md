@@ -1,7 +1,7 @@
 
-  # Data Well-being Group Webpage
+  # Data wellbeing Group Webpage
 
-  This is a code bundle for Data Well-being Group Webpage. The original project is available at https://www.figma.com/design/kIsWwHRb02bG3QbytmtuJf/Data-Well-being-Group-Webpage.
+  This is a code bundle for Data wellbeing Group Webpage. The original project is available at https://www.figma.com/design/kIsWwHRb02bG3QbytmtuJf/Data-wellbeing-Group-Webpage.
 
   ## Running the code
 
