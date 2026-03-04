@@ -6,11 +6,24 @@ const router = express.Router();
 // Get all team members
 router.get('/', async (req, res) => {
   try {
-    const teamMembers = await prisma.teamMember.findMany();
+    console.log('Fetching team members...');
+    const teamMembers = await prisma.teamMember.findMany({
+      where: {
+        isPublic: true
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+    console.log(`Found ${teamMembers.length} team members`);
     res.json(teamMembers);
   } catch (error) {
     console.error('Error fetching team members:', error);
-    res.status(500).json({ error: 'Failed to fetch team members' });
+    console.error('Error details:', JSON.stringify(error));
+    res.status(500).json({ 
+      error: 'Failed to fetch team members',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 });
 

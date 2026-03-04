@@ -9,6 +9,7 @@ import researchProjectRoutes from './routes/researchProjects.js';
 import partnerRoutes from './routes/partners.js';
 import userRoutes from './routes/users.js';
 import initializeRoutes from './routes/initialize.js';
+import pageContentRoutes from './routes/pageContents.js';
 
 dotenv.config();
 
@@ -43,6 +44,7 @@ app.use('/api/research-projects', researchProjectRoutes);
 app.use('/api/partners', partnerRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/initialize-data', initializeRoutes);
+app.use('/api/page-contents', pageContentRoutes);
 
 
 // Error handling middleware

@@ -10,9 +10,11 @@ interface AboutPageProps {
 export function AboutPage({ onNavigate }: AboutPageProps) {
   const [partners, setPartners] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
+    const [pageContent, setPageContent] = useState<any>({});
   
     useEffect(() => {
       fetchPartners();
+      fetchPageContent();
     }, []);
   
     const fetchPartners = async () => {
@@ -25,6 +27,23 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
       }
       setLoading(false);
     };
+  
+    const fetchPageContent = async () => {
+      try {
+        const res = await fetch('/api/page-contents?pageKey=aboutpage');
+        const data = await res.json();
+        setPageContent(data || {});
+      } catch (error) {
+        console.error('Error fetching about page content:', error);
+      }
+    };
+  
+  // Helper to get content value with fallback
+  const getContent = (section: string, key: string, fallback: string) => {
+    const content = pageContent[section]?.[key];
+    if (!content) return fallback;
+    return typeof content === 'object' ? content.value : content;
+  };
   
   const values = [
     {
@@ -62,17 +81,16 @@ export function AboutPage({ onNavigate }: AboutPageProps) {
             <span className="text-sm font-medium text-white">Our Mission</span>
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-            Data and Wellbeing Group
+            {getContent('hero', 'heroTitle', 'Data and Wellbeing Group')}
           </h1>
           <p className="text-lg sm:text-xl mb-10 leading-relaxed max-w-3xl mx-auto text-white/90">
-            Advancing research at the intersection of data science, technology ethics, and human wellbeing. 
-            We develop frameworks, tools, and insights to ensure data serves people's best interests.
+            {getContent('hero', 'heroDescription', 'Advancing research at the intersection of data science, technology ethics, and human wellbeing. We develop frameworks, tools, and insights to ensure data serves people\'s best interests.')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg"
               onClick={() => onNavigate("research")}
-              className="bg-white text-white hover:bg-white/90 hover:shadow-lg hover:-translate-y-1 transition-all px-8 py-4 text-base font-medium rounded-xl"
+              className="bg-white text-black  hover:shadow-lg hover:-translate-y-1 transition-all px-8 py-4 text-base font-medium rounded-xl"
             >
               <BookOpen className="h-5 w-5 mr-2" />
               Explore Research

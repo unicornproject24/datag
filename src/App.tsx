@@ -47,12 +47,17 @@ export default function App() {
       case "community":
         return <CommunityDashboardPage />;
       case "admin":
-        return <AdminPage />;
+        return <AdminPage />; // Admin has its own layout
       case "home":
       default:
         return <HomePage onNavigate={handleNavigate} />;
     }
   };
+
+  // Admin page has its own layout without Navigation and Footer
+  if (currentPage === "admin") {
+    return <AdminPage />;
+  }
 
   return (
     <div className="min-h-screen flex flex-col">

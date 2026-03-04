@@ -167,3 +167,19 @@ model Partner {
 
   @@map("partners")
 }
+
+// Page content model for editable static pages
+model PageContent {
+  id          String   @id @default(uuid())
+  pageKey     String   // e.g., "homepage", "aboutpage"
+  section     String   // e.g., "hero", "approach", "stats", etc.
+  contentKey  String   // e.g., "title", "description", "stat1_value"
+  contentValue String  @db.Text
+  metadata    Json?    // Additional metadata like image URLs, counts, etc.
+  isPublic    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([pageKey, section, contentKey])
+  @@map("page_contents")
+}

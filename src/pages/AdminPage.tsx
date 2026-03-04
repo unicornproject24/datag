@@ -6,8 +6,10 @@ import { Textarea } from "../components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
 import { Badge } from "../components/ui/badge";
 import { AdvancedEditor } from "../components/admin/AdvancedEditor";
+import { AdminLayout } from "../components/AdminLayout";
+import { PageContentTab } from "../components/PageContentTab";
+import { PageSectionEditor } from "../components/PageSectionEditor";
 import { 
-  Settings, 
   Plus, 
   Edit, 
   Trash2, 
@@ -21,7 +23,6 @@ import {
   Search,
   X,
   ChevronLeft,
-  LogOut,
   CheckCircle,
   XCircle,
   Archive,
@@ -130,22 +131,31 @@ export function AdminPage() {
   const [editingBlogPost, setEditingBlogPost] = useState<BlogPost | null>(null);
   const [showBlogForm, setShowBlogForm] = useState(false);
 
+  // Page Content state
+  const [pageContent, setPageContent] = useState<any>({});
+  const [editingPageSection, setEditingPageSection] = useState<string | null>(null);
+  const [pageContentFormData, setPageContentFormData] = useState<any>({});
+  const [showPageContentForm, setShowPageContentForm] = useState(false);
+  const [selectedPage, setSelectedPage] = useState<'homepage' | 'aboutpage'>('homepage');
+
   const API_BASE = '/api';
 
   const fetchAllData = async () => {
     setDataLoading(true);
     try {
-      const [teamRes, researchRes, usersRes, blogRes] = await Promise.all([
+      const [teamRes, researchRes, usersRes, blogRes, pageContentRes] = await Promise.all([
         fetch(`${API_BASE}/team-members`),
         fetch(`${API_BASE}/research-projects`),
         fetch(`${API_BASE}/users`),
-        fetch(`${API_BASE}/blog-posts/admin`)
+        fetch(`${API_BASE}/blog-posts/admin`),
+        fetch(`${API_BASE}/page-contents`)
       ]);
 
       const teamData = await teamRes.json();
       const researchData = await researchRes.json();
       const usersData = await usersRes.json();
       const blogData = await blogRes.json();
+      const pageContentData = await pageContentRes.json();
 
       const team = Array.isArray(teamData) ? teamData : teamData.data || [];
       const research = Array.isArray(researchData) ? researchData : researchData.data || [];
@@ -156,6 +166,7 @@ export function AdminPage() {
       setResearchProjects(research);
       setUsers(allUsers);
       setBlogPosts(posts);
+      setPageContent(pageContentData || {});
 
       // Calculate stats
       const published = research.filter((r: ResearchProject) => r.isPublic).length;
@@ -447,6 +458,65 @@ export function AdminPage() {
     }
   };
 
+  // Page Content Management Functions
+  const handleLoadPageContent = async (pageKey: string) => {
+    try {
+      const res = await fetch(`${API_BASE}/page-contents?pageKey=${pageKey}`);
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.error('Error loading page content:', error);
+      return {};
+    }
+  };
+
+  const handleSavePageContent = async (updates: any[]) => {
+    try {
+      const res = await fetch(`${API_BASE}/page-contents`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+        },
+        body: JSON.stringify({ updates })
+      });
+      
+      if (res.ok) {
+        await fetchAllData();
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error saving page content:', error);
+      return false;
+    }
+  };
+
+  const handleEditPageSection = (section: string, currentData: any) => {
+    setEditingPageSection(section);
+    setPageContentFormData(currentData);
+    setShowPageContentForm(true);
+  };
+
+  const handleUpdatePageSection = async () => {
+    if (!editingPageSection) return;
+    
+    const updates = Object.keys(pageContentFormData).map((key) => ({
+      pageKey: selectedPage,
+      section: editingPageSection,
+      contentKey: key,
+      contentValue: pageContentFormData[key].value || pageContentFormData[key],
+      metadata: pageContentFormData[key].metadata || null
+    }));
+
+    const success = await handleSavePageContent(updates);
+    if (success) {
+      setShowPageContentForm(false);
+      setEditingPageSection(null);
+      setPageContentFormData({});
+    }
+  };
+
   if (authLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-background to-soft-blue flex items-center justify-center">
@@ -493,83 +563,23 @@ export function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-soft-blue">
-      {/* Header */}
-      <header className="border-b bg-white/80 backdrop-blur-sm">
-        <div className="container mx-auto px-4 sm:px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3 sm:gap-4">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-primary flex items-center justify-center flex-shrink-0">
-                <LayoutDashboard className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-              </div>
-              <div className="min-w-0">
-                <h1 className="text-lg sm:text-2xl font-bold text-foreground truncate">Admin Dashboard</h1>
-                <p className="text-xs sm:text-sm text-muted-foreground truncate">Welcome, {user?.name}</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2 sm:gap-4">
-              <Badge className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm ${user?.role === 'ADMIN' ? 'bg-primary text-white' : 'bg-secondary text-white'}`}>
-                {user?.role}
-              </Badge>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={logout}
-                className="rounded-xl border-border hover:shadow-md hover:-translate-y-1 transition-all hidden sm:flex"
-              >
-                <LogOut className="h-4 w-4 mr-2" />
-                Logout
-              </Button>
-              <Button 
-                variant="outline" 
-                size="icon"
-                onClick={logout}
-                className="rounded-xl border-border hover:shadow-md transition-all sm:hidden"
-              >
-                <LogOut className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 h-auto gap-1">
-            <TabsTrigger value="dashboard" className="text-xs sm:text-sm py-2 px-1 sm:px-3">
-              <LayoutDashboard className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
-              <span className="hidden sm:inline">Dashboard</span>
-              <span className="sm:hidden">Dash</span>
-            </TabsTrigger>
-            <TabsTrigger value="research" className="text-xs sm:text-sm py-2 px-1 sm:px-3">
-              <FileText className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
-              <span className="hidden sm:inline">Research</span>
-              <span className="sm:hidden">Research</span>
-            </TabsTrigger>
-            <TabsTrigger value="blog" className="text-xs sm:text-sm py-2 px-1 sm:px-3">
-              <BookOpen className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
-              <span className="hidden sm:inline">Blog</span>
-              <span className="sm:hidden">Blog</span>
-            </TabsTrigger>
-            <TabsTrigger value="team" className="text-xs sm:text-sm py-2 px-1 sm:px-3">
-              <Users className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
-              <span className="hidden sm:inline">Team</span>
-              <span className="sm:hidden">Team</span>
-            </TabsTrigger>
-            {isAdmin && (
-              <TabsTrigger value="users" className="text-xs sm:text-sm py-2 px-1 sm:px-3">
-                <UserPlus className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
-                <span className="hidden sm:inline">Users</span>
-                <span className="sm:hidden">Users</span>
-              </TabsTrigger>
-            )}
-            <TabsTrigger value="settings" className="text-xs sm:text-sm py-2 px-1 sm:px-3">
-              <Settings className="h-3 w-3 sm:h-4 sm:w-4 sm:mr-2" />
-              <span className="hidden sm:inline">Settings</span>
-              <span className="sm:hidden">Settings</span>
-            </TabsTrigger>
+    <AdminLayout 
+      currentView={activeTab} 
+      onViewChange={setActiveTab}
+      onLogout={logout}
+      isAdmin={isAdmin}
+    >
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <div className="hidden">
+          <TabsList>
+            <TabsTrigger value="dashboard">Dashboard</TabsTrigger>
+            <TabsTrigger value="research">Research</TabsTrigger>
+            <TabsTrigger value="blog">Blog</TabsTrigger>
+            <TabsTrigger value="team">Team</TabsTrigger>
+            {isAdmin && <TabsTrigger value="users">Users</TabsTrigger>}
+            <TabsTrigger value="settings">Settings</TabsTrigger>
           </TabsList>
+        </div>
 
           {/* Dashboard Tab */}
           <TabsContent value="dashboard" className="space-y-6">
@@ -1238,6 +1248,30 @@ export function AdminPage() {
             </TabsContent>
           )}
 
+          {/* Page Content Tab */}
+          <TabsContent value="pagecontent" className="space-y-6">
+            {showPageContentForm && editingPageSection ? (
+              <PageSectionEditor
+                section={editingPageSection}
+                pageName={selectedPage === 'homepage' ? 'Home' : 'About'}
+                initialData={pageContentFormData}
+                onSave={handleUpdatePageSection}
+                onCancel={() => {
+                  setShowPageContentForm(false);
+                  setEditingPageSection(null);
+                  setPageContentFormData({});
+                }}
+              />
+            ) : (
+              <PageContentTab
+                pageContent={pageContent}
+                selectedPage={selectedPage}
+                onSelectPage={setSelectedPage}
+                onEditSection={(section, data) => handleEditPageSection(section, data)}
+              />
+            )}
+          </TabsContent>
+
           {/* Settings Tab */}
           <TabsContent value="settings" className="space-y-6">
             <Card className="border shadow-lg">
@@ -1317,8 +1351,7 @@ export function AdminPage() {
             </Card>
           </TabsContent>
         </Tabs>
-      </div>
-    </div>
+      </AdminLayout>
   );
 }
 
@@ -2707,4 +2740,4 @@ const LoginForm = ({ onLogin, loading, error }: { onLogin: (email: string, passw
       </Button>
     </form>
   );
-}
+} 

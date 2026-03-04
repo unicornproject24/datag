@@ -6,13 +6,22 @@ const router = express.Router();
 // Get all blog posts
 router.get('/', async (req, res) => {
   try {
+    console.log('Fetching blog posts...');
     const blogPosts = await prisma.blogPost.findMany({
+      where: {
+        isPublic: true
+      },
       orderBy: { publishedAt: 'desc' }
     });
+    console.log(`Found ${blogPosts.length} blog posts`);
     res.json(blogPosts);
   } catch (error) {
     console.error('Error fetching blog posts:', error);
-    res.status(500).json({ error: 'Failed to fetch blog posts' });
+    console.error('Error details:', JSON.stringify(error));
+    res.status(500).json({ 
+      error: 'Failed to fetch blog posts',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 });
 

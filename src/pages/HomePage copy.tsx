@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Button } from "../components/ui/button";
 import { Card } from "../components/ui/card";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
@@ -8,52 +7,14 @@ interface HomePageProps {
   onNavigate: (page: string) => void;
 }
 
-interface PageContentData {
-  value?: string;
-  metadata?: {
-    imageUrl?: string;
-  };
-}
-
 export function HomePage({ onNavigate }: HomePageProps) {
-  const [pageContent, setPageContent] = useState<any>({});
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Fetch page content from API
-    const fetchContent = async () => {
-      try {
-        const res = await fetch('/api/page-contents?pageKey=homepage');
-        const data = await res.json();
-        setPageContent(data || {});
-      } catch (error) {
-        console.error('Error fetching homepage content:', error);
-      }
-      setLoading(false);
-    };
-
-    fetchContent();
-  }, []);
-
-  // Helper to get content value with fallback
-  const getContent = (section: string, key: string, fallback: string) => {
-    const content = pageContent[section]?.[key];
-    if (!content) return fallback;
-    return typeof content === 'object' ? content.value : content;
-  };
-
-  const getImageUrl = (section: string, key: string, fallback: string) => {
-    const content = pageContent[section]?.[key];
-    if (!content?.metadata?.imageUrl) return fallback;
-    return content.metadata.imageUrl;
-  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-soft-blue via-background to-soft-green">
       {/* Hero Section - Full Screen with Image */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src={getImageUrl('hero', 'heroImage', '/images/inspa-makers--BCd_TrrhGs-unsplash.jpg')}
+            src="/images/inspa-makers--BCd_TrrhGs-unsplash.jpg"
             alt="Data wellbeing"
             className="w-full h-full object-cover"
             onLoad={() => console.log("✅ Hero image loaded successfully")}
@@ -80,11 +41,12 @@ export function HomePage({ onNavigate }: HomePageProps) {
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-6 max-w-4xl mx-auto leading-tight animate-slide-up">
-            Where Data Meets <span className="text-secondary">{getContent('hero', 'heroTitle', 'Human Flourishing')}</span>
+            Where Data Meets <span className="text-secondary">Human Flourishing</span>
           </h1>
 
           <p className="text-lg sm:text-xl mb-10 max-w-3xl mx-auto opacity-90 leading-relaxed animate-slide-up" style={{animationDelay: "0.2s"}}>
-            {getContent('hero', 'heroDescription', 'Advancing research at the intersection of data science, technology ethics, and human wellbeing. We develop frameworks, tools, and insights to ensure data serves people\'s best interests.')}
+            Advancing research at the intersection of data science, technology ethics, and human wellbeing. 
+            We develop frameworks, tools, and insights to ensure data serves people's best interests.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16 animate-slide-up" style={{animationDelay: "0.4s"}}>
@@ -93,7 +55,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               onClick={() => onNavigate("about")}
               className="bg-gradient-primary text-white hover:shadow-lg hover:-translate-y-1 transition-all px-8 py-4 text-base font-medium rounded-xl"
             >
-              {getContent('hero', 'ctaButton1Text', 'Learn More')}
+              Learn More
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button 
@@ -102,7 +64,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               onClick={() => onNavigate("research")}
               className="border-2 border-white text-white hover:bg-white/10 backdrop-blur-sm px-8 py-4 text-base font-medium rounded-xl"
             >
-              {getContent('hero', 'ctaButton2Text', 'Explore Research')}
+              Explore Research
             </Button>
           </div>
 
@@ -117,7 +79,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
             <div className="relative order-2 lg:order-1">
               <div className="aspect-[4/3] rounded-3xl overflow-hidden soft-shadow">
                 <ImageWithFallback
-                  src={getImageUrl('approach', 'approachImage', '/images/jeremy-bishop-EwKXn5CapA4-unsplash.jpg')}
+                  src="/images/jeremy-bishop-EwKXn5CapA4-unsplash.jpg"
                   alt="Our Approach"
                   className="w-full h-full object-cover transition-transform hover:scale-105"
                 />
@@ -133,10 +95,12 @@ export function HomePage({ onNavigate }: HomePageProps) {
               </div>
               
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-6">
-                {getContent('approach', 'approachTitle', 'Our Approach')}
+                Our Approach
               </h2>
               <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
-                {getContent('approach', 'approachDescription', 'We believe that data science should serve humanity. Our interdisciplinary team combines expertise in computer science, psychology, ethics, and policy to create frameworks and tools that put people first.')}
+                We believe that data science should serve humanity. Our interdisciplinary team combines 
+                expertise in computer science, psychology, ethics, and policy to create frameworks and 
+                tools that put people first.
               </p>
 
               <div className="space-y-6">
@@ -190,10 +154,10 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <span className="text-sm font-medium text-secondary">Our Impact</span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-              {getContent('stats', 'statsTitle', 'Making a Difference')}
+              Making a Difference
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              {getContent('stats', 'statsSubtitle', 'Our research and initiatives are creating positive change in data wellbeing')}
+              Our research and initiatives are creating positive change in data wellbeing
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -201,29 +165,29 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <div className="w-16 h-16 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
                 <BookOpen className="h-8 w-8 text-primary" />
               </div>
-              <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">{getContent('stats', 'stat1Value', '50+')}</div>
-              <div className="text-sm text-muted-foreground">{getContent('stats', 'stat1Label', 'Publications')}</div>
+              <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">50+</div>
+              <div className="text-sm text-muted-foreground">Publications</div>
             </div>
             <div className="text-center p-6 rounded-2xl bg-white soft-shadow hover:shadow-lg transition-all hover:-translate-y-1">
               <div className="w-16 h-16 rounded-xl bg-secondary/10 flex items-center justify-center mx-auto mb-4">
                 <Lightbulb className="h-8 w-8 text-secondary" />
               </div>
-              <div className="text-3xl sm:text-4xl font-bold text-secondary mb-2">{getContent('stats', 'stat2Value', '12')}</div>
-              <div className="text-sm text-muted-foreground">{getContent('stats', 'stat2Label', 'Active Projects')}</div>
+              <div className="text-3xl sm:text-4xl font-bold text-secondary mb-2">12</div>
+              <div className="text-sm text-muted-foreground">Active Projects</div>
             </div>
             <div className="text-center p-6 rounded-2xl bg-white soft-shadow hover:shadow-lg transition-all hover:-translate-y-1">
               <div className="w-16 h-16 rounded-xl bg-accent/10 flex items-center justify-center mx-auto mb-4">
                 <Users className="h-8 w-8 text-accent" />
               </div>
-              <div className="text-3xl sm:text-4xl font-bold text-accent mb-2">{getContent('stats', 'stat3Value', '25+')}</div>
-              <div className="text-sm text-muted-foreground">{getContent('stats', 'stat3Label', 'Partners')}</div>
+              <div className="text-3xl sm:text-4xl font-bold text-accent mb-2">25+</div>
+              <div className="text-sm text-muted-foreground">Partners</div>
             </div>
             <div className="text-center p-6 rounded-2xl bg-white soft-shadow hover:shadow-lg transition-all hover:-translate-y-1">
               <div className="w-16 h-16 rounded-xl bg-warm/10 flex items-center justify-center mx-auto mb-4">
                 <Shield className="h-8 w-8 text-warm" />
               </div>
-              <div className="text-3xl sm:text-4xl font-bold text-warm mb-2">{getContent('stats', 'stat4Value', '8')}</div>
-              <div className="text-sm text-muted-foreground">{getContent('stats', 'stat4Label', 'Policy Impacts')}</div>
+              <div className="text-3xl sm:text-4xl font-bold text-warm mb-2">8</div>
+              <div className="text-sm text-muted-foreground">Policy Impacts</div>
             </div>
           </div>
         </div>
@@ -238,10 +202,10 @@ export function HomePage({ onNavigate }: HomePageProps) {
               <span className="text-sm font-medium text-accent">Explore Our Work</span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-4">
-              {getContent('discover', 'discoverTitle', 'Discover DaWg')}
+              Discover DaWg
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              {getContent('discover', 'discoverSubtitle', 'Explore our work across research, community, and collaboration')}
+              Explore our work across research, community, and collaboration
             </p>
           </div>
 
@@ -296,7 +260,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 onClick={() => onNavigate("team")}
                 className="bg-white text-primary hover:bg-white/90 hover:shadow-lg hover:-translate-y-1 transition-all px-8 py-4 text-base font-medium rounded-xl shadow-lg"
               >
-                {getContent('cta', 'ctaButton1Text', 'Join Our Team')}
+                Join Our Team
               </Button>
               <Button 
                 size="lg"
@@ -304,7 +268,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                 onClick={() => onNavigate("partners")}
                 className="border-2 border-white text-white hover:bg-white/10 backdrop-blur-sm px-8 py-4 text-base font-medium rounded-xl shadow-lg"
               >
-                {getContent('cta', 'ctaButton2Text', 'Become a Partner')}
+                Become a Partner
               </Button>
             </div>
           </div>

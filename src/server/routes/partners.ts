@@ -6,11 +6,24 @@ const router = express.Router();
 // Get all partners
 router.get('/', async (req, res) => {
   try {
-    const partners = await prisma.partner.findMany();
+    console.log('Fetching partners...');
+    const partners = await prisma.partner.findMany({
+      where: {
+        isPublic: true
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+    console.log(`Found ${partners.length} partners`);
     res.json(partners);
   } catch (error) {
     console.error('Error fetching partners:', error);
-    res.status(500).json({ error: 'Failed to fetch partners' });
+    console.error('Error details:', JSON.stringify(error));
+    res.status(500).json({ 
+      error: 'Failed to fetch partners',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 });
 

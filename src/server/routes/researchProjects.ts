@@ -6,11 +6,24 @@ const router = express.Router();
 // Get all research projects
 router.get('/', async (req, res) => {
   try {
-    const researchProjects = await prisma.researchProject.findMany();
+    console.log('Fetching research projects...');
+    const researchProjects = await prisma.researchProject.findMany({
+      where: {
+        isPublic: true
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+    console.log(`Found ${researchProjects.length} research projects`);
     res.json(researchProjects);
   } catch (error) {
     console.error('Error fetching research projects:', error);
-    res.status(500).json({ error: 'Failed to fetch research projects' });
+    console.error('Error details:', JSON.stringify(error));
+    res.status(500).json({ 
+      error: 'Failed to fetch research projects',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    });
   }
 });
 
