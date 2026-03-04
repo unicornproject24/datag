@@ -15,7 +15,7 @@ export function Navigation({ currentPage, onNavigate }: NavigationProps) {
     { name: "Team", path: "team" },
     { name: "Research", path: "research" },
     { name: "Blog", path: "blog" },
-    { name: "Partners", path: "partners" },
+    { name: "Our Community", path: "partners" },
     { name: "Admin", path: "admin" }
   ];
 

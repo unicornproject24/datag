@@ -575,65 +575,118 @@ export function AdminPage() {
           <TabsContent value="dashboard" className="space-y-6">
             {stats && (
               <>
+                {/* Enhanced Stats Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <StatCard 
-                    title="Total Team" 
-                    value={stats.totalTeam} 
-                    icon={Users}
-                    description="Active team members"
-                  />
-                  <StatCard 
-                    title="Published Research" 
-                    value={stats.publishedResearch} 
-                    icon={Eye}
-                    description="Publicly visible"
-                    variant="success"
-                  />
-                  <StatCard 
-                    title="Unpublished Research" 
-                    value={stats.unpublishedResearch} 
-                    icon={EyeOff}
-                    description="Draft or hidden"
-                    variant="warning"
-                  />
-                  <StatCard 
-                    title="Total Research" 
-                    value={stats.totalResearch} 
-                    icon={FileText}
-                    description="All projects"
-                  />
+                  <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-blue-700">Total Team</p>
+                          <p className="text-3xl font-bold mt-1 text-blue-900">{stats.totalTeam}</p>
+                          <p className="text-xs text-blue-600 mt-1">Active members</p>
+                        </div>
+                        <Users className="h-10 w-10 text-blue-500 opacity-75" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-green-700">Published Research</p>
+                          <p className="text-3xl font-bold mt-1 text-green-900">{stats.publishedResearch}</p>
+                          <p className="text-xs text-green-600 mt-1">Publicly visible</p>
+                        </div>
+                        <Eye className="h-10 w-10 text-green-500 opacity-75" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card className="bg-gradient-to-br from-yellow-50 to-orange-50 border-yellow-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-yellow-700">Unpublished</p>
+                          <p className="text-3xl font-bold mt-1 text-yellow-900">{stats.unpublishedResearch}</p>
+                          <p className="text-xs text-yellow-600 mt-1">Draft or hidden</p>
+                        </div>
+                        <EyeOff className="h-10 w-10 text-yellow-500 opacity-75" />
+                      </div>
+                    </CardContent>
+                  </Card>
+                  
+                  <Card className="bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                    <CardContent className="p-6">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm font-medium text-purple-700">Total Research</p>
+                          <p className="text-3xl font-bold mt-1 text-purple-900">{stats.totalResearch}</p>
+                          <p className="text-xs text-purple-600 mt-1">All projects</p>
+                        </div>
+                        <FileText className="h-10 w-10 text-purple-500 opacity-75" />
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
 
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Recent Research Projects</CardTitle>
-                    <CardDescription>Latest research activity</CardDescription>
+                {/* Recent Activity Card */}
+                <Card className="border shadow-lg">
+                  <CardHeader className="bg-gradient-to-r from-slate-50 to-gray-50 border-b">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <CardTitle className="text-xl">Recent Research Projects</CardTitle>
+                        <p className="text-sm text-muted-foreground mt-1">Latest research activity and updates</p>
+                      </div>
+                      <Badge variant="outline" className="text-sm px-3 py-1">
+                        {stats.recentResearch.length} recent
+                      </Badge>
+                    </div>
                   </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
+                  <CardContent className="p-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {stats.recentResearch.length > 0 ? (
                         stats.recentResearch.map((project) => (
-                          <div 
+                          <Card 
                             key={project.id} 
-                            className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted cursor-pointer"
+                            className="hover:shadow-lg transition-all cursor-pointer hover:-translate-y-1 border-l-4 border-l-purple-500"
                             onClick={() => {
                               setSelectedResearch(project);
                               setActiveTab('research');
                             }}
                           >
-                            <div>
-                              <h4 className="font-medium">{project.title}</h4>
-                              <p className="text-sm text-muted-foreground">
-                                {new Date(project.createdAt).toLocaleDateString()}
-                              </p>
-                            </div>
-                            <Badge variant={project.isPublic ? 'default' : 'secondary'}>
-                              {project.isPublic ? 'Published' : 'Draft'}
-                            </Badge>
-                          </div>
+                            <CardContent className="p-4">
+                              <div className="flex items-start justify-between gap-3">
+                                <div className="flex-1 min-w-0">
+                                  <div className="flex items-center gap-2 mb-2">
+                                    <h4 className="font-semibold text-base truncate">{project.title}</h4>
+                                    <Badge variant={project.isPublic ? 'default' : 'secondary'} className="text-xs flex-shrink-0">
+                                      {project.isPublic ? 'Published' : 'Draft'}
+                                    </Badge>
+                                  </div>
+                                  <p className="text-sm text-muted-foreground">
+                                    Created: {new Date(project.createdAt).toLocaleDateString('en-US', { 
+                                      year: 'numeric', 
+                                      month: 'short', 
+                                      day: 'numeric' 
+                                    })}
+                                  </p>
+                                </div>
+                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center flex-shrink-0">
+                                  <FileText className="h-5 w-5 text-white" />
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
                         ))
                       ) : (
-                        <p className="text-muted-foreground text-center py-8">No research projects yet</p>
+                        <div className="col-span-full text-center py-16 bg-gradient-to-br from-slate-50 to-gray-50 rounded-2xl">
+                          <div className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-gradient-to-br from-purple-400 to-pink-500 flex items-center justify-center">
+                            <FileText className="h-10 w-10 text-white" />
+                          </div>
+                          <h3 className="text-xl font-semibold mb-2">No Research Projects Yet</h3>
+                          <p className="text-muted-foreground">Get started by creating your first research project</p>
+                        </div>
                       )}
                     </div>
                   </CardContent>
@@ -693,41 +746,65 @@ export function AdminPage() {
                   </Button>
                 </div>
 
-                <div className="grid gap-4">
+                {/* Enhanced Grid Layout */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                   {researchProjects.length > 0 ? (
                     researchProjects
                       .filter(r => r.title.toLowerCase().includes(searchQuery.toLowerCase()))
                       .map((project) => (
-                      <Card key={project.id} className="hover:shadow-md transition-shadow">
-                        <CardContent className="p-4">
-                          <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
-                            <div className="flex-1 min-w-0">
-                              <div className="flex flex-wrap items-center gap-2 mb-2">
-                                <h4 className="font-semibold text-base sm:text-lg">{project.title}</h4>
-                                <Badge variant={project.isPublic ? 'default' : 'secondary'} className="text-xs">
+                        <Card 
+                          key={project.id} 
+                          className="hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-purple-500 overflow-hidden group"
+                        >
+                          {/* Card Header with Status */}
+                          <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-3 border-b">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <Badge variant={project.isPublic ? 'default' : 'secondary'} className="text-xs px-2 py-1">
                                   {project.isPublic ? 'Published' : 'Draft'}
                                 </Badge>
-                                <Badge variant="outline" className="text-xs">{project.status}</Badge>
-                              </div>
-                              <p className="text-muted-foreground text-sm line-clamp-2 mb-2">{project.description}</p>
-                              <div className="flex flex-wrap gap-2 mb-2">
-                                {project.tags.map((tag) => (
-                                  <Badge key={tag} variant="outline" className="text-xs">{tag}</Badge>
-                                ))}
+                                <Badge variant="outline" className="text-xs px-2 py-1">{project.status}</Badge>
                               </div>
                               <p className="text-xs text-muted-foreground">
-                                Updated: {new Date(project.updatedAt).toLocaleDateString()}
+                                Updated: {new Date(project.updatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                               </p>
                             </div>
-                            <div className="flex sm:flex-col gap-2 w-full sm:w-auto">
+                          </div>
+                          
+                          {/* Card Content */}
+                          <CardContent className="p-4 space-y-3">
+                            <div>
+                              <h4 className="font-semibold text-base line-clamp-2 mb-2 group-hover:text-purple-600 transition-colors">
+                                {project.title}
+                              </h4>
+                              <p className="text-muted-foreground text-sm line-clamp-3 leading-relaxed">
+                                {project.description}
+                              </p>
+                            </div>
+                            
+                            <div className="flex flex-wrap gap-1.5 pt-2">
+                              {project.tags.slice(0, 5).map((tag) => (
+                                <Badge key={tag} variant="secondary" className="text-xs px-2 py-0.5">
+                                  {tag}
+                                </Badge>
+                              ))}
+                              {project.tags.length > 5 && (
+                                <Badge variant="outline" className="text-xs px-2 py-0.5">
+                                  +{project.tags.length - 5}
+                                </Badge>
+                              )}
+                            </div>
+                            
+                            {/* Action Buttons Grid */}
+                            <div className="grid grid-cols-4 gap-2 pt-3 border-t">
                               <Button
                                 size="sm"
                                 variant="outline"
                                 onClick={() => setSelectedResearch(project)}
-                                className="flex-1 sm:flex-none"
+                                className="w-full h-9"
+                                title="View Details"
                               >
                                 <Eye className="h-4 w-4" />
-                                <span className="sm:hidden ml-2">View</span>
                               </Button>
                               <Button
                                 size="sm"
@@ -736,34 +813,33 @@ export function AdminPage() {
                                   setEditingResearch(project);
                                   setShowResearchForm(true);
                                 }}
-                                className="flex-1 sm:flex-none"
+                                className="w-full h-9"
+                                title="Edit"
                               >
                                 <Edit className="h-4 w-4" />
-                                <span className="sm:hidden ml-2">Edit</span>
                               </Button>
                               <Button
                                 size="sm"
                                 variant={project.isPublic ? 'secondary' : 'default'}
                                 onClick={() => handleTogglePublishResearch(project.id, project.isPublic)}
-                                className="flex-1 sm:flex-none"
+                                className="w-full h-9"
+                                title={project.isPublic ? 'Unpublish' : 'Publish'}
                               >
                                 {project.isPublic ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                                <span className="sm:hidden ml-2">{project.isPublic ? 'Unpublish' : 'Publish'}</span>
                               </Button>
                               <Button
                                 size="sm"
                                 variant="destructive"
                                 onClick={() => handleDeleteResearch(project.id)}
-                                className="flex-1 sm:flex-none"
+                                className="w-full h-9"
+                                title="Delete"
                               >
                                 <Trash2 className="h-4 w-4" />
-                                <span className="sm:hidden ml-2">Delete</span>
                               </Button>
                             </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))
+                          </CardContent>
+                        </Card>
+                      ))
                   ) : (
                     <div className="text-center py-16 bg-white rounded-2xl soft-shadow">
                       <div className="w-20 h-20 mx-auto mb-6 rounded-3xl bg-gradient-primary flex items-center justify-center">
@@ -831,75 +907,102 @@ export function AdminPage() {
                   </Button>
                 </div>
 
-                <div className="grid gap-4">
+                {/* Enhanced Grid Layout */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                   {blogPosts.length > 0 ? (
                     blogPosts.map((post) => (
-                      <Card key={post.id} className="hover:shadow-md transition-shadow">
-                        <CardContent className="p-4">
-                          <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
-                            <div className="flex-1 min-w-0">
-                              <div className="flex flex-wrap items-center gap-2 mb-2">
-                                <h4 className="font-semibold text-base sm:text-lg">{post.title}</h4>
-                                <Badge variant={post.isPublic ? 'default' : 'secondary'} className="text-xs">
-                                  {post.isPublic ? 'Published' : 'Draft'}
-                                </Badge>
-                                <Badge variant="outline" className="text-xs">{post.category}</Badge>
-                              </div>
-                              <p className="text-muted-foreground text-sm line-clamp-2 mb-2">{post.excerpt}</p>
-                              <div className="flex flex-wrap gap-2 mb-2">
-                                {post.tags.map((tag) => (
-                                  <Badge key={tag} variant="outline" className="text-xs">{tag}</Badge>
-                                ))}
-                              </div>
-                              <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs text-muted-foreground">
-                                <span className="flex items-center gap-1">
-                                  <Clock className="h-3 w-3" /> {post.readTime}
-                                </span>
-                                <span>By {post.author}</span>
-                                <span>Updated: {new Date(post.updatedAt).toLocaleDateString()}</span>
-                              </div>
+                      <Card 
+                        key={post.id} 
+                        className="hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-l-4 border-l-orange-500 overflow-hidden group"
+                      >
+                        {/* Card Header with Status */}
+                        <div className="bg-gradient-to-r from-orange-50 to-red-50 p-3 border-b">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              <Badge variant={post.isPublic ? 'default' : 'secondary'} className="text-xs px-2 py-1">
+                                {post.isPublic ? 'Published' : 'Draft'}
+                              </Badge>
+                              <Badge variant="outline" className="text-xs px-2 py-1">{post.category}</Badge>
                             </div>
-                            <div className="flex sm:flex-col gap-2 w-full sm:w-auto">
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() => setSelectedBlogPost(post)}
-                                className="flex-1 sm:flex-none"
-                              >
-                                <Eye className="h-4 w-4" />
-                                <span className="sm:hidden ml-2">View</span>
-                              </Button>
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() => {
-                                  setEditingBlogPost(post);
-                                  setShowBlogForm(true);
-                                }}
-                                className="flex-1 sm:flex-none"
-                              >
-                                <Edit className="h-4 w-4" />
-                                <span className="sm:hidden ml-2">Edit</span>
-                              </Button>
-                              <Button
-                                size="sm"
-                                variant={post.isPublic ? 'secondary' : 'default'}
-                                onClick={() => handleTogglePublishBlogPost(post.id, post.isPublic)}
-                                className="flex-1 sm:flex-none"
-                              >
-                                {post.isPublic ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                                <span className="sm:hidden ml-2">{post.isPublic ? 'Unpublish' : 'Publish'}</span>
-                              </Button>
-                              <Button
-                                size="sm"
-                                variant="destructive"
-                                onClick={() => handleDeleteBlogPost(post.id)}
-                                className="flex-1 sm:flex-none"
-                              >
-                                <Trash2 className="h-4 w-4" />
-                                <span className="sm:hidden ml-2">Delete</span>
-                              </Button>
+                            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                              <Clock className="h-3 w-3" />
+                              <span>{post.readTime}</span>
                             </div>
+                          </div>
+                        </div>
+                        
+                        {/* Card Content */}
+                        <CardContent className="p-4 space-y-3">
+                          <div>
+                            <h4 className="font-semibold text-base line-clamp-2 mb-2 group-hover:text-orange-600 transition-colors">
+                              {post.title}
+                            </h4>
+                            <p className="text-muted-foreground text-sm line-clamp-3 leading-relaxed">
+                              {post.excerpt}
+                            </p>
+                          </div>
+                          
+                          <div className="flex flex-wrap gap-1.5 pt-2">
+                            {post.tags.slice(0, 5).map((tag) => (
+                              <Badge key={tag} variant="secondary" className="text-xs px-2 py-0.5">
+                                {tag}
+                              </Badge>
+                            ))}
+                            {post.tags.length > 5 && (
+                              <Badge variant="outline" className="text-xs px-2 py-0.5">
+                                +{post.tags.length - 5}
+                              </Badge>
+                            )}
+                          </div>
+                          
+                          <div className="flex items-center gap-2 text-xs text-muted-foreground pt-2 border-t">
+                            <div className="w-6 h-6 rounded-full bg-gradient-to-br from-orange-400 to-red-500 flex items-center justify-center text-white font-semibold text-xs flex-shrink-0">
+                              {post.author.charAt(0)}
+                            </div>
+                            <span className="truncate">By {post.author}</span>
+                          </div>
+                          
+                          {/* Action Buttons Grid */}
+                          <div className="grid grid-cols-4 gap-2 pt-3 border-t">
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => setSelectedBlogPost(post)}
+                              className="w-full h-9"
+                              title="View Details"
+                            >
+                              <Eye className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => {
+                                setEditingBlogPost(post);
+                                setShowBlogForm(true);
+                              }}
+                              className="w-full h-9"
+                              title="Edit"
+                            >
+                              <Edit className="h-4 w-4" />
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant={post.isPublic ? 'secondary' : 'default'}
+                              onClick={() => handleTogglePublishBlogPost(post.id, post.isPublic)}
+                              className="w-full h-9"
+                              title={post.isPublic ? 'Unpublish' : 'Publish'}
+                            >
+                              {post.isPublic ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="destructive"
+                              onClick={() => handleDeleteBlogPost(post.id)}
+                              className="w-full h-9"
+                              title="Delete"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
                           </div>
                         </CardContent>
                       </Card>
@@ -1137,23 +1240,78 @@ export function AdminPage() {
 
           {/* Settings Tab */}
           <TabsContent value="settings" className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Account Settings</CardTitle>
-                <CardDescription>Manage your account preferences</CardDescription>
+            <Card className="border shadow-lg">
+              <CardHeader className="bg-gradient-to-r from-slate-50 to-gray-50 border-b">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <CardTitle className="text-xl">Account Settings</CardTitle>
+                    <p className="text-sm text-muted-foreground mt-1">View and manage your account information</p>
+                  </div>
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center text-white font-semibold text-xl">
+                    {user?.name?.charAt(0)}
+                  </div>
+                </div>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <label className="text-sm font-medium">Name</label>
-                  <Input value={user?.name} disabled className="mt-1" />
+              <CardContent className="p-6 space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-muted-foreground">Full Name</label>
+                    <div className="p-3 bg-muted/50 rounded-lg border">
+                      <p className="text-base font-medium">{user?.name}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-muted-foreground">Email Address</label>
+                    <div className="p-3 bg-muted/50 rounded-lg border">
+                      <p className="text-base font-medium">{user?.email}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-muted-foreground">Role</label>
+                    <div className="p-3 bg-muted/50 rounded-lg border">
+                      <Badge variant={user?.role === 'ADMIN' ? 'default' : 'secondary'} className="px-3 py-1">
+                        {user?.role}
+                      </Badge>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-muted-foreground">Account Status</label>
+                    <div className="p-3 bg-muted/50 rounded-lg border">
+                      <Badge variant="default" className="px-3 py-1 bg-green-600 hover:bg-green-700">Active</Badge>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <label className="text-sm font-medium">Email</label>
-                  <Input value={user?.email} disabled className="mt-1" />
-                </div>
-                <div>
-                  <label className="text-sm font-medium">Role</label>
-                  <Input value={user?.role} disabled className="mt-1" />
+                
+                <div className="pt-6 border-t">
+                  <h4 className="text-sm font-medium mb-4">Account Information</h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
+                      <CardContent className="p-4 text-center">
+                        <LayoutDashboard className="h-8 w-8 text-blue-500 mx-auto mb-2" />
+                        <p className="text-sm font-medium text-blue-700">Dashboard Access</p>
+                        <p className="text-xs text-blue-600 mt-1">Full admin privileges</p>
+                      </CardContent>
+                    </Card>
+                    
+                    <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200">
+                      <CardContent className="p-4 text-center">
+                        <CheckCircle className="h-8 w-8 text-green-500 mx-auto mb-2" />
+                        <p className="text-sm font-medium text-green-700">Verified Account</p>
+                        <p className="text-xs text-green-600 mt-1">Email confirmed</p>
+                      </CardContent>
+                    </Card>
+                    
+                    <Card className="bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200">
+                      <CardContent className="p-4 text-center">
+                        <Lock className="h-8 w-8 text-purple-500 mx-auto mb-2" />
+                        <p className="text-sm font-medium text-purple-700">Secure Access</p>
+                        <p className="text-xs text-purple-600 mt-1">2FA available</p>
+                      </CardContent>
+                    </Card>
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -1161,42 +1319,6 @@ export function AdminPage() {
         </Tabs>
       </div>
     </div>
-  );
-}
-
-// Component: StatCard
-function StatCard({ 
-  title, 
-  value, 
-  icon: Icon, 
-  description,
-  variant = 'default'
-}: { 
-  title: string; 
-  value: number; 
-  icon: React.ElementType; 
-  description: string;
-  variant?: 'default' | 'success' | 'warning';
-}) {
-  const variantStyles = {
-    default: 'bg-card',
-    success: 'bg-green-50 border-green-200',
-    warning: 'bg-yellow-50 border-yellow-200'
-  };
-
-  return (
-    <Card className={variantStyles[variant]}>
-      <CardContent className="p-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-sm font-medium text-muted-foreground">{title}</p>
-            <p className="text-3xl font-bold mt-1">{value}</p>
-            <p className="text-xs text-muted-foreground mt-1">{description}</p>
-          </div>
-          <Icon className="h-8 w-8 text-muted-foreground" />
-        </div>
-      </CardContent>
-    </Card>
   );
 }
 
@@ -1292,6 +1414,8 @@ function ResearchForm({
   onSubmit: (data: Partial<ResearchProject>) => void; 
   onCancel: () => void;
 }) {
+  const [activeSection, setActiveSection] = useState('details');
+  const [previewMode, setPreviewMode] = useState(false);
   const [formData, setFormData] = useState({
     title: research?.title || '',
     description: research?.description || '',
@@ -1309,85 +1433,281 @@ function ResearchForm({
     });
   };
 
+  const sections = [
+    { id: 'details', label: 'Project Details', icon: FileText },
+    { id: 'metadata', label: 'Metadata', icon: Tag },
+    { id: 'visibility', label: 'Visibility', icon: Eye },
+  ];
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{research ? 'Edit Research Project' : 'Create Research Project'}</CardTitle>
+    <Card className="border shadow-lg max-w-5xl mx-auto">
+      <CardHeader className="bg-gradient-to-r from-purple-50 to-pink-50 border-b">
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle className="text-2xl flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
+                <FileText className="h-5 w-5 text-white" />
+              </div>
+              {research ? 'Edit Research Project' : 'Create New Research Project'}
+            </CardTitle>
+            <p className="text-sm text-muted-foreground mt-2">
+              {research ? 'Update project information and settings' : 'Share your research findings with the community'}
+            </p>
+          </div>
+          <Badge variant={formData.isPublic ? 'default' : 'secondary'} className="px-4 py-2 text-sm">
+            {formData.isPublic ? 'Published' : 'Draft'}
+          </Badge>
+        </div>
       </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="text-sm font-medium">Title</label>
-            <Input
-              value={formData.title}
-              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              placeholder="Enter research title"
-              required
-            />
-          </div>
-          
-          <div>
-            <label className="text-sm font-medium">Description</label>
-            <AdvancedEditor
-              content={formData.description}
-              onChange={(content: string) => setFormData({...formData, description: content})}
-              placeholder="Enter research description"
-              className="min-h-[300px]"
-            />
-          </div>
-
-          <div>
-            <label className="text-sm font-medium">Status</label>
-            <select
-              className="w-full p-2 border rounded-md mt-1"
-              value={formData.status}
-              onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-            >
-              <option value="Active">Active</option>
-              <option value="Planning">Planning</option>
-              <option value="Completed">Completed</option>
-              <option value="On Hold">On Hold</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="text-sm font-medium">Tags (comma-separated)</label>
-            <Input
-              value={formData.tags}
-              onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
-              placeholder="AI, Ethics, Data Science"
-            />
+      
+      <CardContent className="p-0">
+        <div className="flex flex-col lg:flex-row">
+          {/* Sidebar Navigation */}
+          <div className="lg:w-64 border-r bg-muted/30 p-4">
+            <nav className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-x-visible">
+              {sections.map((section) => {
+                const Icon = section.icon;
+                return (
+                  <button
+                    key={section.id}
+                    onClick={() => setActiveSection(section.id)}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all whitespace-nowrap lg:w-full ${
+                      activeSection === section.id
+                        ? 'bg-primary text-primary-foreground shadow-md'
+                        : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                    }`}
+                  >
+                    <Icon className="h-4 w-4 flex-shrink-0" />
+                    <span>{section.label}</span>
+                  </button>
+                );
+              })}
+            </nav>
+            
+            {/* Quick Tips */}
+            <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <h4 className="text-xs font-semibold text-blue-900 mb-2">Quick Tips</h4>
+              <ul className="text-xs text-blue-700 space-y-1">
+                <li>• Use clear, descriptive titles</li>
+                <li>• Add relevant tags for discoverability</li>
+                <li>• Include high-quality images</li>
+                <li>• Preview before publishing</li>
+              </ul>
+            </div>
           </div>
 
-          <div>
-            <label className="text-sm font-medium">Image URL</label>
-            <Input
-              value={formData.imageUrl}
-              onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-              placeholder="https://example.com/image.jpg"
-            />
-          </div>
+          {/* Form Content */}
+          <div className="flex-1 p-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Section 1: Project Details */}
+              {activeSection === 'details' && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold">1. Project Information</h3>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setPreviewMode(!previewMode)}
+                      className="gap-2"
+                    >
+                      {previewMode ? <Edit className="h-3 w-3" /> : <Eye className="h-3 w-3" />}
+                      {previewMode ? 'Edit' : 'Preview'}
+                    </Button>
+                  </div>
+                  
+                  {!previewMode ? (
+                    <>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Project Title *</label>
+                        <Input
+                          value={formData.title}
+                          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                          placeholder="e.g., AI-Driven Mental Health Analytics"
+                          required
+                          className="text-base"
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          {formData.title.length}/100 characters
+                        </p>
+                      </div>
 
-          <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              id="isPublic"
-              checked={formData.isPublic}
-              onChange={(e) => setFormData({ ...formData, isPublic: e.target.checked })}
-              className="rounded"
-            />
-            <label htmlFor="isPublic" className="text-sm font-medium">Publish immediately</label>
-          </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Description *</label>
+                        <AdvancedEditor
+                          content={formData.description}
+                          onChange={(content: string) => setFormData({...formData, description: content})}
+                          placeholder="Describe your research project, objectives, and key findings..."
+                          className="min-h-[350px]"
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          Word count: {formData.description.split(/\s+/).filter(w => w.length > 0).length} words
+                        </p>
+                      </div>
 
-          <div className="flex gap-2 pt-4">
-            <Button type="submit">
-              {research ? 'Update' : 'Create'} Research
-            </Button>
-            <Button type="button" variant="outline" onClick={onCancel}>
-              Cancel
-            </Button>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Project Status</label>
+                        <div className="grid grid-cols-2 gap-2">
+                          {['Active', 'Planning', 'Completed', 'On Hold'].map((status) => (
+                            <button
+                              key={status}
+                              type="button"
+                              onClick={() => setFormData({ ...formData, status })}
+                              className={`p-3 rounded-lg border-2 text-sm font-medium transition-all ${
+                                formData.status === status
+                                  ? 'border-primary bg-primary/5 text-primary'
+                                  : 'border-border hover:border-primary/50'
+                              }`}
+                            >
+                              {status}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="space-y-4 border rounded-lg p-6 bg-muted/30">
+                      <div>
+                        <h4 className="font-semibold text-lg mb-2">{formData.title || 'Untitled Project'}</h4>
+                        <Badge variant={formData.status === 'Active' ? 'default' : 'secondary'}>{formData.status}</Badge>
+                      </div>
+                      <div className="prose max-w-none">
+                        <p className="text-muted-foreground whitespace-pre-wrap">{formData.description || 'No description provided'}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Section 2: Metadata */}
+              {activeSection === 'metadata' && (
+                <div className="space-y-6">
+                  <h3 className="text-lg font-semibold">2. Tags & Categorization</h3>
+                  
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Research Tags</label>
+                    <Input
+                      value={formData.tags}
+                      onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
+                      placeholder="AI, Machine Learning, Healthcare, Ethics"
+                      className="text-base"
+                    />
+                    <p className="text-xs text-muted-foreground">Separate tags with commas</p>
+                    
+                    {formData.tags && (
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        {formData.tags.split(',').filter(t => t.trim()).map((tag, idx) => (
+                          <Badge key={idx} variant="secondary" className="px-3 py-1">
+                            {tag.trim()}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Featured Image URL</label>
+                    <Input
+                      value={formData.imageUrl}
+                      onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                      placeholder="https://example.com/research-image.jpg"
+                      className="text-base"
+                    />
+                    
+                    {formData.imageUrl && (
+                      <div className="mt-3 rounded-lg overflow-hidden border">
+                        <img
+                          src={formData.imageUrl}
+                          alt="Preview"
+                          className="w-full h-48 object-cover"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = '/images/placeholder.txt';
+                          }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Section 3: Visibility */}
+              {activeSection === 'visibility' && (
+                <div className="space-y-6">
+                  <h3 className="text-lg font-semibold">3. Publishing Settings</h3>
+                  
+                  <Card className="border-2">
+                    <CardContent className="p-6 space-y-4">
+                      <div className="flex items-start gap-3">
+                        <input
+                          type="checkbox"
+                          id="isPublic"
+                          checked={formData.isPublic}
+                          onChange={(e) => setFormData({ ...formData, isPublic: e.target.checked })}
+                          className="rounded mt-1 h-5 w-5"
+                        />
+                        <div className="flex-1">
+                          <label htmlFor="isPublic" className="text-sm font-medium cursor-pointer">
+                            Publish immediately
+                          </label>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Making this public will display it on the research page for all visitors to see
+                          </p>
+                        </div>
+                        <div className={`w-12 h-6 rounded-full transition-colors ${formData.isPublic ? 'bg-green-500' : 'bg-gray-300'} relative`}>
+                          <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${formData.isPublic ? 'translate-x-6' : ''}`} />
+                        </div>
+                      </div>
+
+                      <div className="pt-4 border-t">
+                        <h4 className="text-sm font-medium mb-3">Visibility Status</h4>
+                        <div className="flex items-center gap-3">
+                          <div className={`w-3 h-3 rounded-full ${formData.isPublic ? 'bg-green-500' : 'bg-yellow-500'}`} />
+                          <span className="text-sm text-muted-foreground">
+                            {formData.isPublic ? 'Visible to public' : 'Only visible to admins'}
+                          </span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <h4 className="text-sm font-semibold text-blue-900 mb-2">Before Publishing</h4>
+                    <ul className="text-xs text-blue-700 space-y-1">
+                      <li>✓ Review content for accuracy</li>
+                      <li>✓ Check image displays correctly</li>
+                      <li>✓ Verify tags are relevant</li>
+                      <li>✓ Proofread description</li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="flex items-center gap-3 pt-6 border-t">
+                <Button 
+                  type="submit" 
+                  className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 gap-2 px-6"
+                >
+                  <CheckCircle className="h-4 w-4" />
+                  {research ? 'Update Project' : 'Create Project'}
+                </Button>
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={onCancel}
+                  className="gap-2"
+                >
+                  <X className="h-4 w-4" />
+                  Cancel
+                </Button>
+                <div className="flex-1" />
+                <span className="text-xs text-muted-foreground">
+                  {research ? `Last updated: ${new Date(research.updatedAt).toLocaleDateString()}` : 'Created just now'}
+                </span>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </CardContent>
     </Card>
   );
@@ -1994,6 +2314,8 @@ function BlogPostForm({
   onSubmit: (data: Partial<BlogPost>) => void; 
   onCancel: () => void;
 }) {
+  const [activeSection, setActiveSection] = useState('content');
+  const [previewMode, setPreviewMode] = useState(false);
   const [formData, setFormData] = useState({
     title: post?.title || '',
     excerpt: post?.excerpt || '',
@@ -2015,111 +2337,327 @@ function BlogPostForm({
     });
   };
 
+  const sections = [
+    { id: 'content', label: 'Content', icon: BookOpen },
+    { id: 'metadata', label: 'Metadata', icon: Tag },
+    { id: 'publishing', label: 'Publishing', icon: Eye },
+  ];
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{post ? 'Edit Blog Post' : 'Create Blog Post'}</CardTitle>
+    <Card className="border shadow-lg max-w-5xl mx-auto">
+      <CardHeader className="bg-gradient-to-r from-orange-50 to-red-50 border-b">
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle className="text-2xl flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center">
+                <BookOpen className="h-5 w-5 text-white" />
+              </div>
+              {post ? 'Edit Blog Post' : 'Create New Blog Post'}
+            </CardTitle>
+            <p className="text-sm text-muted-foreground mt-2">
+              {post ? 'Update your blog post content and settings' : 'Share your insights and knowledge with the community'}
+            </p>
+          </div>
+          <Badge variant={formData.isPublic ? 'default' : 'secondary'} className="px-4 py-2 text-sm">
+            {formData.isPublic ? 'Published' : 'Draft'}
+          </Badge>
+        </div>
       </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="text-sm font-medium">Title</label>
-            <Input
-              value={formData.title}
-              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              placeholder="Enter blog post title"
-              required
-            />
-          </div>
-          
-          <div>
-            <label className="text-sm font-medium">Excerpt</label>
-            <AdvancedEditor
-              content={formData.excerpt}
-              onChange={(content: string) => setFormData({...formData, excerpt: content})}
-              placeholder="Short summary of the post"
-              className="min-h-[150px]"
-            />
-          </div>
-
-          <div>
-            <label className="text-sm font-medium">Content</label>
-            <AdvancedEditor
-              content={formData.content}
-              onChange={(content: string) => setFormData({...formData, content: content})}
-              placeholder="Full blog post content"
-              className="min-h-[400px]"
-            />
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="text-sm font-medium">Author</label>
-              <Input
-                value={formData.author}
-                onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-                placeholder="Author name"
-                required
-              />
-            </div>
-            <div>
-              <label className="text-sm font-medium">Category</label>
-              <Input
-                value={formData.category}
-                onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                placeholder="e.g., Privacy, AI Ethics"
-              />
+      
+      <CardContent className="p-0">
+        <div className="flex flex-col lg:flex-row">
+          {/* Sidebar Navigation */}
+          <div className="lg:w-64 border-r bg-muted/30 p-4">
+            <nav className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-x-visible">
+              {sections.map((section) => {
+                const Icon = section.icon;
+                return (
+                  <button
+                    key={section.id}
+                    onClick={() => setActiveSection(section.id)}
+                    className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all whitespace-nowrap lg:w-full ${
+                      activeSection === section.id
+                        ? 'bg-primary text-primary-foreground shadow-md'
+                        : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                    }`}
+                  >
+                    <Icon className="h-4 w-4 flex-shrink-0" />
+                    <span>{section.label}</span>
+                  </button>
+                );
+              })}
+            </nav>
+            
+            {/* Writing Tips */}
+            <div className="mt-6 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+              <h4 className="text-xs font-semibold text-amber-900 mb-2">Writing Tips</h4>
+              <ul className="text-xs text-amber-700 space-y-1">
+                <li>• Write compelling headlines</li>
+                <li>• Keep paragraphs concise</li>
+                <li>• Use formatting for readability</li>
+                <li>• Add relevant images</li>
+              </ul>
             </div>
           </div>
 
-          <div>
-            <label className="text-sm font-medium">Tags (comma-separated)</label>
-            <Input
-              value={formData.tags}
-              onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
-              placeholder="Privacy, Ethics, Data Science"
-            />
-          </div>
+          {/* Form Content */}
+          <div className="flex-1 p-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Section 1: Content */}
+              {activeSection === 'content' && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold">1. Content Creation</h3>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setPreviewMode(!previewMode)}
+                      className="gap-2"
+                    >
+                      {previewMode ? <Edit className="h-3 w-3" /> : <Eye className="h-3 w-3" />}
+                      {previewMode ? 'Edit' : 'Preview'}
+                    </Button>
+                  </div>
+                  
+                  {!previewMode ? (
+                    <>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Blog Post Title *</label>
+                        <Input
+                          value={formData.title}
+                          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                          placeholder="e.g., The Future of AI in Healthcare"
+                          required
+                          className="text-base"
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          {formData.title.length}/120 characters
+                        </p>
+                      </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="text-sm font-medium">Featured Image URL</label>
-              <Input
-                value={formData.imageUrl}
-                onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                placeholder="https://example.com/image.jpg"
-              />
-            </div>
-            <div>
-              <label className="text-sm font-medium">Read Time</label>
-              <Input
-                value={formData.readTime}
-                onChange={(e) => setFormData({ ...formData, readTime: e.target.value })}
-                placeholder="5 min read"
-              />
-            </div>
-          </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Excerpt / Summary *</label>
+                        <AdvancedEditor
+                          content={formData.excerpt}
+                          onChange={(content: string) => setFormData({...formData, excerpt: content})}
+                          placeholder="Write a brief summary that will appear in blog listings..."
+                          className="min-h-[180px]"
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          Word count: {formData.excerpt.split(/\s+/).filter(w => w.length > 0).length} words
+                        </p>
+                      </div>
 
-          <div className="flex items-center gap-2">
-            <input
-              type="checkbox"
-              id="isPublic"
-              checked={formData.isPublic}
-              onChange={(e) => setFormData({ ...formData, isPublic: e.target.checked })}
-              className="rounded"
-            />
-            <label htmlFor="isPublic" className="text-sm font-medium">Publish immediately</label>
-          </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Full Content *</label>
+                        <AdvancedEditor
+                          content={formData.content}
+                          onChange={(content: string) => setFormData({...formData, content: content})}
+                          placeholder="Write your complete blog post here using Markdown formatting..."
+                          className="min-h-[450px]"
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          Word count: {formData.content.split(/\s+/).filter(w => w.length > 0).length} words • Est. read time: {Math.ceil(formData.content.split(/\s+/).filter(w => w.length > 0).length / 200)} min
+                        </p>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="space-y-6 border rounded-lg p-6 bg-muted/30">
+                      <div>
+                        <h2 className="text-2xl font-bold mb-2">{formData.title || 'Untitled Post'}</h2>
+                        <div className="flex items-center gap-3 text-sm text-muted-foreground">
+                          <span>By {formData.author || 'Anonymous'}</span>
+                          <span>•</span>
+                          <span>{formData.readTime}</span>
+                          <Badge variant="outline">{formData.category}</Badge>
+                        </div>
+                      </div>
+                      <div className="prose max-w-none">
+                        <h4 className="font-semibold">Excerpt:</h4>
+                        <p className="text-muted-foreground whitespace-pre-wrap">{formData.excerpt || 'No excerpt provided'}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
 
-          <div className="flex gap-2 pt-4">
-            <Button type="submit">
-              {post ? 'Update' : 'Create'} Post
-            </Button>
-            <Button type="button" variant="outline" onClick={onCancel}>
-              Cancel
-            </Button>
+              {/* Section 2: Metadata */}
+              {activeSection === 'metadata' && (
+                <div className="space-y-6">
+                  <h3 className="text-lg font-semibold">2. Author & Categorization</h3>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Author Name *</label>
+                      <Input
+                        value={formData.author}
+                        onChange={(e) => setFormData({ ...formData, author: e.target.value })}
+                        placeholder="e.g., Dr. Jane Smith"
+                        required
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Category</label>
+                      <div className="relative">
+                        <select
+                          value={formData.category}
+                          onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                          className="w-full p-2 pr-8 border rounded-md appearance-none bg-white"
+                        >
+                          <option value="General">General</option>
+                          <option value="AI Ethics">AI Ethics</option>
+                          <option value="Data Science">Data Science</option>
+                          <option value="Privacy">Privacy</option>
+                          <option value="Healthcare">Healthcare</option>
+                          <option value="Technology">Technology</option>
+                          <option value="Research">Research</option>
+                        </select>
+                        <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium">Tags</label>
+                    <Input
+                      value={formData.tags}
+                      onChange={(e) => setFormData({ ...formData, tags: e.target.value })}
+                      placeholder="AI, Machine Learning, Ethics, Technology"
+                    />
+                    <p className="text-xs text-muted-foreground">Separate tags with commas</p>
+                    
+                    {formData.tags && (
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        {formData.tags.split(',').filter(t => t.trim()).map((tag, idx) => (
+                          <Badge key={idx} variant="secondary" className="px-3 py-1">
+                            {tag.trim()}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Featured Image URL</label>
+                      <Input
+                        value={formData.imageUrl}
+                        onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
+                        placeholder="https://example.com/blog-image.jpg"
+                      />
+                      
+                      {formData.imageUrl && (
+                        <div className="mt-3 rounded-lg overflow-hidden border">
+                          <img
+                            src={formData.imageUrl}
+                            alt="Preview"
+                            className="w-full h-40 object-cover"
+                            onError={(e) => {
+                              (e.target as HTMLImageElement).src = '/images/placeholder.txt';
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Read Time</label>
+                      <Input
+                        value={formData.readTime}
+                        onChange={(e) => setFormData({ ...formData, readTime: e.target.value })}
+                        placeholder="5 min read"
+                      />
+                      <p className="text-xs text-muted-foreground">Auto-calculated based on word count</p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Section 3: Publishing */}
+              {activeSection === 'publishing' && (
+                <div className="space-y-6">
+                  <h3 className="text-lg font-semibold">3. Publishing Settings</h3>
+                  
+                  <Card className="border-2">
+                    <CardContent className="p-6 space-y-4">
+                      <div className="flex items-start gap-3">
+                        <input
+                          type="checkbox"
+                          id="isPublic"
+                          checked={formData.isPublic}
+                          onChange={(e) => setFormData({ ...formData, isPublic: e.target.checked })}
+                          className="rounded mt-1 h-5 w-5"
+                        />
+                        <div className="flex-1">
+                          <label htmlFor="isPublic" className="text-sm font-medium cursor-pointer">
+                            Publish immediately
+                          </label>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Making this public will display it on the blog page for all visitors to see
+                          </p>
+                        </div>
+                        <div className={`w-12 h-6 rounded-full transition-colors ${formData.isPublic ? 'bg-green-500' : 'bg-gray-300'} relative`}>
+                          <div className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${formData.isPublic ? 'translate-x-6' : ''}`} />
+                        </div>
+                      </div>
+
+                      <div className="pt-4 border-t">
+                        <h4 className="text-sm font-medium mb-3">Publication Status</h4>
+                        <div className="flex items-center gap-3">
+                          <div className={`w-3 h-3 rounded-full ${formData.isPublic ? 'bg-green-500' : 'bg-yellow-500'}`} />
+                          <span className="text-sm text-muted-foreground">
+                            {formData.isPublic ? 'Live and visible to public' : 'Draft - only visible to admins'}
+                          </span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <h4 className="text-sm font-semibold text-green-900 mb-2">Pre-Publish Checklist</h4>
+                    <ul className="text-xs text-green-700 space-y-1">
+                      <li>✓ Proofread for spelling and grammar</li>
+                      <li>✓ Verify all links work correctly</li>
+                      <li>✓ Check image displays properly</li>
+                      <li>✓ Ensure proper formatting</li>
+                      <li>✓ Add relevant tags for SEO</li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+
+              {/* Action Buttons */}
+              <div className="flex items-center gap-3 pt-6 border-t">
+                <Button 
+                  type="submit" 
+                  className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 gap-2 px-6"
+                >
+                  <CheckCircle className="h-4 w-4" />
+                  {post ? 'Update Post' : 'Publish Post'}
+                </Button>
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={onCancel}
+                  className="gap-2"
+                >
+                  <X className="h-4 w-4" />
+                  Cancel
+                </Button>
+                <div className="flex-1" />
+                <span className="text-xs text-muted-foreground">
+                  {post ? `Last updated: ${new Date(post.updatedAt).toLocaleDateString()}` : 'Created just now'}
+                </span>
+              </div>
+            </form>
           </div>
-        </form>
+        </div>
       </CardContent>
     </Card>
   );
@@ -2169,4 +2707,4 @@ const LoginForm = ({ onLogin, loading, error }: { onLogin: (email: string, passw
       </Button>
     </form>
   );
-};
+}
