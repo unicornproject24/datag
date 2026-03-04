@@ -22,7 +22,7 @@ export function PartnersPage() {
         <CardContent className="p-0">
           <div className="grid lg:grid-cols-2">
             {/* Left Side - Visual Content */}
-            <div className="bg-gradient-to-br from-soft-blue via-background to-soft-green p-8 sm:p-12 text-white relative overflow-hidden">
+            <div className="bg-gradient-to-br from-primary via-primary/85 to-secondary/90 p-8 sm:p-12 text-white relative overflow-hidden">
               {/* Animated Background Pattern */}
               <div className="absolute inset-0 opacity-10">
                 <div className="absolute top-0 left-0 w-40 h-40 bg-white rounded-full blur-2xl animate-pulse"></div>
@@ -31,7 +31,7 @@ export function PartnersPage() {
 
               <div className="relative z-10 space-y-8">
                 <div className="space-y-4">
-                  <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium">
+                  <div className="inline-flex items-center gap-2 bg-gradient-to-br from-soft-blue via-background to-soft-green backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium">
                     <Sparkles className="h-4 w-4" />
                     <span>Join Our Growing Community</span>
                   </div>
